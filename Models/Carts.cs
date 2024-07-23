@@ -18,7 +18,7 @@ namespace GroceryDeliverySystem.Models
         public Carts()
         {
             this.CartItems = new HashSet<CartItems>();
-            this.Users1 = new HashSet<Users>();
+            this.Users = new HashSet<Users>();
         }
     
         public int id { get; set; }
@@ -26,8 +26,8 @@ namespace GroceryDeliverySystem.Models
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CartItems> CartItems { get; set; }
-        public virtual Users Users { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Users> Users1 { get; set; }
+        public virtual ICollection<Users> Users { get; set; }
+        public virtual Users Users1 { get; set; }
     }
 }

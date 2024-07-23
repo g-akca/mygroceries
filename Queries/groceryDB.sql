@@ -11,29 +11,28 @@ create table Cities (
 
 create table Users (
 	[id]			int				IDENTITY(1,1) PRIMARY KEY NOT NULL,
-	[name]			nvarchar(255)	NOT NULL,
+	[firstName]		nvarchar(255)	NOT NULL,
+	[lastName]		nvarchar(255)	NOT NULL,
 	[email]			nvarchar(75)	UNIQUE NOT NULL,
 	[password]		nvarchar(30)	NOT NULL,
 	[phone]			nvarchar(20)	NULL,
-	[address]		nvarchar(255)	NOT NULL,
-	[cityID]		int				NOT NULL FOREIGN KEY REFERENCES Cities(id),
-	[cartID]		int				NOT NULL
+	[address]		nvarchar(255)	NULL,
+	[cityID]		int				NULL FOREIGN KEY REFERENCES Cities(id),
+	[cartID]		int				NULL FOREIGN KEY REFERENCES Carts(id),
+	[roles]			nvarchar(3)		DEFAULT 'C'
 );
 
 create table Carts (
 	[id]			int				IDENTITY (1,1) PRIMARY KEY NOT NULL,
-	[userID]		int				NOT NULL FOREIGN KEY REFERENCES Users(id)
+	[userID]		int				NOT NULL FOREIGN KEY REFERENCES Users(id) ON DELETE CASCADE
 );
-
-alter table Users add constraint fk1
-   foreign key (cartID)
-   references Carts (id);
 
 create table Stores (
 	[id]			int				IDENTITY (1,1) PRIMARY KEY NOT NULL,
 	[name]			nvarchar(255)	NOT NULL,
 	[cityID]		int				NOT NULL FOREIGN KEY REFERENCES Cities(id),
-	[imageURL]		nvarchar(255)	NULL
+	[imageURL]		nvarchar(255)	NULL,
+	[description]	nvarchar(255)	NULL
 );
 
 create table Categories (
@@ -99,7 +98,7 @@ insert into Cities (name)
 values ('Turkey')
 
 insert into Categories (name, storeID)
-values ('Snacks', 2)
+values ('Fruits', 2)
 
 insert into Products (name, price, categoryID)
 values ('Ketchup Potato Chips', 35, 2)

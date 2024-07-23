@@ -4,19 +4,19 @@
     <EntitySetMapping Name="CartItems">
       <EntityTypeMapping TypeName="groceryDBModel.CartItems">
         <MappingFragment StoreEntitySet="CartItems">
-          <ScalarProperty Name="id" ColumnName="id" />
-          <ScalarProperty Name="cartID" ColumnName="cartID" />
-          <ScalarProperty Name="productID" ColumnName="productID" />
-          <ScalarProperty Name="quantity" ColumnName="quantity" />
           <ScalarProperty Name="price" ColumnName="price" />
+          <ScalarProperty Name="quantity" ColumnName="quantity" />
+          <ScalarProperty Name="productID" ColumnName="productID" />
+          <ScalarProperty Name="cartID" ColumnName="cartID" />
+          <ScalarProperty Name="id" ColumnName="id" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="Carts">
       <EntityTypeMapping TypeName="groceryDBModel.Carts">
         <MappingFragment StoreEntitySet="Carts">
-          <ScalarProperty Name="id" ColumnName="id" />
           <ScalarProperty Name="userID" ColumnName="userID" />
+          <ScalarProperty Name="id" ColumnName="id" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -24,59 +24,59 @@
       <EntityTypeMapping TypeName="groceryDBModel.Categories">
         <MappingFragment StoreEntitySet="Categories">
           <ScalarProperty Name="imageURL" ColumnName="imageURL" />
-          <ScalarProperty Name="id" ColumnName="id" />
-          <ScalarProperty Name="name" ColumnName="name" />
           <ScalarProperty Name="storeID" ColumnName="storeID" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="id" ColumnName="id" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="Cities">
       <EntityTypeMapping TypeName="groceryDBModel.Cities">
         <MappingFragment StoreEntitySet="Cities">
-          <ScalarProperty Name="id" ColumnName="id" />
           <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="id" ColumnName="id" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="Deliveries">
       <EntityTypeMapping TypeName="groceryDBModel.Deliveries">
         <MappingFragment StoreEntitySet="Deliveries">
-          <ScalarProperty Name="id" ColumnName="id" />
-          <ScalarProperty Name="orderID" ColumnName="orderID" />
-          <ScalarProperty Name="delPersonID" ColumnName="delPersonID" />
-          <ScalarProperty Name="status" ColumnName="status" />
           <ScalarProperty Name="deliveryTime" ColumnName="deliveryTime" />
+          <ScalarProperty Name="status" ColumnName="status" />
+          <ScalarProperty Name="delPersonID" ColumnName="delPersonID" />
+          <ScalarProperty Name="orderID" ColumnName="orderID" />
+          <ScalarProperty Name="id" ColumnName="id" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="DeliveryPerson">
       <EntityTypeMapping TypeName="groceryDBModel.DeliveryPerson">
         <MappingFragment StoreEntitySet="DeliveryPerson">
-          <ScalarProperty Name="id" ColumnName="id" />
-          <ScalarProperty Name="name" ColumnName="name" />
-          <ScalarProperty Name="phone" ColumnName="phone" />
           <ScalarProperty Name="status" ColumnName="status" />
+          <ScalarProperty Name="phone" ColumnName="phone" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="id" ColumnName="id" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="OrderItems">
       <EntityTypeMapping TypeName="groceryDBModel.OrderItems">
         <MappingFragment StoreEntitySet="OrderItems">
-          <ScalarProperty Name="id" ColumnName="id" />
-          <ScalarProperty Name="orderID" ColumnName="orderID" />
-          <ScalarProperty Name="productID" ColumnName="productID" />
-          <ScalarProperty Name="quantity" ColumnName="quantity" />
           <ScalarProperty Name="price" ColumnName="price" />
+          <ScalarProperty Name="quantity" ColumnName="quantity" />
+          <ScalarProperty Name="productID" ColumnName="productID" />
+          <ScalarProperty Name="orderID" ColumnName="orderID" />
+          <ScalarProperty Name="id" ColumnName="id" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="Orders">
       <EntityTypeMapping TypeName="groceryDBModel.Orders">
         <MappingFragment StoreEntitySet="Orders">
-          <ScalarProperty Name="id" ColumnName="id" />
-          <ScalarProperty Name="userID" ColumnName="userID" />
-          <ScalarProperty Name="status" ColumnName="status" />
           <ScalarProperty Name="totalPrice" ColumnName="totalPrice" />
+          <ScalarProperty Name="status" ColumnName="status" />
+          <ScalarProperty Name="userID" ColumnName="userID" />
+          <ScalarProperty Name="id" ColumnName="id" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -84,10 +84,10 @@
       <EntityTypeMapping TypeName="groceryDBModel.Products">
         <MappingFragment StoreEntitySet="Products">
           <ScalarProperty Name="imageURL" ColumnName="imageURL" />
-          <ScalarProperty Name="id" ColumnName="id" />
-          <ScalarProperty Name="name" ColumnName="name" />
-          <ScalarProperty Name="price" ColumnName="price" />
           <ScalarProperty Name="categoryID" ColumnName="categoryID" />
+          <ScalarProperty Name="price" ColumnName="price" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="id" ColumnName="id" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -96,23 +96,25 @@
         <MappingFragment StoreEntitySet="Stores">
           <ScalarProperty Name="description" ColumnName="description" />
           <ScalarProperty Name="imageURL" ColumnName="imageURL" />
-          <ScalarProperty Name="id" ColumnName="id" />
-          <ScalarProperty Name="name" ColumnName="name" />
           <ScalarProperty Name="cityID" ColumnName="cityID" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="id" ColumnName="id" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="Users">
       <EntityTypeMapping TypeName="groceryDBModel.Users">
         <MappingFragment StoreEntitySet="Users">
-          <ScalarProperty Name="id" ColumnName="id" />
-          <ScalarProperty Name="name" ColumnName="name" />
-          <ScalarProperty Name="email" ColumnName="email" />
-          <ScalarProperty Name="password" ColumnName="password" />
-          <ScalarProperty Name="phone" ColumnName="phone" />
-          <ScalarProperty Name="address" ColumnName="address" />
-          <ScalarProperty Name="cityID" ColumnName="cityID" />
+          <ScalarProperty Name="lastName" ColumnName="lastName" />
+          <ScalarProperty Name="firstName" ColumnName="firstName" />
+          <ScalarProperty Name="roles" ColumnName="roles" />
           <ScalarProperty Name="cartID" ColumnName="cartID" />
+          <ScalarProperty Name="cityID" ColumnName="cityID" />
+          <ScalarProperty Name="address" ColumnName="address" />
+          <ScalarProperty Name="phone" ColumnName="phone" />
+          <ScalarProperty Name="password" ColumnName="password" />
+          <ScalarProperty Name="email" ColumnName="email" />
+          <ScalarProperty Name="id" ColumnName="id" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

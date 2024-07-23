@@ -25,7 +25,6 @@ namespace GroceryDeliverySystem
                 defaults: new { controller = "Store", action = "Index" }
             );
 
-
             routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
