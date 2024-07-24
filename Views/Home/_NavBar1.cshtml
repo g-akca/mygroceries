@@ -1,0 +1,104 @@
+﻿@using GroceryDeliverySystem.Models;
+@model List<CartItems>
+
+<!DOCTYPE html>
+<head>
+    <style>
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #f1f1f1;
+            width: 300px; /* Adjust width as needed */
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            z-index: 1;
+            padding: 10px; /* Add padding for spacing */
+        }
+
+        .dropdown-content a {
+            color: black;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+        }
+
+            .dropdown-content a:hover {
+                background-color: #ddd;
+            }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+
+        .dropdown:hover .dropbtn {
+            background-color: #3e8e41;
+        }
+
+        .shopping-cart-item {
+            display: flex;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px solid #ddd; /* Optional: Add a border between items */
+        }
+
+            .shopping-cart-item img {
+                width: 80px; /* Adjust image size */
+                height: auto;
+                margin-right: 10px; /* Add spacing between image and text */
+            }
+
+        .item-details {
+            flex: 1; /* Allow item details to take remaining space */
+        }
+
+        .item-name {
+            display: block; /* Ensure each detail is on a new line */
+            font-weight: bold; /* Optionally bold item name */
+        }
+
+        .button {
+            display: block;
+            text-align: center;
+            background-color: #3e8e41;
+            color: white;
+            padding: 10px 0;
+            text-decoration: none;
+            border-radius: 5px;
+            margin-top: 10px;
+        }
+
+            .button:hover {
+                background-color: #357b36;
+            }
+    </style>
+</head>
+
+<div class="dropdown">
+    <form class="d-flex me-2" action="/Cart/Index/" method="get">
+        <button class="btn btn-outline-dark dropbtn" href="/Cart/Index/">
+            <i class="bi-cart-fill me-1"></i>
+            Cart
+            <span class="badge bg-dark text-white ms-1 rounded-pill">@Model.Count</span>
+        </button>
+    </form>
+    <div class="dropdown-content">
+        @foreach (var item in Model)
+        {
+            <div class="shopping-cart-item clearfix">
+                @if (!string.IsNullOrEmpty(item.Products.imageURL))
+                {
+                    <img class="card-img-top" src="@item.Products.imageURL" alt="..." />
+                }
+                else
+                {
+                    <img class="card-img-top" src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg" alt="..." />
+                }
+                <div class="item-details">
+                    <span class="item-name">@item.Products.name</span>
+                    <span class="item-price">@item.price</span>
+                    <span class="item-quantity">@item.quantity</span>
+                </div>
+            </div>
+        }
+        <a href="#" class="button">Checkout</a>
+    </div>
+</div>

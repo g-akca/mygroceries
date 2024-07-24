@@ -1,0 +1,200 @@
+﻿@using GroceryDeliverySystem.Models
+@model List<Cities>
+
+@{
+    ViewBag.Title = "Cities";
+}
+
+@section head {
+    <style>
+        .error {
+            color: red;
+        }
+    </style>
+}
+
+@section body {
+    <!-- The Modal -->
+    <div class="modal" id="deleteModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">Delete City</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <p class="message"></p>
+                    <p class="error"></p>
+                </div>
+
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-danger cityDel">Delete</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="addModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">Add City</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <form action="/Panel/AddCity/" method="post" id="form1">
+                        <label>Name</label>
+                        <input type="text" class="form-control" name="name" id="name1" placeholder="Enter city name" required />
+                    </form>
+                </div>
+
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-primary cityAdd" form="form1">Add</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="updateModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">Update City</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <form action="/Panel/AddCity/" method="post" id="form2">
+                        <input type="hidden" class="form-control" name="id" id="id" />
+
+                        <label>Name</label>
+                        <input type="text" class="form-control" name="name" id="name2" placeholder="Enter city name" required />
+                    </form>
+                    <p class="message"></p>
+                </div>
+
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-primary cityUpd" form="form2">Update</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+}
+
+<div class="container mt-4">
+    <div class="row">
+        <div style="width:20%;">
+            <div class="sidemenu__categories">
+                <div class="sidemenu__categories__title">
+                    <span>Management Panel</span>
+                </div>
+                <ul>
+                    @if (User.IsInRole("A"))
+                    {
+                        <li><a href="/Panel/Users/">Users</a></li>
+                        <li><a href="/Panel/Couriers/">Couriers</a></li>
+                        <li><a href="/Panel/Cities/">Cities</a></li>
+                    }
+                    <li><a href="/Panel/Stores/">Stores</a></li>
+                    <li><a href="/Panel/Categories/">Categories</a></li>
+                    <li><a href="/Panel/Products/">Products</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="col-lg-9">
+            <h2>City Details</h2>
+            <div>
+                <a class="btn btn-success rounded-2" data-bs-toggle="modal" data-bs-target="#addModal"> Add New City </a>
+            </div>
+            <div>
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th> ID </th>
+                            <th> Name </th>
+                            <th> Delete </th>
+                            <th> Update </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (Cities c in Model)
+                        {
+                            <tr>
+                                <td> @c.id </td>
+                                <td> @c.name </td>
+                                <td> <a class="btn btn-danger delModal" data-cID="@c.id" data-name="@c.name" data-bs-toggle="modal" data-bs-target="#deleteModal"> Delete </a> </td>
+                                <td> <a class="btn btn-info updCity" data-cID="@c.id" data-name="@c.name" data-bs-toggle="modal" data-bs-target="#updateModal"> Update </a> </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts{
+    <script src="~/Shared/js/jquery-3.7.1.min.js"></script>
+    <script>
+        $(".delModal").click(
+            function () {
+                var id = $(this).attr("data-cID");
+                var name = $(this).attr("data-name");
+                $(".modal-body > p.message").html("Should the city<strong> " + name + " </strong>with the ID<strong> " + id + " </strong>get deleted?");
+                $(".cityDel").data("cID", id);
+            }
+        );
+
+        $(".cityDel").click(
+            function () {
+                var id = $(this).data("cID");
+                $.ajax(
+                    {
+                        type: "POST",
+                        url: "/Panel/DeleteCity/" + id,
+                        success: function (result) {
+                            if (result == "successful") {
+                                window.location.replace("/Panel/Cities/");
+                            }
+                            else {
+                                $(".modal-body > p.error").html("An error occurred");
+                            }
+                        }
+                    }
+                )
+            }
+        );
+
+        $(".updCity").click(
+            function () {
+                var id = $(this).attr("data-cID");
+                var name = $(this).attr("data-name");
+
+                $(".modal-body #id").val(id);
+                $(".modal-body #name2").val(name);
+            }
+        );
+
+    </script>
+}
+

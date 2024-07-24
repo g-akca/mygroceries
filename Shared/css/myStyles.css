@@ -1,0 +1,46 @@
+﻿.sidemenu {
+    padding-bottom: 50px;
+}
+
+.sidemenu__categories__title {
+    background: #7fad39;
+    position: relative;
+    padding: 10px 25px 10px 40px;
+    cursor: pointer;
+}
+
+    .sidemenu__categories__title i {
+        font-size: 16px;
+        color: #ffffff;
+        margin-right: 10px;
+    }
+
+    .sidemenu__categories__title span {
+        font-size: 18px;
+        font-weight: 700;
+        color: #ffffff;
+    }
+
+.sidemenu__categories {
+    background-color: #f1f1f1;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+}
+
+    .sidemenu__categories ul {
+        border: 1px solid #ebebeb;
+        padding-left: 40px;
+        padding-top: 10px;
+        padding-bottom: 12px;
+    }
+
+        .sidemenu__categories ul li {
+            list-style: none;
+        }
+
+            .sidemenu__categories ul li a {
+                font-size: 16px;
+                color: #1c1c1c;
+                line-height: 39px;
+                display: block;
+                text-decoration: none;
+            }

@@ -18,6 +18,7 @@ namespace GroceryDeliverySystem.Models
         public Stores()
         {
             this.Categories = new HashSet<Categories>();
+            this.Users = new HashSet<Users>();
         }
     
         public int id { get; set; }
@@ -29,5 +30,7 @@ namespace GroceryDeliverySystem.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Categories> Categories { get; set; }
         public virtual Cities Cities { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Users> Users { get; set; }
     }
 }

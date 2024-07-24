@@ -1,0 +1,220 @@
+﻿@using GroceryDeliverySystem.Models
+@model List<Categories>
+
+@{
+    ViewBag.Title = "Categories";
+}
+
+@section head {
+    <style>
+        .error {
+            color: red;
+        }
+    </style>
+}
+
+@section body {
+    <!-- The Modal -->
+    <div class="modal" id="deleteModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">Delete Category</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <p class="message"></p>
+                    <p class="error"></p>
+                </div>
+
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-danger ctgDel">Delete</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="addModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">Add Category</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <form action="/Panel/AddCategory/" method="post" id="form1">
+                        <label>Name</label>
+                        <input type="text" class="form-control" name="name" id="name1" placeholder="Enter name" required />
+
+                        <label>Store ID</label>
+                        <input type="number" class="form-control" name="storeID" id="storeID1" placeholder="Enter store ID" required />
+
+                        <label>Image URL (Optional)</label>
+                        <input type="text" class="form-control" name="imageURL" id="imageURL1" placeholder="Enter image URL" />
+                    </form>
+                </div>
+
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-primary ctgAdd" form="form1">Add</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="updateModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">Update Category</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <form action="/Panel/AddCategory/" method="post" id="form2">
+                        <input type="hidden" class="form-control" name="id" id="id" />
+
+                        <label>Name</label>
+                        <input type="text" class="form-control" name="name" id="name2" placeholder="Enter name" required />
+
+                        <label>Store ID</label>
+                        <input type="number" class="form-control" name="storeID" id="storeID2" placeholder="Enter store ID" required />
+
+                        <label>Image URL (Optional)</label>
+                        <input type="text" class="form-control" name="imageURL" id="imageURL2" placeholder="Enter image URL" />
+                    </form>
+                    <p class="message"></p>
+                </div>
+
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-primary ctgUpd" form="form2">Update</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+}
+
+<div class="container mt-4">
+    <div class="row">
+        <div style="width:20%;">
+            <div class="sidemenu__categories">
+                <div class="sidemenu__categories__title">
+                    <span>Management Panel</span>
+                </div>
+                <ul>
+                    @if (User.IsInRole("A"))
+                    {
+                        <li><a href="/Panel/Users/">Users</a></li>
+                        <li><a href="/Panel/Couriers/">Couriers</a></li>
+                        <li><a href="/Panel/Cities/">Cities</a></li>
+                    }
+                    <li><a href="/Panel/Stores/">Stores</a></li>
+                    <li><a href="/Panel/Categories/">Categories</a></li>
+                    <li><a href="/Panel/Products/">Products</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="col-lg-9">
+            <h2>Category Details</h2>
+            <div>
+                <a class="btn btn-success rounded-2" data-bs-toggle="modal" data-bs-target="#addModal"> Add New Category </a>
+            </div>
+            <div>
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th> ID </th>
+                            <th> Name </th>
+                            <th> Store ID </th>
+                            <th> Image URL </th>
+                            <th> Delete </th>
+                            <th> Update </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (Categories ct in Model)
+                        {
+                            <tr>
+                                <td> @ct.id </td>
+                                <td> @ct.name </td>
+                                <td> @ct.storeID </td>
+                                <td> @ct.imageURL </td>
+                                <td> <a class="btn btn-danger delModal" data-ctID="@ct.id" data-name="@ct.name" data-storeID="@ct.storeID" data-image="@ct.imageURL" data-bs-toggle="modal" data-bs-target="#deleteModal"> Delete </a> </td>
+                                <td> <a class="btn btn-info updCtg" data-ctID="@ct.id" data-name="@ct.name" data-storeID="@ct.storeID" data-image="@ct.imageURL" data-bs-toggle="modal" data-bs-target="#updateModal"> Update </a> </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts{
+    <script src="~/Shared/js/jquery-3.7.1.min.js"></script>
+    <script>
+        $(".delModal").click(
+            function () {
+                var id = $(this).attr("data-ctID");
+                var name = $(this).attr("data-name");
+                $(".modal-body > p.message").html("Should the category<strong> " + name + " </strong>with the ID<strong> " + id + " </strong>get deleted?");
+                $(".ctgDel").data("ctID", id);
+            }
+        );
+
+        $(".ctgDel").click(
+            function () {
+                var id = $(this).data("ctID");
+                $.ajax(
+                    {
+                        type: "POST",
+                        url: "/Panel/DeleteCategory/" + id,
+                        success: function (result) {
+                            if (result == "successful") {
+                                window.location.replace("/Panel/Categories/");
+                            }
+                            else {
+                                $(".modal-body > p.error").html("An error occurred");
+                            }
+                        }
+                    }
+                )
+            }
+        );
+
+        $(".updCtg").click(
+            function () {
+                var id = $(this).attr("data-ctID");
+                var name = $(this).attr("data-name");
+                var storeID = $(this).attr("data-storeID");
+                var image = $(this).attr("data-image");
+
+                $(".modal-body #id").val(id);
+                $(".modal-body #name2").val(name);
+                $(".modal-body #storeID2").val(storeID);
+                $(".modal-body #imageURL2").val(image);
+            }
+        );
+
+    </script>
+}
+

@@ -27,13 +27,13 @@
                                     <div class="col-md-6 mb-4">
                                         <div data-mdb-input-init class="form-outline">
                                             <label>First name</label>
-                                            <input type="text" id="firstName" name="firstName" class="form-control" required />
+                                            <input type="text" id="firstName" name="firstName" class="form-control" maxlength="40" required />
                                         </div>
                                     </div>
                                     <div class="col-md-6 mb-4">
                                         <div data-mdb-input-init class="form-outline">
                                             <label>Last name</label>
-                                            <input type="text" id="lastName" name="lastName" class="form-control" required />
+                                            <input type="text" id="lastName" name="lastName" class="form-control" maxlength="30" required />
                                         </div>
                                     </div>
                                 </div>
@@ -52,8 +52,8 @@
 
                                 <!-- Password input -->
                                 <div data-mdb-input-init class="form-outline mb-4">
-                                    <label>Password</label>
-                                    <input type="password" id="password" name="password" class="form-control" required />
+                                    <label>Password (4 to 20 characters)</label>
+                                    <input type="password" id="password" name="password" pattern=".{4,20}" class="form-control" required />
                                 </div>
 
                                 <!-- Checkbox -->

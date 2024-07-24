@@ -1,0 +1,236 @@
+﻿@using GroceryDeliverySystem.Models
+@model List<DeliveryPerson>
+
+@{
+    ViewBag.Title = "Couriers";
+}
+
+@section head {
+    <style>
+        .error {
+            color: red;
+        }
+    </style>
+}
+
+@section body {
+    <!-- The Modal -->
+    <div class="modal" id="deleteModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">Delete Courier</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <p class="message"></p>
+                    <p class="error"></p>
+                </div>
+
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-danger courDel">Delete</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="addModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">Add Courier</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <form action="/Panel/AddCourier/" method="post" id="form1">
+                        <label>Name</label>
+                        <input type="text" class="form-control" name="name" id="name1" placeholder="Enter name" required />
+
+                        <label for="phone">Phone number (Optional)</label>
+                        <input type="tel" class="form-control" name="phone" id="phone" pattern="\(\d{3}\)-\d{3}-\d{4}" placeholder="(123)-456-7890" />
+
+                        <label>Status</label>
+                        <input type="text" class="form-control" name="status" id="status1" placeholder="Enter status" required />
+                    </form>
+                </div>
+
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-primary courAdd" form="form1">Add</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="updateModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">Update Courier</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <form action="/Panel/AddCourier/" method="post" id="form2">
+                        <input type="hidden" class="form-control" name="id" id="id" />
+
+                        <label>Name</label>
+                        <input type="text" class="form-control" name="name" id="name2" placeholder="Enter name" required />
+
+                        <label for="phone">Phone number (Optional)</label>
+                        <input type="tel" class="form-control phone-upd" name="phone" id="phone" pattern="\(\d{3}\)-\d{3}-\d{4}" placeholder="(123)-456-7890" />
+
+                        <label>Status</label>
+                        <input type="text" class="form-control" name="status" id="status2" placeholder="Enter status" required />
+                    </form>
+                    <p class="message"></p>
+                </div>
+
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-primary courUpd" form="form2">Update</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+}
+
+<div class="container mt-4">
+    <div class="row">
+        <div style="width:20%;">
+            <div class="sidemenu__categories">
+                <div class="sidemenu__categories__title">
+                    <span>Management Panel</span>
+                </div>
+                <ul>
+                    @if (User.IsInRole("A"))
+                    {
+                        <li><a href="/Panel/Users/">Users</a></li>
+                        <li><a href="/Panel/Couriers/">Couriers</a></li>
+                        <li><a href="/Panel/Cities/">Cities</a></li>
+                    }
+                    <li><a href="/Panel/Stores/">Stores</a></li>
+                    <li><a href="/Panel/Categories/">Categories</a></li>
+                    <li><a href="/Panel/Products/">Products</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="col-lg-9">
+            <h2>Courier Details</h2>
+            <div>
+                <a class="btn btn-success rounded-2" data-bs-toggle="modal" data-bs-target="#addModal"> Add New Courier </a>
+            </div>
+            <div>
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th> ID </th>
+                            <th> Name </th>
+                            <th> Phone </th>
+                            <th> Status </th>
+                            <th> Delete </th>
+                            <th> Update </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (DeliveryPerson dp in Model)
+                        {
+                            <tr>
+                                <td> @dp.id </td>
+                                <td> @dp.name </td>
+                                <td> @dp.phone </td>
+                                <td> @dp.status  </td>
+                                <td> <a class="btn btn-danger delModal" data-dpID="@dp.id" data-name="@dp.name" data-phone="@dp.phone" data-status="@dp.status" data-bs-toggle="modal" data-bs-target="#deleteModal"> Delete </a> </td>
+                                <td> <a class="btn btn-info updCour" data-dpID="@dp.id" data-name="@dp.name" data-phone="@dp.phone" data-status="@dp.status" data-bs-toggle="modal" data-bs-target="#updateModal"> Update </a> </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts{
+    <script src="~/Shared/js/jquery-3.7.1.min.js"></script>
+    <script>
+        $(".delModal").click(
+            function () {
+                var id = $(this).attr("data-dpID");
+                var name = $(this).attr("data-name");
+                $(".modal-body > p.message").html("Should the courier<strong> " + name + " </strong>with the ID<strong> " + id + " </strong>get deleted?");
+                $(".courDel").data("dpID", id);
+            }
+        );
+
+        $(".courDel").click(
+            function () {
+                var id = $(this).data("dpID");
+                $.ajax(
+                    {
+                        type: "POST",
+                        url: "/Panel/DeleteCourier/" + id,
+                        success: function (result) {
+                            if (result == "successful") {
+                                window.location.replace("/Panel/Couriers/");
+                            }
+                            else {
+                                $(".modal-body > p.error").html("An error occurred");
+                            }
+                        }
+                    }
+                )
+            }
+        );
+
+        $(".updCour").click(
+            function () {
+                var id = $(this).attr("data-dpID");
+                var name = $(this).attr("data-name");
+                var phone = $(this).attr("data-phone");
+                var status = $(this).attr("data-status");
+
+                $(".modal-body #id").val(id);
+                $(".modal-body #name2").val(name);
+                $(".modal-body .phone-upd").val(phone);
+                $(".modal-body #status2").val(status);
+            }
+        );
+
+        document.addEventListener('DOMContentLoaded', function () {
+            const phoneInput = document.getElementById('phone');
+
+            phoneInput.addEventListener('input', function () {
+                let input = phoneInput.value.replace(/\D/g, ''); // Remove non-digit characters
+                if (input.length > 6) {
+                    input = `(${input.slice(0, 3)})-${input.slice(3, 6)}-${input.slice(6, 10)}`;
+                } else if (input.length > 3) {
+                    input = `(${input.slice(0, 3)})-${input.slice(3)}`;
+                } else if (input.length > 0) {
+                    input = `(${input}`;
+                }
+                phoneInput.value = input;
+            });
+        });
+
+    </script>
+}
+

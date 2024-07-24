@@ -80,5 +80,27 @@ namespace GroceryDeliverySystem.Controllers
                 return View();
             }
         }
+
+        [HttpGet]
+        [ChildActionOnly]
+        [Authorize]
+        public ActionResult NavBar1()
+        {
+            var userEmail = User.Identity.Name;
+            var user = gdb.Users.FirstOrDefault(u => u.email == userEmail);
+            var cart = gdb.Carts.FirstOrDefault(c => c.userID == user.id);
+            var cartItems = gdb.CartItems.Where(x => x.cartID == cart.id).ToList();
+            return PartialView("_NavBar1", cartItems);
+        }
+
+        [HttpGet]
+        [ChildActionOnly]
+        [Authorize]
+        public ActionResult NavBar2()
+        {
+            var userEmail = User.Identity.Name;
+            var user = gdb.Users.FirstOrDefault(u => u.email == userEmail);
+            return PartialView("_NavBar2", user);
+        }
     }
 }
