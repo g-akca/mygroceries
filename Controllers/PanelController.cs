@@ -24,7 +24,7 @@ namespace GroceryDeliverySystem.Controllers
         [Authorize(Roles = "A")]
         public ActionResult Couriers()
         {
-            return View(gdb.DeliveryPerson.ToList());
+            return View(gdb.Drivers.ToList());
         }
 
         [Authorize(Roles = "A")]
@@ -151,10 +151,10 @@ namespace GroceryDeliverySystem.Controllers
         [HttpPost]
         public string DeleteCourier(int id)
         {
-            DeliveryPerson cour = gdb.DeliveryPerson.FirstOrDefault(x => x.id == id);
+            Drivers cour = gdb.Drivers.FirstOrDefault(x => x.id == id);
             try
             {
-                gdb.DeliveryPerson.Remove(cour);
+                gdb.Drivers.Remove(cour);
                 gdb.SaveChanges();
                 return "successful";
             }
@@ -166,9 +166,9 @@ namespace GroceryDeliverySystem.Controllers
 
         [Authorize(Roles = "A")]
         [HttpPost]
-        public ActionResult AddCourier(DeliveryPerson cour)
+        public ActionResult AddCourier(Drivers cour)
         {
-            gdb.DeliveryPerson.AddOrUpdate(cour);
+            gdb.Drivers.AddOrUpdate(cour);
             gdb.SaveChanges();
             return RedirectToAction("Couriers");
         }

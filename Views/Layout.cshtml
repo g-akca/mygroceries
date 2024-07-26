@@ -9,7 +9,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <meta name="description" content="" />
     <meta name="author" content="" />
-    <title>Shop Homepage - Start Bootstrap Template</title>
+    <title>MyGroceries - Grocery Delivery</title>
     <!-- Favicon-->
     <link rel="icon" type="image/x-icon" href="~/Shared/assets/favicon.ico" />
     <!-- Bootstrap icons-->
@@ -51,9 +51,7 @@
                 </ul>
                 @if (User.Identity.IsAuthenticated)
                 {
-                    <div id="navbar-container">
-                        @Html.Action("NavBar1", "Home")
-                    </div>
+                    @Html.Action("NavBar1", "Home")
                 }
                 else
                 {
@@ -96,6 +94,7 @@
                     data: { cartitemID: cartitemID },
                     success: function () {
                         updateCartDropdown();
+                        updateCart();
                     }
                 });
             });
@@ -112,6 +111,9 @@
                     // Update only the dropdown content part
                     $('.dropdown-content').html($(result).find('.dropdown-content').html());
 
+                    // Update the cart count badge
+                    $('.btn-outline-dark .badge').html($(result).find('.btn-outline-dark .badge').html());
+
                     attachEventHandlers();
 
                     // Restore the dropdown open state
@@ -121,6 +123,22 @@
                 }
             });
         }
+
+        document.addEventListener('DOMContentLoaded', function () {
+            const phoneInput = document.getElementById('phone');
+
+            phoneInput.addEventListener('input', function () {
+                let input = phoneInput.value.replace(/\D/g, ''); // Remove non-digit characters
+                if (input.length > 6) {
+                    input = `(${input.slice(0, 3)})-${input.slice(3, 6)}-${input.slice(6, 10)}`;
+                } else if (input.length > 3) {
+                    input = `(${input.slice(0, 3)})-${input.slice(3)}`;
+                } else if (input.length > 0) {
+                    input = `(${input}`;
+                }
+                phoneInput.value = input;
+            });
+        });
     </script>
 </body>
 </html>

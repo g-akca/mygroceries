@@ -62,12 +62,26 @@ create table CartItems (
 	[price]			decimal (10,2)	NOT NULL
 );
 
+create table Drivers ( 
+	[id]			int				IDENTITY (1,1) PRIMARY KEY NOT NULL,
+	[name]			nvarchar(255)	NOT NULL,
+	[phone]			nvarchar(255)	NOT NULL
+);
+
 create table Orders (
 	[id]			int				IDENTITY (1,1) PRIMARY KEY NOT NULL,
 	[userID]		int				NOT NULL FOREIGN KEY REFERENCES Users(id),
+	[storeID]		int				NOT NULL FOREIGN KEY REFERENCES Stores(id),
+	[driverID]		int				NOT NULL FOREIGN KEY REFERENCES Drivers(id),
 	[status]		nvarchar(50)	NOT NULL,
 	[totalPrice]	decimal (10,2)	NOT NULL,
-	[date]			datetime		NULL
+	[date]			datetime		NULL,
+	[firstName]		nvarchar(255)	NOT NULL,
+	[lastName]		nvarchar(255)	NOT NULL,
+	[address]		nvarchar(255)	NOT NULL,
+	[email]			nvarchar(75)	NOT NULL,
+	[phone]			nvarchar(20)	NULL,
+	[cityID]		int				NOT NULL FOREIGN KEY REFERENCES Cities(id)
 );
 
 create table OrderItems ( 
@@ -76,21 +90,6 @@ create table OrderItems (
 	[productID]		int				NOT NULL FOREIGN KEY REFERENCES Products(id),
 	[quantity]		int				NOT NULL,
 	[price]			decimal (10,2)	NOT NULL
-);
-
-create table DeliveryPerson (
-	[id]			int				IDENTITY (1,1) PRIMARY KEY NOT NULL,
-	[name]			nvarchar(255)	NOT NULL,
-	[phone]			nvarchar(20)	NULL,
-	[status]		nvarchar(50)	NOT NULL
-);
-
-create table Deliveries (
-	[id]			int				IDENTITY (1,1) PRIMARY KEY NOT NULL,
-	[orderID]		int				NOT NULL FOREIGN KEY REFERENCES Orders(id),
-	[delPersonID]	int				NOT NULL FOREIGN KEY REFERENCES DeliveryPerson(id),
-	[status]		nvarchar(50)	NOT NULL,
-	[deliveryTime]	timestamp		NULL
 );
 
 insert into Cities (name)
@@ -121,5 +120,5 @@ values ('Snacks', 1)
 insert into Products (name, price, categoryID)
 values ('Ketchup Flavoured Potato Chips', 35, 1)
 
-insert into CartItems (cartID, productID, quantity, price)
-values (1, 1, 2, 70)
+insert into Drivers (name, phone)
+values ('Test Driver', '(468)-511-8464')

@@ -156,7 +156,7 @@
                         <input type="email" class="form-control" name="email" id="email2" placeholder="example@email.com" required />
 
                         <label for="phone">Phone number (Optional)</label>
-                        <input type="tel" class="form-control phone-upd" name="phone" id="phone" pattern="\(\d{3}\)-\d{3}-\d{4}" placeholder="(123)-456-7890" />
+                        <input type="tel" class="form-control phone-upd" name="phone" id="phone2" pattern="\(\d{3}\)-\d{3}-\d{4}" placeholder="(123)-456-7890" />
 
                         <label>Password (4 to 20 characters)</label>
                         <input type="password" class="form-control" name="password" id="password2" pattern=".{4,20}" required />
@@ -329,7 +329,7 @@
                 $(".modal-body #firstName2").val(firstname);
                 $(".modal-body #lastName2").val(lastname);
                 $(".modal-body #email2").val(email);
-                $(".modal-body .phone-upd").val(phone);
+                $(".modal-body #phone2").val(phone);
                 $(".modal-body #password2").val(password);
                 $(".modal-body #address2").val(address);
                 $(".modal-body #cityID2").val(cityID);
@@ -340,7 +340,7 @@
         );
 
         document.addEventListener('DOMContentLoaded', function () {
-            const phoneInput = document.getElementById('phone');
+            const phoneInput = document.getElementById('phone2');
 
             phoneInput.addEventListener('input', function () {
                 let input = phoneInput.value.replace(/\D/g, ''); // Remove non-digit characters

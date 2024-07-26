@@ -1,14 +1,169 @@
-﻿@using GroceryDeliverySystem.Models;
+﻿@using GroceryDeliverySystem.Models
+@using System.Linq
+
 @model List<CartItems>
+
 @{
-    ViewBag.Title = "Index";
+    decimal totalPrice = Model.Sum(item => item.price);
 }
 
-<h2>Cart</h2>
+<head>
+    <style>
+        .cart-page {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
 
-@foreach (var item in Model)
-{
-    <p>@item.Products.name</p>
-    <p>@item.price</p>
+        .cart-item {
+            display: flex;
+            align-items: center;
+            padding: 15px;
+            border-bottom: 1px solid #ddd;
+            margin-bottom: 10px;
+        }
+
+            .cart-item img {
+                width: 100px; /* Adjust the image size */
+                height: auto;
+                margin-right: 15px;
+            }
+
+        .item-details {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+        }
+
+        .item-info {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+        }
+
+        .item-name {
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .item-product-price {
+            color: #888;
+            margin-bottom: 10px;
+        }
+
+        .item-price {
+            margin-right: 15px;
+            font-weight: bold;
+        }
+
+        .quantity-controls {
+            display: flex;
+            align-items: center;
+        }
+
+            .quantity-controls button {
+                background-color: #3e8e41;
+                color: white;
+                border: none;
+                padding: 5px 10px;
+                cursor: pointer;
+                font-size: 16px;
+                margin: 0 5px;
+            }
+
+                .quantity-controls button:hover {
+                    background-color: #357b36;
+                }
+
+            .quantity-controls span {
+                margin: 0 10px;
+                font-size: 16px;
+                font-weight: bold;
+            }
+
+        .total-price {
+            margin-top: 20px;
+            font-weight: bold;
+            padding: 15px;
+            background-color: #f1f1f1;
+            text-align: right;
+            margin-bottom: 10px;
+        }
+
+        .checkout-button {
+            display: block;
+            text-align: center;
+            margin-top: 10px;
+            margin: 0 auto;
+            width: 200px;
+            padding: 10px;
+            background-color: #3e8e41;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+            .checkout-button:hover {
+                background-color: #357b36;
+            }
+    </style>
+</head>
+
+<div class="container cart-page">
+    <h1 class="mt-3 mb-4">Your Cart</h1>
+    @if (Model.Any())
+    {
+        <div class="cart-items">
+            @foreach (var item in Model)
+            {
+                <div class="cart-item">
+                    @if (!string.IsNullOrEmpty(item.Products.imageURL))
+                    {
+                        <img src="@item.Products.imageURL" alt="Product Image" />
+                    }
+                    else
+                    {
+                        <img src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg" alt="Placeholder Image" />
+                    }
+                    <div class="item-details">
+                        <div class="item-info">
+                            <div class="item-name">@item.Products.name</div>
+                            <div class="item-product-price">@item.Products.price TL</div>
+                        </div>
+                        <div class="item-price">@item.price TL</div>
+                        <div class="quantity-controls">
+                            <button type="button" class="qbutton" data-action="reduce" data-itemID="@item.id">-</button>
+                            <span id="quantity-@item.id" class="quantity">@item.quantity</span>
+                            <button type="button" class="qbutton" data-action="add" data-itemID="@item.id">+</button>
+                        </div>
+                    </div>
+                </div>
+            }
+            <div class="total-price">Total: @totalPrice TL</div>
+            <button onclick="window.location.href='/Cart/Checkout/'" class="checkout-button">Proceed to Checkout</button>
+        </div>
+    }
+    else
+    {
+        <p>Your cart is empty.</p>
+    }
+</div>
+
+@section scripts {
+    <script src="~/Shared/js/jquery-3.7.1.min.js"></script>
+    <script>
+        function updateCart() {
+            $.ajax({
+                url: '@Url.Action("Index", "Cart")',
+                type: 'GET',
+                success: function (result) {
+                    $('.cart-items').html($(result).find('.cart-items').html());
+                    $('.total-price').html($(result).find('.total-price').html());
+
+                    attachEventHandlers();
+                }
+            });
+        }
+    </script>
 }
-

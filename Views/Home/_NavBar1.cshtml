@@ -7,6 +7,8 @@
     Users user = ViewBag.User;
     List<Cities> cities = ViewBag.Cities;
     decimal totalPrice = Model.Sum(item => item.price);
+    var currentUrl = Request.Url.AbsolutePath;
+    var isCartPage = currentUrl.Contains("/Cart");
 }
 
 <!DOCTYPE html>
@@ -112,6 +114,7 @@
 
         .item-price {
             text-align: right; /* Align price to the right */
+            white-space: nowrap; /* Prevent wrapping */
         }
 
         .quantity-controls {
@@ -145,12 +148,26 @@
             padding: 10px;
             background-color: #f1f1f1;
         }
+
+        .badge {
+            padding-left: 9px;
+            padding-right: 9px;
+        }
+
+        #lblCartCount {
+            font-size: 12px;
+            background: #3e8e41;
+            color: #fff;
+            padding: 0 5px;
+            vertical-align: top;
+            margin-left: -10px;
+        }
     </style>
 </head>
 
 <div>
     <button class="btn btn-outline-dark dropbtn me-2">
-        <i class="bi-geo-alt me-1"></i>
+        <i class="bi-geo-alt-fill me-1"></i>
         @if (cities.FirstOrDefault(x => x.id == user.cityID) != null)
         {
             @cities.FirstOrDefault(x => x.id == user.cityID).name
@@ -162,44 +179,52 @@
     </button>
 </div>
 
-<div class="dropdown">
-    <form class="d-flex me-2" action="/Cart/Index/" method="get">
-        <button class="btn btn-outline-dark dropbtn" href="/Cart/Index/">
-            <i class="bi-cart-fill me-1"></i>
-            Cart
-            <span class="badge bg-dark text-white ms-1 rounded-pill">@Model.Count</span>
-        </button>
-    </form>
-    <div class="dropdown-content">
-        @foreach (var item in Model)
-        {
-            <div class="shopping-cart-item clearfix">
-                @if (!string.IsNullOrEmpty(item.Products.imageURL))
-                {
-                    <img class="card-img-top" src="@item.Products.imageURL" alt="..." />
-                }
-                else
-                {
-                    <img class="card-img-top" src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg" alt="..." />
-                }
-                <div class="item-details">
-                    <span class="item-name">@item.Products.name</span>
-                    <span class="item-price">$@item.price</span>
-                    <div class="quantity-controls">
-                        <button type="button" class="qbutton" data-itemID="@item.id" data-action="reduce">-</button>
-                        <span id="quantity-@item.id" class="quantity">@item.quantity</span>
-                        <button type="button" class="qbutton" data-itemID="@item.id" data-action="add">+</button>
+@if (!isCartPage)
+{
+    <div class="dropdown">
+        <form class="d-flex me-2" action="/Cart/Index/" method="get">
+            <button class="btn btn-outline-dark dropbtn" href="/Cart/Index/">
+                <i class="bi-cart-fill"></i>
+                <span class="badge text-white" id='lblCartCount'>@Model.Count</span>
+                Cart
+                <i class="bi-chevron-down ms-1"></i>
+            </button>
+        </form>
+        <div class="dropdown-content">
+            @foreach (var item in Model)
+            {
+                <div class="shopping-cart-item clearfix">
+                    @if (!string.IsNullOrEmpty(item.Products.imageURL))
+                    {
+                        <img class="card-img-top" src="@item.Products.imageURL" alt="..." />
+                    }
+                    else
+                    {
+                        <img class="card-img-top" src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg" alt="..." />
+                    }
+                    <div class="item-details">
+                        <span class="item-name">@item.Products.name</span>
+                        <span class="item-price">@item.price TL</span>
+                        <div class="quantity-controls">
+                            <button type="button" class="qbutton" data-itemID="@item.id" data-action="reduce">-</button>
+                            <span id="quantity-@item.id" class="quantity">@item.quantity</span>
+                            <button type="button" class="qbutton" data-itemID="@item.id" data-action="add">+</button>
+                        </div>
                     </div>
                 </div>
-            </div>
-        }
-        <div class="total-price">Total: $@totalPrice</div>
-        <a href="#" class="button">Checkout</a>
+            }
+            <div class="total-price">Total: @totalPrice TL</div>
+            <a href="/Cart/Checkout/" class="button">Checkout</a>
+        </div>
     </div>
-</div>
+}
 
 <div class="dropdown">
-    <button class="btn btn-outline-dark dropbtn">Hello, @user.firstName</button>
+    <button class="btn btn-outline-dark dropbtn">
+        <i class="bi-person-circle me-1"></i>
+        Hello, @user.firstName
+        <i class="bi-chevron-down ms-1"></i>
+    </button>
     <div class="dropdown-content2">
         <a href="/Account/Settings/">Account Settings</a>
         <a href="/Account/Orders/">Past Orders</a>

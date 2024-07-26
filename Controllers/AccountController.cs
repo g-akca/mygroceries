@@ -32,7 +32,7 @@ namespace GroceryDeliverySystem.Controllers
 
         public ActionResult GetOrderItems(int orderId)
         {
-            var orderItems = gdb.OrderItems.Where(oi => oi.orderID == orderId).ToList();
+            var orderItems = gdb.OrderItems.Where(o => o.orderID == orderId).ToList();
             return PartialView("_OrderItemsPartial", orderItems);
         }
 

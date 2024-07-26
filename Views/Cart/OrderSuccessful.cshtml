@@ -1,0 +1,167 @@
+﻿@using GroceryDeliverySystem.Models
+@model Orders
+
+@{
+    List<OrderItems> oi = ViewBag.OrderItems;
+    string cityName = ViewBag.CityName;
+}
+
+<head>
+    <style>
+        .checkout-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            margin-top: 20px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            background-color: #f9f9f9;
+        }
+
+        .checkout-header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .checkout-section {
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        .section-divider {
+            border-top: 1px solid #ddd;
+            margin: 15px 0; /* Adjust spacing as needed */
+        }
+
+        .checkout-section h3 {
+            margin-bottom: 10px;
+        }
+
+        .checkout-section .cart-item {
+            display: flex;
+            align-items: center; /* Vertically align items */
+            justify-content: space-between; /* Space items evenly */
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+            gap: 10px; /* Add space between columns */
+        }
+
+            .checkout-section .cart-item img {
+                width: 80px;
+                height: auto;
+                margin-right: 15px;
+            }
+
+            .checkout-section .cart-item .item-details {
+                flex: 1;
+                display: flex;
+                flex-direction: column; /* Stack name and price vertically */
+                align-items: flex-start; /* Align items to the start */
+            }
+
+                .checkout-section .cart-item .item-details .item-name {
+                    font-weight: bold;
+                }
+
+                .checkout-section .cart-item .item-details .item-price {
+                    color: #888;
+                }
+
+            .checkout-section .cart-item .item-quantity {
+                display: flex;
+                align-items: center;
+                margin-left: auto; /* Push quantity controls to the right */
+            }
+
+                .checkout-section .cart-item .item-quantity span {
+                    margin: 0 10px;
+                    font-size: 16px;
+                }
+
+            .checkout-section .cart-item .item-total {
+                text-align: right;
+                min-width: 100px; /* Ensure total column has enough width */
+            }
+
+        .checkout-section .total-price {
+            text-align: right;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+
+        .checkout-section .place-order-btn {
+            width: 100%;
+            padding: 15px;
+            background-color: #3e8e41;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+            .checkout-section .place-order-btn:hover {
+                background-color: #357b36;
+            }
+    </style>
+</head>
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8 text-center">
+            <div class="card">
+                <div class="card-header bg-success text-white">
+                    <h2>Order Successful</h2>
+                </div>
+                <div class="card-body mt-2">
+                    <p class="lead">Thank you for your order! Your delivery has been successfully processed.</p>
+                    <p>Order Date: <strong>@Model.date</strong></p>
+                    <div class="checkout-section">
+                        <h3>Shipping Information</h3>
+                        <p><strong>First Name:</strong> @Model.firstName</p>
+                        <p><strong>Last Name:</strong> @Model.lastName</p>
+                        <p><strong>Email:</strong> @Model.email</p>
+                        <p><strong>Phone:</strong> @Model.phone</p>
+                        <p><strong>Address:</strong> @Model.address</p>
+                        <p><strong>City:</strong> @cityName</p>
+                    </div>
+                    <!-- Section Divider -->
+                    <div class="section-divider"></div>
+                    <div class="checkout-section">
+                        <h3>Order Details</h3>
+                        @foreach (var item in oi)
+                        {
+                            <div class="cart-item">
+                                @if (!string.IsNullOrEmpty(item.Products.imageURL))
+                                {
+                                    <img src="@item.Products.imageURL" alt="Product Image" />
+                                }
+                                else
+                                {
+                                    <img src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg" alt="Placeholder Image" />
+                                }
+                                <div class="item-details">
+                                    <div class="item-name">@item.Products.name</div>
+                                    <div class="item-price">@item.Products.price TL</div>
+                                </div>
+                                <div class="item-quantity">
+                                    <span>Quantity: @item.quantity</span>
+                                </div>
+                                <div class="item-total">
+                                    @item.price TL
+                                </div>
+                            </div>
+                        }
+                        <div class="total-price">
+                            Total: @Model.totalPrice TL
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <a href="@Url.Action("Index", "Home")" class="btn btn-primary">Continue Shopping</a>
+                    <a href="@Url.Action("Orders", "Account")" class="btn btn-secondary">View Order Details</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

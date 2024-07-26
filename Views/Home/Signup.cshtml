@@ -77,27 +77,4 @@
             </div>
         </div>
     </div>
-    <!-- Jumbotron -->
 </section>
-<!-- Section: Design Block -->
-
-@section Scripts {
-    <script src="~/Shared/js/jquery-3.7.1.min.js"></script>
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            const phoneInput = document.getElementById('phone');
-
-            phoneInput.addEventListener('input', function () {
-                let input = phoneInput.value.replace(/\D/g, ''); // Remove non-digit characters
-                if (input.length > 6) {
-                    input = `(${input.slice(0, 3)})-${input.slice(3, 6)}-${input.slice(6, 10)}`;
-                } else if (input.length > 3) {
-                    input = `(${input.slice(0, 3)})-${input.slice(3)}`;
-                } else if (input.length > 0) {
-                    input = `(${input}`;
-                }
-                phoneInput.value = input;
-            });
-        });
-    </script>
-}

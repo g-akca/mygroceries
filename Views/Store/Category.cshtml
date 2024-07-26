@@ -3,9 +3,20 @@
 
 @{
     List<Categories> Ctg = ViewBag.Categories;
+    Stores store = ViewBag.Store;
+    string categoryName = ViewBag.CategoryName;
 }
 
 <div class="container mt-4">
+    <!-- Breadcrumb navigation -->
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb bg-light p-3 rounded">
+            <li class="breadcrumb-item"><a href="/">Home</a></li>
+                <li class="breadcrumb-item"><a href="/Store/@store.id/">@store.name</a></li>
+                <li class="breadcrumb-item active" aria-current="page">@categoryName</li>
+        </ol>
+    </nav>
+
     <div class="row">
         <!-- Sidebar with categories -->
         <div class="col-md-3">
@@ -16,7 +27,7 @@
                 <ul>
                     @foreach (var ctg in Ctg)
                     {
-                        <li><a href="../@ctg.id/">@ctg.name</a></li>
+                        <li><a href="@Url.Action("Category", "Store", new { id = ctg.id })">@ctg.name</a></li>
                     }
                 </ul>
             </div>
@@ -67,8 +78,12 @@
                         type: "POST",
                         url: "@Url.Action("AddToCart", "Cart")",
                         data: { productID: productID },
-                        success: function () {
-                            updateCartDropdown(); // Update cart dropdown on success
+                        success: function (response) {
+                            if (response.success) {
+                                updateCartDropdown();
+                            } else {
+                                alert(response.message);
+                            }
                         }
                     }
                 )
