@@ -66,7 +66,8 @@ create table Orders (
 	[id]			int				IDENTITY (1,1) PRIMARY KEY NOT NULL,
 	[userID]		int				NOT NULL FOREIGN KEY REFERENCES Users(id),
 	[status]		nvarchar(50)	NOT NULL,
-	[totalPrice]	decimal (10,2)	NOT NULL
+	[totalPrice]	decimal (10,2)	NOT NULL,
+	[date]			datetime		NULL
 );
 
 create table OrderItems ( 

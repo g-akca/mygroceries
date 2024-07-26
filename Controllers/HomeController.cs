@@ -2,6 +2,7 @@
 using GroceryDeliverySystem.Security;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity.Migrations;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Web;
@@ -16,7 +17,16 @@ namespace GroceryDeliverySystem.Controllers
         // GET: Home
         public ActionResult Index()
         {
-            return View(gdb.Stores.ToList());
+            if (User.Identity.IsAuthenticated)
+            {
+                var email = User.Identity.Name;
+                var user = gdb.Users.FirstOrDefault(x => x.email == email);
+                return View(gdb.Stores.Where(x => x.cityID == user.cityID).ToList());
+            }
+            else
+            {
+                return View(gdb.Stores.ToList());
+            }
         }
 
         [HttpGet]
@@ -82,7 +92,6 @@ namespace GroceryDeliverySystem.Controllers
         }
 
         [HttpGet]
-        [ChildActionOnly]
         [Authorize]
         public ActionResult NavBar1()
         {
@@ -90,17 +99,11 @@ namespace GroceryDeliverySystem.Controllers
             var user = gdb.Users.FirstOrDefault(u => u.email == userEmail);
             var cart = gdb.Carts.FirstOrDefault(c => c.userID == user.id);
             var cartItems = gdb.CartItems.Where(x => x.cartID == cart.id).ToList();
-            return PartialView("_NavBar1", cartItems);
-        }
 
-        [HttpGet]
-        [ChildActionOnly]
-        [Authorize]
-        public ActionResult NavBar2()
-        {
-            var userEmail = User.Identity.Name;
-            var user = gdb.Users.FirstOrDefault(u => u.email == userEmail);
-            return PartialView("_NavBar2", user);
+            ViewBag.User = user;
+            ViewBag.Cities = gdb.Cities.ToList();
+
+            return PartialView("_NavBar1", cartItems);
         }
     }
 }

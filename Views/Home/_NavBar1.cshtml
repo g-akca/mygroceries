@@ -1,5 +1,13 @@
 ﻿@using GroceryDeliverySystem.Models;
+@using System.Linq;
+
 @model List<CartItems>
+
+@{
+    Users user = ViewBag.User;
+    List<Cities> cities = ViewBag.Cities;
+    decimal totalPrice = Model.Sum(item => item.price);
+}
 
 <!DOCTYPE html>
 <head>
@@ -8,22 +16,22 @@
             display: none;
             position: absolute;
             background-color: #f1f1f1;
-            width: 300px; /* Adjust width as needed */
+            width: 400px; /* Adjust width as needed */
             box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
             z-index: 1;
             padding: 10px; /* Add padding for spacing */
         }
 
-        .dropdown-content a {
-            color: black;
-            padding: 12px 16px;
-            text-decoration: none;
-            display: block;
-        }
-
-            .dropdown-content a:hover {
-                background-color: #ddd;
+            .dropdown-content a {
+                color: black;
+                padding: 12px 16px;
+                text-decoration: none;
+                display: block;
             }
+
+                .dropdown-content a:hover {
+                    background-color: #ddd;
+                }
 
         .dropdown:hover .dropdown-content {
             display: block;
@@ -31,28 +39,6 @@
 
         .dropdown:hover .dropbtn {
             background-color: #3e8e41;
-        }
-
-        .shopping-cart-item {
-            display: flex;
-            align-items: center;
-            padding: 10px 0;
-            border-bottom: 1px solid #ddd; /* Optional: Add a border between items */
-        }
-
-            .shopping-cart-item img {
-                width: 80px; /* Adjust image size */
-                height: auto;
-                margin-right: 10px; /* Add spacing between image and text */
-            }
-
-        .item-details {
-            flex: 1; /* Allow item details to take remaining space */
-        }
-
-        .item-name {
-            display: block; /* Ensure each detail is on a new line */
-            font-weight: bold; /* Optionally bold item name */
         }
 
         .button {
@@ -69,8 +55,112 @@
             .button:hover {
                 background-color: #357b36;
             }
+
+        .dropdown-content2 {
+            display: none;
+            position: absolute;
+            background-color: #f1f1f1;
+            min-width: 160px;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            z-index: 1;
+        }
+
+            .dropdown-content2 a {
+                color: black;
+                padding: 12px 16px;
+                text-decoration: none;
+                display: block;
+            }
+
+                .dropdown-content2 a:hover {
+                    background-color: #ddd;
+                }
+
+        .dropdown:hover .dropdown-content2 {
+            display: block;
+        }
+
+        .shopping-cart-item {
+            display: flex;
+            align-items: center;
+            padding: 10px;
+            border-bottom: 1px solid #ddd; /* Optional: Add a border between items */
+            margin-bottom: 10px; /* Add space between items */
+        }
+
+            .shopping-cart-item img {
+                width: 80px; /* Adjust image size */
+                height: auto;
+                margin-right: 15px; /* Add more spacing between image and text */
+            }
+
+        .item-details {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr; /* Three columns: name, price, buttons */
+            align-items: center;
+            width: 100%;
+            gap: 10px;
+        }
+
+        .item-name {
+            font-weight: bold; /* Optionally bold item name */
+            display: -webkit-box;
+            -webkit-box-orient: vertical;
+            -webkit-line-clamp: 3; /* Limit to 3 lines */
+            overflow: hidden;
+        }
+
+        .item-price {
+            text-align: right; /* Align price to the right */
+        }
+
+        .quantity-controls {
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+        }
+
+            .quantity-controls button {
+                background-color: #3e8e41;
+                color: white;
+                border: none;
+                padding: 5px;
+                cursor: pointer;
+                font-size: 16px;
+            }
+
+                .quantity-controls button:hover {
+                    background-color: #357b36;
+                }
+
+            .quantity-controls span {
+                margin: 0 10px;
+                font-size: 16px;
+                font-weight: bold;
+            }
+
+        .total-price {
+            margin-top: 10px;
+            font-weight: bold;
+            padding: 10px;
+            background-color: #f1f1f1;
+        }
     </style>
 </head>
+
+<div>
+    <button class="btn btn-outline-dark dropbtn me-2">
+        <i class="bi-geo-alt me-1"></i>
+        @if (cities.FirstOrDefault(x => x.id == user.cityID) != null)
+        {
+            @cities.FirstOrDefault(x => x.id == user.cityID).name
+        }
+        else
+        {
+            <text>Select a city</text>
+        }
+    </button>
+</div>
 
 <div class="dropdown">
     <form class="d-flex me-2" action="/Cart/Index/" method="get">
@@ -94,11 +184,33 @@
                 }
                 <div class="item-details">
                     <span class="item-name">@item.Products.name</span>
-                    <span class="item-price">@item.price</span>
-                    <span class="item-quantity">@item.quantity</span>
+                    <span class="item-price">$@item.price</span>
+                    <div class="quantity-controls">
+                        <button type="button" class="qbutton" data-itemID="@item.id" data-action="reduce">-</button>
+                        <span id="quantity-@item.id" class="quantity">@item.quantity</span>
+                        <button type="button" class="qbutton" data-itemID="@item.id" data-action="add">+</button>
+                    </div>
                 </div>
             </div>
         }
+        <div class="total-price">Total: $@totalPrice</div>
         <a href="#" class="button">Checkout</a>
+    </div>
+</div>
+
+<div class="dropdown">
+    <button class="btn btn-outline-dark dropbtn">Hello, @user.firstName</button>
+    <div class="dropdown-content2">
+        <a href="/Account/Settings/">Account Settings</a>
+        <a href="/Account/Orders/">Past Orders</a>
+        @if (User.IsInRole("A"))
+        {
+            <a href="/Panel/Users/">Admin Panel</a>
+        }
+        else if (User.IsInRole("S"))
+        {
+            <a href="/Panel/Stores/">Manager Panel</a>
+        }
+        <a href="/Home/Logout/">Sign Out</a>
     </div>
 </div>

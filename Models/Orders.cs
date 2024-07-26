@@ -25,6 +25,7 @@ namespace GroceryDeliverySystem.Models
         public int userID { get; set; }
         public string status { get; set; }
         public decimal totalPrice { get; set; }
+        public Nullable<System.DateTime> date { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Deliveries> Deliveries { get; set; }

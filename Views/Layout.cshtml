@@ -31,6 +31,12 @@
         main {
             flex: 1;
         }
+
+        #navbar-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
     </style>
 </head>
 <body>
@@ -45,8 +51,9 @@
                 </ul>
                 @if (User.Identity.IsAuthenticated)
                 {
-                    @Html.Action("NavBar1", "Home")
-                    @Html.Action("NavBar2", "Home")
+                    <div id="navbar-container">
+                        @Html.Action("NavBar1", "Home")
+                    </div>
                 }
                 else
                 {
@@ -71,5 +78,49 @@
     <!-- Core theme JS-->
     <script src="~/Shared/js/scripts.js"></script>
     @RenderSection("Scripts", required: false)
+    <script src="~/Shared/js/jquery-3.7.1.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            attachEventHandlers();
+        });
+
+        function attachEventHandlers() {
+            $(".qbutton").off("click").on("click", function () {
+                var cartitemID = $(this).data("itemid");
+                var action = $(this).data("action");
+                const myurl = action === 'add' ? "/Cart/AddQuantity/" : "/Cart/ReduceQuantity/";
+
+                $.ajax({
+                    url: myurl,
+                    type: 'POST',
+                    data: { cartitemID: cartitemID },
+                    success: function () {
+                        updateCartDropdown();
+                    }
+                });
+            });
+        }
+
+        function updateCartDropdown() {
+            // Preserve the dropdown menu's open state
+            var isDropdownOpen = $('.dropdown-content').is(':visible');
+
+            $.ajax({
+                url: '@Url.Action("NavBar1", "Home")',
+                type: 'GET',
+                success: function(result) {
+                    // Update only the dropdown content part
+                    $('.dropdown-content').html($(result).find('.dropdown-content').html());
+
+                    attachEventHandlers();
+
+                    // Restore the dropdown open state
+                    if (isDropdownOpen) {
+                        $('.dropdown-content').show();
+                    }
+                }
+            });
+        }
+    </script>
 </body>
 </html>

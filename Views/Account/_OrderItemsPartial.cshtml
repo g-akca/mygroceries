@@ -1,0 +1,33 @@
+﻿@using GroceryDeliverySystem.Models
+@model List<OrderItems>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Image</th>
+            <th>Product Name</th>
+            <th>Quantity</th>
+            <th>Price</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td style="max-width: 70px;">
+                @if (!string.IsNullOrEmpty(item.Products.imageURL))
+                {
+                    <img class="card-img-top" src="@item.Products.imageURL" alt="..." />
+                }
+                else
+                {
+                    <img class="card-img-top" src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg" alt="..." />
+                }
+                </td>
+                <td class="align-middle">@item.Products.name</td>
+                <td class="align-middle">@item.quantity</td>
+                <td class="align-middle">@item.price</td>
+            </tr>
+        }
+    </tbody>
+</table>

@@ -20,6 +20,10 @@ namespace GroceryDeliverySystem.Controllers
         public ActionResult Category(int ctgid)
         {
             var products = gdb.Products.Where(x => x.categoryID == ctgid).ToList();
+            var ctg = gdb.Categories.FirstOrDefault(x => x.id == ctgid);
+            var categories = gdb.Categories.Where(x => x.storeID == ctg.storeID).ToList();
+
+            ViewBag.Categories = categories;
             return View(products);
         }
     }

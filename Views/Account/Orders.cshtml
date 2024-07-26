@@ -1,0 +1,89 @@
+﻿@using GroceryDeliverySystem.Models
+@model List<Orders>
+
+@{
+    ViewBag.Title = "Orders";
+}
+
+@section body {
+    <!-- The Modal -->
+    <div class="modal modal-lg" id="detailsModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">Order Details</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+
+                <!-- Modal body -->
+                <div class="modal-body" id="orderDetailsBody">
+                    <!-- Order details will be dynamically loaded here -->
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+<div class="container mt-4">
+    <div class="row">
+        <div style="width:20%;">
+            <div class="sidemenu__categories">
+                <div class="sidemenu__categories__title">
+                    <span>My Account</span>
+                </div>
+                <ul>
+                    <li><a href="/Account/Settings/">Account Settings</a></li>
+                    <li><a href="/Account/Orders/">Past Orders</a></li>
+                    <li><a href="/Home/Logout/">Sign Out</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="col-lg-9">
+            <h2>Past Orders</h2>
+            <div>
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th> Date </th>
+                            <th> Status </th>
+                            <th> Total Price </th>
+                            <th> Details </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td> @item.date </td>
+                                <td> @item.status </td>
+                                <td> @item.totalPrice </td>
+                                <td> <a class="btn btn-info detOrder" data-orID="@item.id" data-bs-toggle="modal" data-bs-target="#detailsModal"> Details </a> </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts {
+    <script src="~/Shared/js/jquery-3.7.1.min.js"></script>
+    <script>
+        $('.detOrder').click(function () {
+            var orderId = $(this).data('orID');
+
+            $.ajax({
+                url: '/Account/GetOrderItems/',
+                type: 'GET',
+                data: { orderId: orderId },
+                success: function (result) {
+                    $('#orderDetailsBody').html(result);
+                    $('#detailsModal').modal('show');
+                }
+            });
+        });
+    </script>
+}

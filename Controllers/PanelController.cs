@@ -14,10 +14,6 @@ namespace GroceryDeliverySystem.Controllers
     {
         groceryDBEntities gdb = new groceryDBEntities();
         // GET: Panel
-        public ActionResult Index()
-        {
-            return View();
-        }
 
         [Authorize(Roles = "A")]
         public ActionResult Users()
@@ -100,7 +96,6 @@ namespace GroceryDeliverySystem.Controllers
 
                         p.AddRange(products);
                     }
-
                     return View(p);
                 }
                 else

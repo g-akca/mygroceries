@@ -12,53 +12,61 @@
     <EntitySet Name="Products" EntityType="groceryDBModel.Products" />
     <EntitySet Name="Stores" EntityType="groceryDBModel.Stores" />
     <EntitySet Name="Users" EntityType="groceryDBModel.Users" />
-    <AssociationSet Name="FK__CartItems__cartI__0F2D40CE" Association="groceryDBModel.FK__CartItems__cartI__0F2D40CE">
+    <AssociationSet Name="FK__CartItems__cartI__3F115E1A" Association="groceryDBModel.FK__CartItems__cartI__3F115E1A">
       <End Role="Carts" EntitySet="Carts" />
       <End Role="CartItems" EntitySet="CartItems" />
     </AssociationSet>
-    <AssociationSet Name="FK__CartItems__produ__10216507" Association="groceryDBModel.FK__CartItems__produ__10216507">
+    <AssociationSet Name="FK__CartItems__produ__40058253" Association="groceryDBModel.FK__CartItems__produ__40058253">
       <End Role="Products" EntitySet="Products" />
       <End Role="CartItems" EntitySet="CartItems" />
     </AssociationSet>
-    <AssociationSet Name="FK__Users__cartID__214BF109" Association="groceryDBModel.FK__Users__cartID__214BF109">
+    <AssociationSet Name="FK__Carts__userID__3587F3E0" Association="groceryDBModel.FK__Carts__userID__3587F3E0">
+      <End Role="Users" EntitySet="Users" />
+      <End Role="Carts" EntitySet="Carts" />
+    </AssociationSet>
+    <AssociationSet Name="UC" Association="groceryDBModel.UC">
       <End Role="Carts" EntitySet="Carts" />
       <End Role="Users" EntitySet="Users" />
     </AssociationSet>
-    <AssociationSet Name="FK__Categorie__store__09746778" Association="groceryDBModel.FK__Categorie__store__09746778">
+    <AssociationSet Name="FK__Categorie__store__395884C4" Association="groceryDBModel.FK__Categorie__store__395884C4">
       <End Role="Stores" EntitySet="Stores" />
       <End Role="Categories" EntitySet="Categories" />
     </AssociationSet>
-    <AssociationSet Name="FK__Products__catego__0C50D423" Association="groceryDBModel.FK__Products__catego__0C50D423">
+    <AssociationSet Name="FK__Products__catego__3C34F16F" Association="groceryDBModel.FK__Products__catego__3C34F16F">
       <End Role="Categories" EntitySet="Categories" />
       <End Role="Products" EntitySet="Products" />
     </AssociationSet>
-    <AssociationSet Name="FK__Stores__cityID__0697FACD" Association="groceryDBModel.FK__Stores__cityID__0697FACD">
+    <AssociationSet Name="FK__Stores__cityID__2B0A656D" Association="groceryDBModel.FK__Stores__cityID__2B0A656D">
       <End Role="Cities" EntitySet="Cities" />
       <End Role="Stores" EntitySet="Stores" />
     </AssociationSet>
-    <AssociationSet Name="FK__Users__cityID__2057CCD0" Association="groceryDBModel.FK__Users__cityID__2057CCD0">
+    <AssociationSet Name="FK__Users__cityID__2FCF1A8A" Association="groceryDBModel.FK__Users__cityID__2FCF1A8A">
       <End Role="Cities" EntitySet="Cities" />
       <End Role="Users" EntitySet="Users" />
     </AssociationSet>
-    <AssociationSet Name="FK__Deliverie__delPe__1C873BEC" Association="groceryDBModel.FK__Deliverie__delPe__1C873BEC">
+    <AssociationSet Name="FK__Deliverie__delPe__4C6B5938" Association="groceryDBModel.FK__Deliverie__delPe__4C6B5938">
       <End Role="DeliveryPerson" EntitySet="DeliveryPerson" />
       <End Role="Deliveries" EntitySet="Deliveries" />
     </AssociationSet>
-    <AssociationSet Name="FK__Deliverie__order__1B9317B3" Association="groceryDBModel.FK__Deliverie__order__1B9317B3">
+    <AssociationSet Name="FK__Deliverie__order__4B7734FF" Association="groceryDBModel.FK__Deliverie__order__4B7734FF">
       <End Role="Orders" EntitySet="Orders" />
       <End Role="Deliveries" EntitySet="Deliveries" />
     </AssociationSet>
-    <AssociationSet Name="FK__OrderItem__order__15DA3E5D" Association="groceryDBModel.FK__OrderItem__order__15DA3E5D">
+    <AssociationSet Name="FK__OrderItem__order__45BE5BA9" Association="groceryDBModel.FK__OrderItem__order__45BE5BA9">
       <End Role="Orders" EntitySet="Orders" />
       <End Role="OrderItems" EntitySet="OrderItems" />
     </AssociationSet>
-    <AssociationSet Name="FK__OrderItem__produ__16CE6296" Association="groceryDBModel.FK__OrderItem__produ__16CE6296">
+    <AssociationSet Name="FK__OrderItem__produ__46B27FE2" Association="groceryDBModel.FK__OrderItem__produ__46B27FE2">
       <End Role="Products" EntitySet="Products" />
       <End Role="OrderItems" EntitySet="OrderItems" />
     </AssociationSet>
-    <AssociationSet Name="FK__Carts__userID__79FD19BE" Association="groceryDBModel.FK__Carts__userID__79FD19BE">
+    <AssociationSet Name="FK__Orders__userID__42E1EEFE" Association="groceryDBModel.FK__Orders__userID__42E1EEFE">
       <End Role="Users" EntitySet="Users" />
-      <End Role="Carts" EntitySet="Carts" />
+      <End Role="Orders" EntitySet="Orders" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Users__managedSt__31B762FC" Association="groceryDBModel.FK__Users__managedSt__31B762FC">
+      <End Role="Stores" EntitySet="Stores" />
+      <End Role="Users" EntitySet="Users" />
     </AssociationSet>
   </EntityContainer>
   <EntityType Name="CartItems">
@@ -70,8 +78,8 @@
     <Property Name="productID" Type="Int32" Nullable="false" />
     <Property Name="quantity" Type="Int32" Nullable="false" />
     <Property Name="price" Type="Decimal" Nullable="false" Precision="10" Scale="2" />
-    <NavigationProperty Name="Carts" Relationship="groceryDBModel.FK__CartItems__cartI__0F2D40CE" FromRole="CartItems" ToRole="Carts" />
-    <NavigationProperty Name="Products" Relationship="groceryDBModel.FK__CartItems__produ__10216507" FromRole="CartItems" ToRole="Products" />
+    <NavigationProperty Name="Carts" Relationship="groceryDBModel.FK__CartItems__cartI__3F115E1A" FromRole="CartItems" ToRole="Carts" />
+    <NavigationProperty Name="Products" Relationship="groceryDBModel.FK__CartItems__produ__40058253" FromRole="CartItems" ToRole="Products" />
   </EntityType>
   <EntityType Name="Carts">
     <Key>
@@ -79,9 +87,9 @@
     </Key>
     <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="userID" Type="Int32" Nullable="false" />
-    <NavigationProperty Name="CartItems" Relationship="groceryDBModel.FK__CartItems__cartI__0F2D40CE" FromRole="Carts" ToRole="CartItems" />
-    <NavigationProperty Name="Users" Relationship="groceryDBModel.FK__Users__cartID__214BF109" FromRole="Carts" ToRole="Users" />
-    <NavigationProperty Name="Users1" Relationship="groceryDBModel.FK__Carts__userID__79FD19BE" FromRole="Carts" ToRole="Users" />
+    <NavigationProperty Name="CartItems" Relationship="groceryDBModel.FK__CartItems__cartI__3F115E1A" FromRole="Carts" ToRole="CartItems" />
+    <NavigationProperty Name="Users" Relationship="groceryDBModel.FK__Carts__userID__3587F3E0" FromRole="Carts" ToRole="Users" />
+    <NavigationProperty Name="Users1" Relationship="groceryDBModel.UC" FromRole="Carts" ToRole="Users" />
   </EntityType>
   <EntityType Name="Categories">
     <Key>
@@ -91,8 +99,8 @@
     <Property Name="name" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
     <Property Name="storeID" Type="Int32" Nullable="false" />
     <Property Name="imageURL" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
-    <NavigationProperty Name="Stores" Relationship="groceryDBModel.FK__Categorie__store__09746778" FromRole="Categories" ToRole="Stores" />
-    <NavigationProperty Name="Products" Relationship="groceryDBModel.FK__Products__catego__0C50D423" FromRole="Categories" ToRole="Products" />
+    <NavigationProperty Name="Stores" Relationship="groceryDBModel.FK__Categorie__store__395884C4" FromRole="Categories" ToRole="Stores" />
+    <NavigationProperty Name="Products" Relationship="groceryDBModel.FK__Products__catego__3C34F16F" FromRole="Categories" ToRole="Products" />
   </EntityType>
   <EntityType Name="Cities">
     <Key>
@@ -100,8 +108,8 @@
     </Key>
     <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-    <NavigationProperty Name="Stores" Relationship="groceryDBModel.FK__Stores__cityID__0697FACD" FromRole="Cities" ToRole="Stores" />
-    <NavigationProperty Name="Users" Relationship="groceryDBModel.FK__Users__cityID__2057CCD0" FromRole="Cities" ToRole="Users" />
+    <NavigationProperty Name="Stores" Relationship="groceryDBModel.FK__Stores__cityID__2B0A656D" FromRole="Cities" ToRole="Stores" />
+    <NavigationProperty Name="Users" Relationship="groceryDBModel.FK__Users__cityID__2FCF1A8A" FromRole="Cities" ToRole="Users" />
   </EntityType>
   <EntityType Name="Deliveries">
     <Key>
@@ -112,8 +120,8 @@
     <Property Name="delPersonID" Type="Int32" Nullable="false" />
     <Property Name="status" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
     <Property Name="deliveryTime" Type="Binary" MaxLength="8" FixedLength="true" annotation:StoreGeneratedPattern="Computed" />
-    <NavigationProperty Name="DeliveryPerson" Relationship="groceryDBModel.FK__Deliverie__delPe__1C873BEC" FromRole="Deliveries" ToRole="DeliveryPerson" />
-    <NavigationProperty Name="Orders" Relationship="groceryDBModel.FK__Deliverie__order__1B9317B3" FromRole="Deliveries" ToRole="Orders" />
+    <NavigationProperty Name="DeliveryPerson" Relationship="groceryDBModel.FK__Deliverie__delPe__4C6B5938" FromRole="Deliveries" ToRole="DeliveryPerson" />
+    <NavigationProperty Name="Orders" Relationship="groceryDBModel.FK__Deliverie__order__4B7734FF" FromRole="Deliveries" ToRole="Orders" />
   </EntityType>
   <EntityType Name="DeliveryPerson">
     <Key>
@@ -123,7 +131,7 @@
     <Property Name="name" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
     <Property Name="phone" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
     <Property Name="status" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-    <NavigationProperty Name="Deliveries" Relationship="groceryDBModel.FK__Deliverie__delPe__1C873BEC" FromRole="DeliveryPerson" ToRole="Deliveries" />
+    <NavigationProperty Name="Deliveries" Relationship="groceryDBModel.FK__Deliverie__delPe__4C6B5938" FromRole="DeliveryPerson" ToRole="Deliveries" />
   </EntityType>
   <EntityType Name="OrderItems">
     <Key>
@@ -134,8 +142,8 @@
     <Property Name="productID" Type="Int32" Nullable="false" />
     <Property Name="quantity" Type="Int32" Nullable="false" />
     <Property Name="price" Type="Decimal" Nullable="false" Precision="10" Scale="2" />
-    <NavigationProperty Name="Orders" Relationship="groceryDBModel.FK__OrderItem__order__15DA3E5D" FromRole="OrderItems" ToRole="Orders" />
-    <NavigationProperty Name="Products" Relationship="groceryDBModel.FK__OrderItem__produ__16CE6296" FromRole="OrderItems" ToRole="Products" />
+    <NavigationProperty Name="Orders" Relationship="groceryDBModel.FK__OrderItem__order__45BE5BA9" FromRole="OrderItems" ToRole="Orders" />
+    <NavigationProperty Name="Products" Relationship="groceryDBModel.FK__OrderItem__produ__46B27FE2" FromRole="OrderItems" ToRole="Products" />
   </EntityType>
   <EntityType Name="Orders">
     <Key>
@@ -145,8 +153,10 @@
     <Property Name="userID" Type="Int32" Nullable="false" />
     <Property Name="status" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
     <Property Name="totalPrice" Type="Decimal" Nullable="false" Precision="10" Scale="2" />
-    <NavigationProperty Name="Deliveries" Relationship="groceryDBModel.FK__Deliverie__order__1B9317B3" FromRole="Orders" ToRole="Deliveries" />
-    <NavigationProperty Name="OrderItems" Relationship="groceryDBModel.FK__OrderItem__order__15DA3E5D" FromRole="Orders" ToRole="OrderItems" />
+    <NavigationProperty Name="Deliveries" Relationship="groceryDBModel.FK__Deliverie__order__4B7734FF" FromRole="Orders" ToRole="Deliveries" />
+    <NavigationProperty Name="OrderItems" Relationship="groceryDBModel.FK__OrderItem__order__45BE5BA9" FromRole="Orders" ToRole="OrderItems" />
+    <NavigationProperty Name="Users" Relationship="groceryDBModel.FK__Orders__userID__42E1EEFE" FromRole="Orders" ToRole="Users" />
+    <Property Name="date" Type="DateTime" Precision="3" />
   </EntityType>
   <EntityType Name="Products">
     <Key>
@@ -157,9 +167,9 @@
     <Property Name="price" Type="Decimal" Nullable="false" Precision="10" Scale="2" />
     <Property Name="categoryID" Type="Int32" Nullable="false" />
     <Property Name="imageURL" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
-    <NavigationProperty Name="CartItems" Relationship="groceryDBModel.FK__CartItems__produ__10216507" FromRole="Products" ToRole="CartItems" />
-    <NavigationProperty Name="Categories" Relationship="groceryDBModel.FK__Products__catego__0C50D423" FromRole="Products" ToRole="Categories" />
-    <NavigationProperty Name="OrderItems" Relationship="groceryDBModel.FK__OrderItem__produ__16CE6296" FromRole="Products" ToRole="OrderItems" />
+    <NavigationProperty Name="CartItems" Relationship="groceryDBModel.FK__CartItems__produ__40058253" FromRole="Products" ToRole="CartItems" />
+    <NavigationProperty Name="Categories" Relationship="groceryDBModel.FK__Products__catego__3C34F16F" FromRole="Products" ToRole="Categories" />
+    <NavigationProperty Name="OrderItems" Relationship="groceryDBModel.FK__OrderItem__produ__46B27FE2" FromRole="Products" ToRole="OrderItems" />
   </EntityType>
   <EntityType Name="Stores">
     <Key>
@@ -170,14 +180,17 @@
     <Property Name="cityID" Type="Int32" Nullable="false" />
     <Property Name="imageURL" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
     <Property Name="description" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
-    <NavigationProperty Name="Categories" Relationship="groceryDBModel.FK__Categorie__store__09746778" FromRole="Stores" ToRole="Categories" />
-    <NavigationProperty Name="Cities" Relationship="groceryDBModel.FK__Stores__cityID__0697FACD" FromRole="Stores" ToRole="Cities" />
+    <NavigationProperty Name="Categories" Relationship="groceryDBModel.FK__Categorie__store__395884C4" FromRole="Stores" ToRole="Categories" />
+    <NavigationProperty Name="Cities" Relationship="groceryDBModel.FK__Stores__cityID__2B0A656D" FromRole="Stores" ToRole="Cities" />
+    <NavigationProperty Name="Users" Relationship="groceryDBModel.FK__Users__managedSt__31B762FC" FromRole="Stores" ToRole="Users" />
   </EntityType>
   <EntityType Name="Users">
     <Key>
       <PropertyRef Name="id" />
     </Key>
     <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="firstName" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Name="lastName" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
     <Property Name="email" Type="String" Nullable="false" MaxLength="75" FixedLength="false" Unicode="true" />
     <Property Name="password" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="true" />
     <Property Name="phone" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
@@ -185,13 +198,14 @@
     <Property Name="cityID" Type="Int32" />
     <Property Name="cartID" Type="Int32" />
     <Property Name="roles" Type="String" MaxLength="3" FixedLength="false" Unicode="true" />
-    <NavigationProperty Name="Carts" Relationship="groceryDBModel.FK__Users__cartID__214BF109" FromRole="Users" ToRole="Carts" />
-    <NavigationProperty Name="Cities" Relationship="groceryDBModel.FK__Users__cityID__2057CCD0" FromRole="Users" ToRole="Cities" />
-    <Property Name="firstName" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
-    <Property Name="lastName" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
-    <NavigationProperty Name="Carts1" Relationship="groceryDBModel.FK__Carts__userID__79FD19BE" FromRole="Users" ToRole="Carts" />
+    <Property Name="managedStore" Type="Int32" />
+    <NavigationProperty Name="Carts" Relationship="groceryDBModel.FK__Carts__userID__3587F3E0" FromRole="Users" ToRole="Carts" />
+    <NavigationProperty Name="Carts1" Relationship="groceryDBModel.UC" FromRole="Users" ToRole="Carts" />
+    <NavigationProperty Name="Cities" Relationship="groceryDBModel.FK__Users__cityID__2FCF1A8A" FromRole="Users" ToRole="Cities" />
+    <NavigationProperty Name="Orders" Relationship="groceryDBModel.FK__Orders__userID__42E1EEFE" FromRole="Users" ToRole="Orders" />
+    <NavigationProperty Name="Stores" Relationship="groceryDBModel.FK__Users__managedSt__31B762FC" FromRole="Users" ToRole="Stores" />
   </EntityType>
-  <Association Name="FK__CartItems__cartI__0F2D40CE">
+  <Association Name="FK__CartItems__cartI__3F115E1A">
     <End Type="groceryDBModel.Carts" Role="Carts" Multiplicity="1" />
     <End Type="groceryDBModel.CartItems" Role="CartItems" Multiplicity="*" />
     <ReferentialConstraint>
@@ -203,7 +217,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__CartItems__produ__10216507">
+  <Association Name="FK__CartItems__produ__40058253">
     <End Type="groceryDBModel.Products" Role="Products" Multiplicity="1" />
     <End Type="groceryDBModel.CartItems" Role="CartItems" Multiplicity="*" />
     <ReferentialConstraint>
@@ -215,7 +229,21 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__Users__cartID__214BF109">
+  <Association Name="FK__Carts__userID__3587F3E0">
+    <End Type="groceryDBModel.Users" Role="Users" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Type="groceryDBModel.Carts" Role="Carts" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Carts">
+        <PropertyRef Name="userID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="UC">
     <End Type="groceryDBModel.Carts" Role="Carts" Multiplicity="0..1" />
     <End Type="groceryDBModel.Users" Role="Users" Multiplicity="*" />
     <ReferentialConstraint>
@@ -227,7 +255,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__Categorie__store__09746778">
+  <Association Name="FK__Categorie__store__395884C4">
     <End Type="groceryDBModel.Stores" Role="Stores" Multiplicity="1" />
     <End Type="groceryDBModel.Categories" Role="Categories" Multiplicity="*" />
     <ReferentialConstraint>
@@ -239,7 +267,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__Products__catego__0C50D423">
+  <Association Name="FK__Products__catego__3C34F16F">
     <End Type="groceryDBModel.Categories" Role="Categories" Multiplicity="1" />
     <End Type="groceryDBModel.Products" Role="Products" Multiplicity="*" />
     <ReferentialConstraint>
@@ -251,7 +279,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__Stores__cityID__0697FACD">
+  <Association Name="FK__Stores__cityID__2B0A656D">
     <End Type="groceryDBModel.Cities" Role="Cities" Multiplicity="1" />
     <End Type="groceryDBModel.Stores" Role="Stores" Multiplicity="*" />
     <ReferentialConstraint>
@@ -263,7 +291,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__Users__cityID__2057CCD0">
+  <Association Name="FK__Users__cityID__2FCF1A8A">
     <End Type="groceryDBModel.Cities" Role="Cities" Multiplicity="0..1" />
     <End Type="groceryDBModel.Users" Role="Users" Multiplicity="*" />
     <ReferentialConstraint>
@@ -275,7 +303,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__Deliverie__delPe__1C873BEC">
+  <Association Name="FK__Deliverie__delPe__4C6B5938">
     <End Type="groceryDBModel.DeliveryPerson" Role="DeliveryPerson" Multiplicity="1" />
     <End Type="groceryDBModel.Deliveries" Role="Deliveries" Multiplicity="*" />
     <ReferentialConstraint>
@@ -287,7 +315,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__Deliverie__order__1B9317B3">
+  <Association Name="FK__Deliverie__order__4B7734FF">
     <End Type="groceryDBModel.Orders" Role="Orders" Multiplicity="1" />
     <End Type="groceryDBModel.Deliveries" Role="Deliveries" Multiplicity="*" />
     <ReferentialConstraint>
@@ -299,7 +327,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__OrderItem__order__15DA3E5D">
+  <Association Name="FK__OrderItem__order__45BE5BA9">
     <End Type="groceryDBModel.Orders" Role="Orders" Multiplicity="1" />
     <End Type="groceryDBModel.OrderItems" Role="OrderItems" Multiplicity="*" />
     <ReferentialConstraint>
@@ -311,7 +339,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__OrderItem__produ__16CE6296">
+  <Association Name="FK__OrderItem__produ__46B27FE2">
     <End Type="groceryDBModel.Products" Role="Products" Multiplicity="1" />
     <End Type="groceryDBModel.OrderItems" Role="OrderItems" Multiplicity="*" />
     <ReferentialConstraint>
@@ -323,15 +351,27 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__Carts__userID__79FD19BE">
+  <Association Name="FK__Orders__userID__42E1EEFE">
     <End Type="groceryDBModel.Users" Role="Users" Multiplicity="1" />
-    <End Type="groceryDBModel.Carts" Role="Carts" Multiplicity="*" />
+    <End Type="groceryDBModel.Orders" Role="Orders" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Users">
         <PropertyRef Name="id" />
       </Principal>
-      <Dependent Role="Carts">
+      <Dependent Role="Orders">
         <PropertyRef Name="userID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Users__managedSt__31B762FC">
+    <End Type="groceryDBModel.Stores" Role="Stores" Multiplicity="0..1" />
+    <End Type="groceryDBModel.Users" Role="Users" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Stores">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Users">
+        <PropertyRef Name="managedStore" />
       </Dependent>
     </ReferentialConstraint>
   </Association>

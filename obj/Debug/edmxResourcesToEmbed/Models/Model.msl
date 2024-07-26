@@ -73,6 +73,7 @@
     <EntitySetMapping Name="Orders">
       <EntityTypeMapping TypeName="groceryDBModel.Orders">
         <MappingFragment StoreEntitySet="Orders">
+          <ScalarProperty Name="date" ColumnName="date" />
           <ScalarProperty Name="totalPrice" ColumnName="totalPrice" />
           <ScalarProperty Name="status" ColumnName="status" />
           <ScalarProperty Name="userID" ColumnName="userID" />
@@ -105,8 +106,7 @@
     <EntitySetMapping Name="Users">
       <EntityTypeMapping TypeName="groceryDBModel.Users">
         <MappingFragment StoreEntitySet="Users">
-          <ScalarProperty Name="lastName" ColumnName="lastName" />
-          <ScalarProperty Name="firstName" ColumnName="firstName" />
+          <ScalarProperty Name="managedStore" ColumnName="managedStore" />
           <ScalarProperty Name="roles" ColumnName="roles" />
           <ScalarProperty Name="cartID" ColumnName="cartID" />
           <ScalarProperty Name="cityID" ColumnName="cityID" />
@@ -114,6 +114,8 @@
           <ScalarProperty Name="phone" ColumnName="phone" />
           <ScalarProperty Name="password" ColumnName="password" />
           <ScalarProperty Name="email" ColumnName="email" />
+          <ScalarProperty Name="lastName" ColumnName="lastName" />
+          <ScalarProperty Name="firstName" ColumnName="firstName" />
           <ScalarProperty Name="id" ColumnName="id" />
         </MappingFragment>
       </EntityTypeMapping>

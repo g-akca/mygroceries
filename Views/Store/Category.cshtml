@@ -2,37 +2,77 @@
 @model List<Products>
 
 @{
-    ViewBag.Title = "Index";
+    List<Categories> Ctg = ViewBag.Categories;
 }
 
-<section class="py-5">
-    <div class="container px-4 px-lg-5 mt-5">
-        <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
-            @foreach (var prd in Model)
-            {
-                <div class="col mb-5">
-                    <div class="card h-100">
-                        @if (!string.IsNullOrEmpty(prd.imageURL))
-                        {
-                            <img class="card-img-top" src="@prd.imageURL" alt="..." />
-                        }
-                        else
-                        {
-                            <img class="card-img-top" src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg" alt="..." />
-                        }
-                        <div class="card-body p-4">
-                            <div class="text-center">
-                                <h6 class="fw-bolder">@prd.name</h6>
+<div class="container mt-4">
+    <div class="row">
+        <!-- Sidebar with categories -->
+        <div class="col-md-3">
+            <div class="sidemenu__categories">
+                <div class="sidemenu__categories__title">
+                    <span>All Categories</span>
+                </div>
+                <ul>
+                    @foreach (var ctg in Ctg)
+                    {
+                        <li><a href="../@ctg.id/">@ctg.name</a></li>
+                    }
+                </ul>
+            </div>
+        </div>
+
+        <!-- Products -->
+        <div class="col-md-9">
+            <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4">
+                @foreach (var prd in Model)
+                {
+                    <div class="col mb-5">
+                        <div class="card h-100">
+                            @if (!string.IsNullOrEmpty(prd.imageURL))
+                            {
+                                <img class="card-img-top" src="@prd.imageURL" alt="..." />
+                            }
+                            else
+                            {
+                                <img class="card-img-top" src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg" alt="..." />
+                            }
+                            <div class="p-4">
+                                <div class="text-center">
+                                    <h6>@prd.name</h6>
+                                    <div class="card-body">
+                                        <h6 class="fw-bold text-center mb-3">@prd.price TL</h6>
+                                    </div>
+                                </div>
+                            </div>
+                            <div>
+                                <button type="button" data-prdID="@prd.id" class="btn toggle-button addCart">+</button>
                             </div>
                         </div>
-                        <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                            <h6 class="fw-bold text-center">@prd.price TL</h6>
-                            @*<div class="text-center"><a class="btn btn-outline-dark mt-auto" href="@prd.id/">Go to Category</a></div>*@
-                        </div>
                     </div>
-                </div>
-            }
+                }
+            </div>
         </div>
     </div>
-</section>
+</div>
 
+@section scripts {
+    <script src="~/Shared/js/jquery-3.7.1.min.js"></script>
+    <script>
+        $(".addCart").click(
+            function () {
+                var productID = $(this).attr("data-prdID");
+                $.ajax(
+                    {
+                        type: "POST",
+                        url: "@Url.Action("AddToCart", "Cart")",
+                        data: { productID: productID },
+                        success: function () {
+                            updateCartDropdown(); // Update cart dropdown on success
+                        }
+                    }
+                )
+            }
+        );
+    </script>
+}

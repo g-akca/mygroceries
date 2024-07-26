@@ -1,0 +1,84 @@
+﻿@using GroceryDeliverySystem.Models
+@model Users
+
+@{
+    List<Cities> cities = ViewBag.Cities;
+}
+
+<div class="container mt-4">
+    <div class="row">
+        <div style="width:20%;">
+            <div class="sidemenu__categories">
+                <div class="sidemenu__categories__title">
+                    <span>My Account</span>
+                </div>
+                <ul>
+                    <li><a href="/Account/Settings/">Account Settings</a></li>
+                    <li><a href="/Account/Orders/">Past Orders</a></li>
+                    <li><a href="/Home/Logout/">Sign Out</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="col-lg-9">
+            <h2>Account Settings</h2>
+            <div>
+                <form action="/Account/UpdateUser/" method="post" id="form">
+                    <input type="hidden" class="form-control" value="@Model.id" name="id" id="id" />
+                    <input type="hidden" class="form-control" value="@Model.cartID" name="cartID" id="cartID" />
+                    <input type="hidden" class="form-control" value="@Model.roles" name="roles" id="roles" />
+                    <input type="hidden" class="form-control" value="@Model.managedStore" name="managedStore" id="managedStore" />
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div data-mdb-input-init class="form-outline">
+                                <label>First name</label>
+                                <input type="text" class="form-control" value="@Model.firstName" name="firstName" id="firstName" placeholder="Enter first name" required />
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div data-mdb-input-init class="form-outline">
+                                <label>Last name</label>
+                                <input type="text" class="form-control" value="@Model.lastName" name="lastName" id="lastName" placeholder="Enter last name" required />
+                            </div>
+                        </div>
+                    </div>
+
+                    <label>Email address</label>
+                    <input type="email" class="form-control" value="@Model.email" name="email" id="email" placeholder="example@email.com" required />
+
+                    <label for="phone">Phone number (Optional)</label>
+                    <input type="tel" class="form-control phone-upd" value="@Model.phone" name="phone" id="phone" pattern="\(\d{3}\)-\d{3}-\d{4}" placeholder="(123)-456-7890" />
+
+                    <label>Password (4 to 20 characters)</label>
+                    <input type="password" class="form-control" value="@Model.password" name="password" id="password" pattern=".{4,20}" required />
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div data-mdb-input-init class="form-outline">
+                                <label>Address (Optional)</label>
+                                <input type="text" class="form-control" value="@Model.address" name="address" id="address" placeholder="Enter address" />
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div data-mdb-input-init class="form-outline">
+                                <label>City (Optional)</label>
+                                <select class="form-select" name="cityID" id="cityID">
+                                    <option value="" disabled selected>Select a city</option>
+                                    @foreach (var city in cities)
+                                    {
+                                        <option value="@city.id" @(city.id == Model.cityID ? "selected" : "")>@city.name</option>
+                                    }
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mt-4 d-flex justify-content-center">
+                        <button type="submit" data-mdb-button-init data-mdb-ripple-init class="btn btn-primary btn-block">
+                            Update
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

@@ -44,3 +44,31 @@
                 display: block;
                 text-decoration: none;
             }
+
+/* Store/Category */
+.toggle-button {
+    position: absolute; /* Positioning it at the bottom right */
+    bottom: 10px; /* Distance from the bottom of the card */
+    right: 10px; /* Distance from the right edge of the card */
+    width: 35px; /* Initial width */
+    height: 35px; /* Initial height */
+    padding: 0; /* Remove default padding */
+    font-weight: bold;
+    background-color: black; /* Background color */
+    color: white; /* Text color */
+    border: 2px solid black; /* Black border */
+    display: flex; /* Flexbox for centering */
+    align-items: center; /* Center vertically */
+    justify-content: center; /* Center horizontally */
+    cursor: pointer; /* Pointer cursor on hover */
+    transition: background-color 0.3s, border-color 0.3s, width 0.3s; /* Smooth transition */
+    box-shadow: 0px 4px 8px 0px rgba(0,0,0,0.2);
+}
+
+    .toggle-button:hover {
+        border-color: black; /* Ensure border color remains black on hover */
+    }
+
+.card-body .fw-bold {
+    margin-top: 0.4rem; /* Increase space below price */
+}

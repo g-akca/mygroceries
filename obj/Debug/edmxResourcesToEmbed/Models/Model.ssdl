@@ -70,6 +70,7 @@
     <Property Name="userID" Type="int" Nullable="false" />
     <Property Name="status" Type="nvarchar" MaxLength="50" Nullable="false" />
     <Property Name="totalPrice" Type="decimal" Precision="10" Scale="2" Nullable="false" />
+    <Property Name="date" Type="datetime" />
   </EntityType>
   <EntityType Name="Products">
     <Key>
@@ -105,20 +106,9 @@
     <Property Name="cityID" Type="int" />
     <Property Name="cartID" Type="int" />
     <Property Name="roles" Type="nvarchar" MaxLength="3" />
+    <Property Name="managedStore" Type="int" />
   </EntityType>
-  <Association Name="FK__CartItems__cartI__0F2D40CE">
-    <End Role="Carts" Type="Self.Carts" Multiplicity="1" />
-    <End Role="CartItems" Type="Self.CartItems" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Carts">
-        <PropertyRef Name="id" />
-      </Principal>
-      <Dependent Role="CartItems">
-        <PropertyRef Name="cartID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK__CartItems__produ__10216507">
+  <Association Name="FK__CartItems__produ__4924D839">
     <End Role="Products" Type="Self.Products" Multiplicity="1" />
     <End Role="CartItems" Type="Self.CartItems" Multiplicity="*" />
     <ReferentialConstraint>
@@ -130,7 +120,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__Carts__userID__7AF13DF7">
+  <Association Name="FK__Carts__userID__63D8CE75">
     <End Role="Users" Type="Self.Users" Multiplicity="1">
       <OnDelete Action="Cascade" />
     </End>
@@ -144,7 +134,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__Categorie__store__09746778">
+  <Association Name="FK__Categorie__store__4277DAAA">
     <End Role="Stores" Type="Self.Stores" Multiplicity="1" />
     <End Role="Categories" Type="Self.Categories" Multiplicity="*" />
     <ReferentialConstraint>
@@ -156,7 +146,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__Deliverie__delPe__1C873BEC">
+  <Association Name="FK__Deliverie__delPe__558AAF1E">
     <End Role="DeliveryPerson" Type="Self.DeliveryPerson" Multiplicity="1" />
     <End Role="Deliveries" Type="Self.Deliveries" Multiplicity="*" />
     <ReferentialConstraint>
@@ -168,7 +158,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__Deliverie__order__1B9317B3">
+  <Association Name="FK__Deliverie__order__54968AE5">
     <End Role="Orders" Type="Self.Orders" Multiplicity="1" />
     <End Role="Deliveries" Type="Self.Deliveries" Multiplicity="*" />
     <ReferentialConstraint>
@@ -180,7 +170,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__OrderItem__order__15DA3E5D">
+  <Association Name="FK__OrderItem__order__4EDDB18F">
     <End Role="Orders" Type="Self.Orders" Multiplicity="1" />
     <End Role="OrderItems" Type="Self.OrderItems" Multiplicity="*" />
     <ReferentialConstraint>
@@ -192,7 +182,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__OrderItem__produ__16CE6296">
+  <Association Name="FK__OrderItem__produ__4FD1D5C8">
     <End Role="Products" Type="Self.Products" Multiplicity="1" />
     <End Role="OrderItems" Type="Self.OrderItems" Multiplicity="*" />
     <ReferentialConstraint>
@@ -204,7 +194,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__Products__catego__0C50D423">
+  <Association Name="FK__Products__catego__45544755">
     <End Role="Categories" Type="Self.Categories" Multiplicity="1" />
     <End Role="Products" Type="Self.Products" Multiplicity="*" />
     <ReferentialConstraint>
@@ -216,7 +206,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__Stores__cityID__0697FACD">
+  <Association Name="FK__Stores__cityID__361203C5">
     <End Role="Cities" Type="Self.Cities" Multiplicity="1" />
     <End Role="Stores" Type="Self.Stores" Multiplicity="*" />
     <ReferentialConstraint>
@@ -228,19 +218,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__Users__cartID__56B3DD81">
-    <End Role="Carts" Type="Self.Carts" Multiplicity="0..1" />
-    <End Role="Users" Type="Self.Users" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Carts">
-        <PropertyRef Name="id" />
-      </Principal>
-      <Dependent Role="Users">
-        <PropertyRef Name="cartID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK__Users__cityID__55BFB948">
+  <Association Name="FK__Users__cityID__5E1FF51F">
     <End Role="Cities" Type="Self.Cities" Multiplicity="0..1" />
     <End Role="Users" Type="Self.Users" Multiplicity="*" />
     <ReferentialConstraint>
@@ -249,6 +227,30 @@
       </Principal>
       <Dependent Role="Users">
         <PropertyRef Name="cityID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Users__managedSt__60083D91">
+    <End Role="Stores" Type="Self.Stores" Multiplicity="0..1" />
+    <End Role="Users" Type="Self.Users" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Stores">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Users">
+        <PropertyRef Name="managedStore" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="UC">
+    <End Role="Carts" Type="Self.Carts" Multiplicity="0..1" />
+    <End Role="Users" Type="Self.Users" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Carts">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Users">
+        <PropertyRef Name="cartID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -264,52 +266,52 @@
     <EntitySet Name="Products" EntityType="Self.Products" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Stores" EntityType="Self.Stores" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
-    <AssociationSet Name="FK__CartItems__cartI__0F2D40CE" Association="Self.FK__CartItems__cartI__0F2D40CE">
-      <End Role="Carts" EntitySet="Carts" />
-      <End Role="CartItems" EntitySet="CartItems" />
-    </AssociationSet>
-    <AssociationSet Name="FK__CartItems__produ__10216507" Association="Self.FK__CartItems__produ__10216507">
+    <AssociationSet Name="FK__CartItems__produ__4924D839" Association="Self.FK__CartItems__produ__4924D839">
       <End Role="Products" EntitySet="Products" />
       <End Role="CartItems" EntitySet="CartItems" />
     </AssociationSet>
-    <AssociationSet Name="FK__Carts__userID__7AF13DF7" Association="Self.FK__Carts__userID__7AF13DF7">
+    <AssociationSet Name="FK__Carts__userID__63D8CE75" Association="Self.FK__Carts__userID__63D8CE75">
       <End Role="Users" EntitySet="Users" />
       <End Role="Carts" EntitySet="Carts" />
     </AssociationSet>
-    <AssociationSet Name="FK__Categorie__store__09746778" Association="Self.FK__Categorie__store__09746778">
+    <AssociationSet Name="FK__Categorie__store__4277DAAA" Association="Self.FK__Categorie__store__4277DAAA">
       <End Role="Stores" EntitySet="Stores" />
       <End Role="Categories" EntitySet="Categories" />
     </AssociationSet>
-    <AssociationSet Name="FK__Deliverie__delPe__1C873BEC" Association="Self.FK__Deliverie__delPe__1C873BEC">
+    <AssociationSet Name="FK__Deliverie__delPe__558AAF1E" Association="Self.FK__Deliverie__delPe__558AAF1E">
       <End Role="DeliveryPerson" EntitySet="DeliveryPerson" />
       <End Role="Deliveries" EntitySet="Deliveries" />
     </AssociationSet>
-    <AssociationSet Name="FK__Deliverie__order__1B9317B3" Association="Self.FK__Deliverie__order__1B9317B3">
+    <AssociationSet Name="FK__Deliverie__order__54968AE5" Association="Self.FK__Deliverie__order__54968AE5">
       <End Role="Orders" EntitySet="Orders" />
       <End Role="Deliveries" EntitySet="Deliveries" />
     </AssociationSet>
-    <AssociationSet Name="FK__OrderItem__order__15DA3E5D" Association="Self.FK__OrderItem__order__15DA3E5D">
+    <AssociationSet Name="FK__OrderItem__order__4EDDB18F" Association="Self.FK__OrderItem__order__4EDDB18F">
       <End Role="Orders" EntitySet="Orders" />
       <End Role="OrderItems" EntitySet="OrderItems" />
     </AssociationSet>
-    <AssociationSet Name="FK__OrderItem__produ__16CE6296" Association="Self.FK__OrderItem__produ__16CE6296">
+    <AssociationSet Name="FK__OrderItem__produ__4FD1D5C8" Association="Self.FK__OrderItem__produ__4FD1D5C8">
       <End Role="Products" EntitySet="Products" />
       <End Role="OrderItems" EntitySet="OrderItems" />
     </AssociationSet>
-    <AssociationSet Name="FK__Products__catego__0C50D423" Association="Self.FK__Products__catego__0C50D423">
+    <AssociationSet Name="FK__Products__catego__45544755" Association="Self.FK__Products__catego__45544755">
       <End Role="Categories" EntitySet="Categories" />
       <End Role="Products" EntitySet="Products" />
     </AssociationSet>
-    <AssociationSet Name="FK__Stores__cityID__0697FACD" Association="Self.FK__Stores__cityID__0697FACD">
+    <AssociationSet Name="FK__Stores__cityID__361203C5" Association="Self.FK__Stores__cityID__361203C5">
       <End Role="Cities" EntitySet="Cities" />
       <End Role="Stores" EntitySet="Stores" />
     </AssociationSet>
-    <AssociationSet Name="FK__Users__cartID__56B3DD81" Association="Self.FK__Users__cartID__56B3DD81">
-      <End Role="Carts" EntitySet="Carts" />
+    <AssociationSet Name="FK__Users__cityID__5E1FF51F" Association="Self.FK__Users__cityID__5E1FF51F">
+      <End Role="Cities" EntitySet="Cities" />
       <End Role="Users" EntitySet="Users" />
     </AssociationSet>
-    <AssociationSet Name="FK__Users__cityID__55BFB948" Association="Self.FK__Users__cityID__55BFB948">
-      <End Role="Cities" EntitySet="Cities" />
+    <AssociationSet Name="FK__Users__managedSt__60083D91" Association="Self.FK__Users__managedSt__60083D91">
+      <End Role="Stores" EntitySet="Stores" />
+      <End Role="Users" EntitySet="Users" />
+    </AssociationSet>
+    <AssociationSet Name="UC" Association="Self.UC">
+      <End Role="Carts" EntitySet="Carts" />
       <End Role="Users" EntitySet="Users" />
     </AssociationSet>
   </EntityContainer>
