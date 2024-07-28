@@ -18,10 +18,11 @@
             display: none;
             position: absolute;
             background-color: #f1f1f1;
-            width: 400px; /* Adjust width as needed */
+            width: 410px; /* Adjust width as needed */
             box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
             z-index: 1;
             padding: 10px; /* Add padding for spacing */
+            border-radius: 10px;
         }
 
             .dropdown-content a {
@@ -40,18 +41,18 @@
         }
 
         .dropdown:hover .dropbtn {
-            background-color: #3e8e41;
+            background-color: #7fad39;
         }
 
         .button {
             display: block;
             text-align: center;
-            background-color: #3e8e41;
+            background-color: #7fad39;
             color: white;
             padding: 10px 0;
-            text-decoration: none;
             border-radius: 5px;
-            margin-top: 10px;
+            margin-right: 10px;
+            width: 150px;
         }
 
             .button:hover {
@@ -65,6 +66,7 @@
             min-width: 160px;
             box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
             z-index: 1;
+            border-radius: 10px;
         }
 
             .dropdown-content2 a {
@@ -85,9 +87,8 @@
         .shopping-cart-item {
             display: flex;
             align-items: center;
-            padding: 10px;
+            padding: 12px;
             border-bottom: 1px solid #ddd; /* Optional: Add a border between items */
-            margin-bottom: 10px; /* Add space between items */
         }
 
             .shopping-cart-item img {
@@ -120,33 +121,56 @@
         .quantity-controls {
             display: flex;
             align-items: center;
-            justify-content: flex-end;
+            border: 1px solid #7fad39;
+            border-radius: 8px;
         }
 
-            .quantity-controls button {
-                background-color: #3e8e41;
-                color: white;
-                border: none;
-                padding: 5px;
-                cursor: pointer;
+            .quantity-controls button, .quantity-controls span {
+                padding: 5px 10px;
                 font-size: 16px;
+                margin: 0;
+                border: none;
             }
 
-                .quantity-controls button:hover {
-                    background-color: #357b36;
-                }
+            .quantity-controls button {
+                background-color: #7fad39;
+                color: white;
+                cursor: pointer;
+            }
 
             .quantity-controls span {
-                margin: 0 10px;
-                font-size: 16px;
+                background-color: white;
+                color: black;
                 font-weight: bold;
+                text-align: center;
+                width: 35px;
+                border-left: 1px solid #7fad39;
+                border-right: 1px solid #7fad39;
             }
 
-        .total-price {
-            margin-top: 10px;
-            font-weight: bold;
-            padding: 10px;
+            .quantity-controls button:first-child {
+                border-radius: 5px 0 0 5px;
+            }
+
+            .quantity-controls button:last-child {
+                border-radius: 0 5px 5px 0;
+            }
+
+            .quantity-controls button:hover {
+                background-color: #357b36;
+            }
+
+        .total-checkout {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
             background-color: #f1f1f1;
+            padding: 10px; /* Add padding for spacing */
+            margin-top: 10px;
+        }
+
+        .total-price {
+            margin-left: 20px; /* Shift total price to the right */
         }
 
         .badge {
@@ -156,7 +180,7 @@
 
         #lblCartCount {
             font-size: 12px;
-            background: #3e8e41;
+            background: #7fad39;
             color: #fff;
             padding: 0 5px;
             vertical-align: top;
@@ -165,8 +189,46 @@
     </style>
 </head>
 
+<div class="modal fade" id="cityUpdate">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title">Change City & Address</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+
+            <!-- Modal body -->
+            <div class="modal-body">
+                <form action="/Account/UpdateAddress/" method="post" id="form">
+                    <input type="hidden" class="form-control" value="@user.id" name="userID" id="userID" />
+
+                    <label>Address (Optional)</label>
+                    <input type="text" class="form-control" value="@user.address" name="address" id="address" placeholder="Enter address" />
+
+                    <label>City</label>
+                    <select class="form-select" name="cityID" id="cityID">
+                        <option value="" disabled selected>Select a city</option>
+                        @foreach (var city in cities)
+                        {
+                            <option value="@city.id" @(city.id == user.cityID ? "selected" : "")>@city.name</option>
+                        }
+                    </select>
+                </form>
+                <p class="message"></p>
+            </div>
+
+            <!-- Modal footer -->
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancel</button>
+                <button type="submit" class="btn btn-primary orderUpd" form="form">Update</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <div>
-    <button class="btn btn-outline-dark dropbtn me-2">
+    <button class="btn btn-outline-dark dropbtn me-2" data-bs-toggle="modal" data-bs-target="#cityUpdate">
         <i class="bi-geo-alt-fill me-1"></i>
         @if (cities.FirstOrDefault(x => x.id == user.cityID) != null)
         {
@@ -191,30 +253,39 @@
             </button>
         </form>
         <div class="dropdown-content">
-            @foreach (var item in Model)
+            @if (Model.Any() == false)
             {
-                <div class="shopping-cart-item clearfix">
-                    @if (!string.IsNullOrEmpty(item.Products.imageURL))
-                    {
-                        <img class="card-img-top" src="@item.Products.imageURL" alt="..." />
-                    }
-                    else
-                    {
-                        <img class="card-img-top" src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg" alt="..." />
-                    }
-                    <div class="item-details">
-                        <span class="item-name">@item.Products.name</span>
-                        <span class="item-price">@item.price TL</span>
-                        <div class="quantity-controls">
-                            <button type="button" class="qbutton" data-itemID="@item.id" data-action="reduce">-</button>
-                            <span id="quantity-@item.id" class="quantity">@item.quantity</span>
-                            <button type="button" class="qbutton" data-itemID="@item.id" data-action="add">+</button>
+                <p class="mt-3 ms-2">Your cart is empty.</p>
+            }
+            else
+            {
+                foreach (var item in Model)
+                {
+                    <div class="shopping-cart-item clearfix">
+                        @if (!string.IsNullOrEmpty(item.Products.imageURL))
+                        {
+                            <img class="card-img-top" src="@item.Products.imageURL" alt="..." />
+                        }
+                        else
+                        {
+                            <img class="card-img-top" src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg" alt="..." />
+                        }
+                        <div class="item-details">
+                            <span class="item-name">@item.Products.name</span>
+                            <span class="item-price">@item.price TL</span>
+                            <div class="quantity-controls">
+                                <button type="button" class="qbutton" data-itemID="@item.id" data-action="reduce">-</button>
+                                <span id="quantity-@item.id" class="quantity">@item.quantity</span>
+                                <button type="button" class="qbutton" data-itemID="@item.id" data-action="add">+</button>
+                            </div>
                         </div>
                     </div>
+                }
+                <div class="total-checkout">
+                    <span class="total-price"><strong>Total:</strong> @totalPrice TL</span>
+                    <a href="/Cart/Checkout/" class="button">Checkout</a>
                 </div>
             }
-            <div class="total-price">Total: @totalPrice TL</div>
-            <a href="/Cart/Checkout/" class="button">Checkout</a>
         </div>
     </div>
 }

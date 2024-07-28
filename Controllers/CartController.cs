@@ -48,6 +48,11 @@ namespace GroceryDeliverySystem.Controllers
             var user = gdb.Users.FirstOrDefault(x => x.email == email);
             var cartItems = gdb.CartItems.Where(c => c.cartID == user.cartID).ToList();
 
+            if (cartItems.Count == 0)
+            {
+                return RedirectToAction("Index");
+            }
+
             foreach (var cartItem in cartItems)
             {
                 var orderItem = new OrderItems
@@ -73,8 +78,13 @@ namespace GroceryDeliverySystem.Controllers
         }
 
         [HttpPost]
+        [AllowAnonymous]
         public JsonResult AddToCart(int productID)
         {
+            if (!User.Identity.IsAuthenticated)
+            {
+                return Json(new { success = false, notAuth = true });
+            }
             var email = User.Identity.Name;
             var user = gdb.Users.FirstOrDefault(x => x.email == email);
             var cartID = user.cartID.Value;

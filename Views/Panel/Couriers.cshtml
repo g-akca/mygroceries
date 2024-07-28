@@ -15,7 +15,7 @@
 
 @section body {
     <!-- The Modal -->
-    <div class="modal" id="deleteModal">
+    <div class="modal fade" id="deleteModal">
         <div class="modal-dialog">
             <div class="modal-content">
 
@@ -41,7 +41,7 @@
         </div>
     </div>
 
-    <div class="modal" id="addModal">
+    <div class="modal fade" id="addModal">
         <div class="modal-dialog">
             <div class="modal-content">
 
@@ -72,7 +72,7 @@
         </div>
     </div>
 
-    <div class="modal" id="updateModal">
+    <div class="modal fade" id="updateModal">
         <div class="modal-dialog">
             <div class="modal-content">
 
@@ -118,20 +118,23 @@
                     @if (User.IsInRole("A"))
                     {
                         <li><a href="/Panel/Users/">Users</a></li>
-                        <li><a href="/Panel/Couriers/">Couriers</a></li>
                         <li><a href="/Panel/Cities/">Cities</a></li>
                     }
                     <li><a href="/Panel/Stores/">Stores</a></li>
                     <li><a href="/Panel/Categories/">Categories</a></li>
                     <li><a href="/Panel/Products/">Products</a></li>
+                    <li><a href="/Panel/Orders/">Orders</a></li>
+                    <li><a href="/Panel/Couriers/">Couriers</a></li>
                 </ul>
             </div>
         </div>
         <div class="col-lg-9">
             <h2>Courier Details</h2>
+            @if (User.IsInRole("A")) {
             <div>
                 <a class="btn btn-success rounded-2" data-bs-toggle="modal" data-bs-target="#addModal"> Add New Courier </a>
             </div>
+            }
             <div>
                 <table class="table table-hover">
                     <thead>
@@ -139,8 +142,11 @@
                             <th> ID </th>
                             <th> Name </th>
                             <th> Phone </th>
-                            <th> Delete </th>
-                            <th> Update </th>
+                            @if (User.IsInRole("A"))
+                            {
+                                <th> Delete </th>
+                                <th> Update </th>
+                            }
                         </tr>
                     </thead>
                     <tbody>
@@ -150,8 +156,11 @@
                                 <td> @d.id </td>
                                 <td> @d.name </td>
                                 <td> @d.phone </td>
-                                <td> <a class="btn btn-danger delModal" data-dpID="@d.id" data-name="@d.name" data-phone="@d.phone" data-bs-toggle="modal" data-bs-target="#deleteModal"> Delete </a> </td>
-                                <td> <a class="btn btn-info updCour" data-dpID="@d.id" data-name="@d.name" data-phone="@d.phone" data-bs-toggle="modal" data-bs-target="#updateModal"> Update </a> </td>
+                                @if (User.IsInRole("A"))
+                                {
+                                    <td> <a class="btn btn-danger delModal" data-dpID="@d.id" data-name="@d.name" data-phone="@d.phone" data-bs-toggle="modal" data-bs-target="#deleteModal"> Delete </a> </td>
+                                    <td> <a class="btn btn-info updCour" data-dpID="@d.id" data-name="@d.name" data-phone="@d.phone" data-bs-toggle="modal" data-bs-target="#updateModal"> Update </a> </td>
+                                }
                             </tr>
                         }
                     </tbody>

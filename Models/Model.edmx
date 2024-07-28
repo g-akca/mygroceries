@@ -148,8 +148,10 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__OrderItem__order__15702A09">
-          <End Role="Orders" Type="Self.Orders" Multiplicity="1" />
+        <Association Name="FK__OrderItem__order__24B26D99">
+          <End Role="Orders" Type="Self.Orders" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="OrderItems" Type="Self.OrderItems" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Orders">
@@ -291,7 +293,7 @@
             <End Role="Stores" EntitySet="Stores" />
             <End Role="Categories" EntitySet="Categories" />
           </AssociationSet>
-          <AssociationSet Name="FK__OrderItem__order__15702A09" Association="Self.FK__OrderItem__order__15702A09">
+          <AssociationSet Name="FK__OrderItem__order__24B26D99" Association="Self.FK__OrderItem__order__24B26D99">
             <End Role="Orders" EntitySet="Orders" />
             <End Role="OrderItems" EntitySet="OrderItems" />
           </AssociationSet>

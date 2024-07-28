@@ -15,7 +15,7 @@
 
 @section body {
     <!-- The Modal -->
-    <div class="modal" id="deleteModal">
+    <div class="modal fade" id="deleteModal">
         <div class="modal-dialog">
             <div class="modal-content">
 
@@ -41,7 +41,7 @@
         </div>
     </div>
 
-    <div class="modal" id="addModal">
+    <div class="modal fade" id="addModal">
         <div class="modal-dialog">
             <div class="modal-content">
 
@@ -78,7 +78,7 @@
         </div>
     </div>
 
-    <div class="modal" id="updateModal">
+    <div class="modal fade" id="updateModal">
         <div class="modal-dialog">
             <div class="modal-content">
 
@@ -130,12 +130,13 @@
                     @if (User.IsInRole("A"))
                     {
                         <li><a href="/Panel/Users/">Users</a></li>
-                        <li><a href="/Panel/Couriers/">Couriers</a></li>
                         <li><a href="/Panel/Cities/">Cities</a></li>
                     }
                     <li><a href="/Panel/Stores/">Stores</a></li>
                     <li><a href="/Panel/Categories/">Categories</a></li>
                     <li><a href="/Panel/Products/">Products</a></li>
+                    <li><a href="/Panel/Orders/">Orders</a></li>
+                    <li><a href="/Panel/Couriers/">Couriers</a></li>
                 </ul>
             </div>
         </div>
@@ -151,7 +152,8 @@
                             <th> ID </th>
                             <th> Name </th>
                             <th> Price </th>
-                            <th> Category ID </th>
+                            <th> Category </th>
+                            <th> Store </th>
                             <th> Image URL </th>
                             <th> Delete </th>
                             <th> Update </th>
@@ -164,7 +166,8 @@
                                 <td> @pr.id </td>
                                 <td> @pr.name </td>
                                 <td> @pr.price  </td>
-                                <td> @pr.categoryID </td>
+                                <td> @pr.Categories.name </td>
+                                <td> @pr.Categories.Stores.name </td>
                                 <td> @pr.imageURL </td>
                                 <td> <a class="btn btn-danger delModal" data-prID="@pr.id" data-name="@pr.name" data-price="@pr.price" data-ctgID="@pr.categoryID" data-image="@pr.imageURL" data-bs-toggle="modal" data-bs-target="#deleteModal"> Delete </a> </td>
                                 <td> <a class="btn btn-info updPrd" data-prID="@pr.id" data-name="@pr.name" data-price="@pr.price" data-ctgID="@pr.categoryID" data-image="@pr.imageURL" data-bs-toggle="modal" data-bs-target="#updateModal"> Update </a> </td>

@@ -38,27 +38,6 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="Deliveries">
-      <EntityTypeMapping TypeName="groceryDBModel.Deliveries">
-        <MappingFragment StoreEntitySet="Deliveries">
-          <ScalarProperty Name="deliveryTime" ColumnName="deliveryTime" />
-          <ScalarProperty Name="status" ColumnName="status" />
-          <ScalarProperty Name="delPersonID" ColumnName="delPersonID" />
-          <ScalarProperty Name="orderID" ColumnName="orderID" />
-          <ScalarProperty Name="id" ColumnName="id" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="DeliveryPerson">
-      <EntityTypeMapping TypeName="groceryDBModel.DeliveryPerson">
-        <MappingFragment StoreEntitySet="DeliveryPerson">
-          <ScalarProperty Name="status" ColumnName="status" />
-          <ScalarProperty Name="phone" ColumnName="phone" />
-          <ScalarProperty Name="name" ColumnName="name" />
-          <ScalarProperty Name="id" ColumnName="id" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="OrderItems">
       <EntityTypeMapping TypeName="groceryDBModel.OrderItems">
         <MappingFragment StoreEntitySet="OrderItems">
@@ -73,6 +52,14 @@
     <EntitySetMapping Name="Orders">
       <EntityTypeMapping TypeName="groceryDBModel.Orders">
         <MappingFragment StoreEntitySet="Orders">
+          <ScalarProperty Name="driverID" ColumnName="driverID" />
+          <ScalarProperty Name="cityID" ColumnName="cityID" />
+          <ScalarProperty Name="phone" ColumnName="phone" />
+          <ScalarProperty Name="email" ColumnName="email" />
+          <ScalarProperty Name="address" ColumnName="address" />
+          <ScalarProperty Name="lastName" ColumnName="lastName" />
+          <ScalarProperty Name="firstName" ColumnName="firstName" />
+          <ScalarProperty Name="storeID" ColumnName="storeID" />
           <ScalarProperty Name="date" ColumnName="date" />
           <ScalarProperty Name="totalPrice" ColumnName="totalPrice" />
           <ScalarProperty Name="status" ColumnName="status" />
@@ -116,6 +103,15 @@
           <ScalarProperty Name="email" ColumnName="email" />
           <ScalarProperty Name="lastName" ColumnName="lastName" />
           <ScalarProperty Name="firstName" ColumnName="firstName" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Drivers">
+      <EntityTypeMapping TypeName="groceryDBModel.Drivers">
+        <MappingFragment StoreEntitySet="Drivers">
+          <ScalarProperty Name="phone" ColumnName="phone" />
+          <ScalarProperty Name="name" ColumnName="name" />
           <ScalarProperty Name="id" ColumnName="id" />
         </MappingFragment>
       </EntityTypeMapping>

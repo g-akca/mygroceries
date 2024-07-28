@@ -27,7 +27,7 @@
                 <ul>
                     @foreach (var ctg in Ctg)
                     {
-                        <li><a href="@Url.Action("Category", "Store", new { id = ctg.id })">@ctg.name</a></li>
+                        <li><a href="/Store/@store.id/@ctg.id/">@ctg.name</a></li>
                     }
                 </ul>
             </div>
@@ -39,7 +39,7 @@
                 @foreach (var prd in Model)
                 {
                     <div class="col mb-5">
-                        <div class="card h-100">
+                        <div class="card h-100 shadow-sm rounded">
                             @if (!string.IsNullOrEmpty(prd.imageURL))
                             {
                                 <img class="card-img-top" src="@prd.imageURL" alt="..." />
@@ -81,7 +81,11 @@
                         success: function (response) {
                             if (response.success) {
                                 updateCartDropdown();
-                            } else {
+                            }
+                            else if (response.notAuth) {
+                                window.location.href = "@Url.Action("Login", "Home")";
+                            }
+                            else {
                                 alert(response.message);
                             }
                         }

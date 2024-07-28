@@ -22,12 +22,6 @@ namespace GroceryDeliverySystem.Controllers
         }
 
         [Authorize(Roles = "A")]
-        public ActionResult Couriers()
-        {
-            return View(gdb.Drivers.ToList());
-        }
-
-        [Authorize(Roles = "A")]
         public ActionResult Cities()
         {
             return View(gdb.Cities.ToList());
@@ -109,6 +103,33 @@ namespace GroceryDeliverySystem.Controllers
             }
         }
 
+        public ActionResult Orders()
+        {
+            if (User.IsInRole("S"))
+            {
+                var userEmail = User.Identity.Name;
+                var user = gdb.Users.FirstOrDefault(x => x.email == userEmail);
+                if (user.managedStore != null)
+                {
+                    var store = gdb.Stores.FirstOrDefault(x => x.id == user.managedStore);
+                    return View(gdb.Orders.Where(x => x.storeID == store.id).ToList());
+                }
+                else
+                {
+                    return View();
+                }
+            }
+            else
+            {
+                return View(gdb.Orders.ToList());
+            }
+        }
+
+        public ActionResult Couriers()
+        {
+            return View(gdb.Drivers.ToList());
+        }
+
         [Authorize(Roles = "A")]
         [HttpPost]
         public string DeleteUser(int id)
@@ -130,6 +151,12 @@ namespace GroceryDeliverySystem.Controllers
         [HttpPost]
         public ActionResult AddUser(Users user)
         {
+            bool isAvailable = gdb.Users.Any(u => u.email == user.email && u.id != user.id);
+            if (isAvailable)
+            {
+                TempData["EmailError"] = "The email address you've entered is already in use. Please choose another one.";
+                return RedirectToAction("Users");
+            }
             gdb.Users.AddOrUpdate(user);
             gdb.SaveChanges();
             if (user.cartID == null)
@@ -145,32 +172,6 @@ namespace GroceryDeliverySystem.Controllers
             }
             gdb.SaveChanges();
             return RedirectToAction("Users");
-        }
-
-        [Authorize(Roles = "A")]
-        [HttpPost]
-        public string DeleteCourier(int id)
-        {
-            Drivers cour = gdb.Drivers.FirstOrDefault(x => x.id == id);
-            try
-            {
-                gdb.Drivers.Remove(cour);
-                gdb.SaveChanges();
-                return "successful";
-            }
-            catch (Exception ex)
-            {
-                return "error";
-            }
-        }
-
-        [Authorize(Roles = "A")]
-        [HttpPost]
-        public ActionResult AddCourier(Drivers cour)
-        {
-            gdb.Drivers.AddOrUpdate(cour);
-            gdb.SaveChanges();
-            return RedirectToAction("Couriers");
         }
 
         [Authorize(Roles = "A")]
@@ -215,6 +216,7 @@ namespace GroceryDeliverySystem.Controllers
             }
         }
 
+        [Authorize(Roles = "A")]
         [HttpPost]
         public ActionResult AddStore(Stores st)
         {
@@ -269,6 +271,57 @@ namespace GroceryDeliverySystem.Controllers
             gdb.Products.AddOrUpdate(pr);
             gdb.SaveChanges();
             return RedirectToAction("Products");
+        }
+
+        [HttpPost]
+        public string DeleteOrder(int id)
+        {
+            Orders or = gdb.Orders.FirstOrDefault(x => x.id == id);
+            try
+            {
+                gdb.Orders.Remove(or);
+                gdb.SaveChanges();
+                return "successful";
+            }
+            catch (Exception ex)
+            {
+                return "error";
+            }
+        }
+
+        [HttpPost]
+        public ActionResult ChangeStatus(int id, string status)
+        {
+            var order = gdb.Orders.FirstOrDefault(o => o.id == id);
+            order.status = status;
+            gdb.SaveChanges();
+            return RedirectToAction("Orders");
+        }
+
+        [Authorize(Roles = "A")]
+        [HttpPost]
+        public string DeleteCourier(int id)
+        {
+            Drivers cour = gdb.Drivers.FirstOrDefault(x => x.id == id);
+            try
+            {
+                gdb.Drivers.Remove(cour);
+                gdb.SaveChanges();
+                return "successful";
+            }
+            catch (Exception ex)
+            {
+                return "error";
+            }
+        }
+
+        [Authorize(Roles = "A")]
+        [HttpPost]
+        public ActionResult AddCourier(Drivers cour)
+        {
+            gdb.Drivers.AddOrUpdate(cour);
+            gdb.SaveChanges();
+            return RedirectToAction("Couriers");
         }
     }
 }

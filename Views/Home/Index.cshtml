@@ -5,38 +5,60 @@
     ViewBag.Title = "Index";
 }
 
-<!-- Header-->
-<header class="bg-dark py-4">
+<head>
+    <style>
+        .btn-outline-dark:hover {
+            background-color: #343a40;
+            color: white;
+            border-color: #343a40;
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+            transition: transform 0.2s;
+        }
+
+        .card img {
+            border-radius: 5px;
+        }
+    </style>
+</head>
+
+<header class="bg-dark py-5">
     <div class="container-fluid px-4 px-lg-5 my-5">
         <div class="text-center text-white">
-            <h1 class="display-4 fw-bolder">MyGroceries</h1>
-            <p class="lead fw-normal text-white-50 mb-0">A grocery delivery website</p>
+            <h1 class="display-4 fw-bolder">Welcome to MyGroceries</h1>
+            <p class="lead fw-normal text-white-50 mb-0">Delivering Fresh Groceries to Your Door</p>
+            <a class="btn btn-primary btn-lg mt-4" href="#stores">Shop Now</a>
         </div>
     </div>
 </header>
-<section class="py-5">
-    <div class="container px-4 px-lg-5 mt-5">
+
+<section id="stores" class="py-5 bg-light">
+    <div class="container px-4 px-lg-5">
+        <div class="text-center mb-5">
+            <h2 class="fw-bolder">Stores</h2>
+            <p class="lead fw-normal text-muted mb-0">Grocery shops in your city</p>
+        </div>
         <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
             @foreach (var store in Model)
             {
                 <div class="col mb-5">
-                    <div class="card h-100">
+                    <div class="card h-100 shadow-sm rounded">
                         @if (!string.IsNullOrEmpty(store.imageURL))
                         {
-                            <img class="card-img-top" src="@store.imageURL" alt="..." />
+                            <img class="card-img-top" src="@store.imageURL" alt="Store Image" style="height: 200px; object-fit: cover;" />
                         }
                         else
                         {
-                            <img class="card-img-top" src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg" alt="..." />
+                            <img class="card-img-top" src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg" alt="Store Image" style="height: 200px; object-fit: cover;" />
                         }
-                        <div class="card-body p-4">
-                            <div class="text-center">
-                                <h5 class="fw-bolder">@store.name</h5>
-                                <p>@store.description</p>
-                            </div>
+                        <div class="card-body p-4 text-center">
+                            <h5 class="fw-bolder">@store.name</h5>
+                            <p class="text-muted">@store.description</p>
                         </div>
-                        <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                            <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="/Store/@store.id/">Go to Store</a></div>
+                        <div class="card-footer p-4 pt-0 border-top-0 bg-transparent text-center">
+                            <a class="btn btn-outline-dark mt-auto" href="/Store/@store.id/">Go to Store</a>
                         </div>
                     </div>
                 </div>

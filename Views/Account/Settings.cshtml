@@ -21,6 +21,12 @@
         </div>
         <div class="col-lg-9">
             <h2>Account Settings</h2>
+            @if (TempData["EmailError"] != null)
+            {
+                <div class="alert alert-danger" role="alert">
+                    @TempData["EmailError"]
+                </div>
+            }
             <div>
                 <form action="/Account/UpdateUser/" method="post" id="form">
                     <input type="hidden" class="form-control" value="@Model.id" name="id" id="id" />

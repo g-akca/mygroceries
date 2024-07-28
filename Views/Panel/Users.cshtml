@@ -1,10 +1,6 @@
 ﻿@using GroceryDeliverySystem.Models
 @model List<Users>
 
-@{
-    ViewBag.Title = "Users";
-}
-
 @section head {
     <style>
         .error {
@@ -15,7 +11,7 @@
 
 @section body {
     <!-- The Modal -->
-    <div class="modal" id="deleteModal">
+    <div class="modal fade" id="deleteModal">
         <div class="modal-dialog">
             <div class="modal-content">
 
@@ -41,7 +37,7 @@
         </div>
     </div>
 
-    <div class="modal" id="addModal">
+    <div class="modal fade" id="addModal">
         <div class="modal-dialog">
             <div class="modal-content">
 
@@ -93,8 +89,7 @@
                             </div>
                         </div>
 
-                        <label>Cart ID (Optional)</label>
-                        <input type="number" class="form-control" name="cartID" id="cartID1" placeholder="Enter cart ID" />
+                        <input type="hidden" class="form-control" name="cartID" id="cartID1" />
 
                         <div class="row">
                             <div class="col-md-6">
@@ -123,7 +118,7 @@
         </div>
     </div>
 
-    <div class="modal" id="updateModal">
+    <div class="modal fade" id="updateModal">
         <div class="modal-dialog">
             <div class="modal-content">
 
@@ -176,8 +171,7 @@
                             </div>
                         </div>
 
-                        <label>Cart ID (Optional)</label>
-                        <input type="number" class="form-control" name="cartID" id="cartID2" placeholder="Enter cart ID" />
+                        <input type="hidden" class="form-control" name="cartID" id="cartID2" />
 
                         <div class="row">
                             <div class="col-md-6">
@@ -219,20 +213,30 @@
                     @if (User.IsInRole("A"))
                     {
                         <li><a href="/Panel/Users/">Users</a></li>
-                        <li><a href="/Panel/Couriers/">Couriers</a></li>
                         <li><a href="/Panel/Cities/">Cities</a></li>
                     }
                     <li><a href="/Panel/Stores/">Stores</a></li>
                     <li><a href="/Panel/Categories/">Categories</a></li>
                     <li><a href="/Panel/Products/">Products</a></li>
+                    <li><a href="/Panel/Orders/">Orders</a></li>
+                    <li><a href="/Panel/Couriers/">Couriers</a></li>
                 </ul>
             </div>
         </div>
         <div class="col-lg-9">
             <h2>User Details</h2>
+
+            @if (TempData["EmailError"] != null)
+            {
+                <div class="alert alert-danger" role="alert">
+                    @TempData["EmailError"]
+                </div>
+            }
+
             <div>
                 <a class="btn btn-success rounded-2" data-bs-toggle="modal" data-bs-target="#addModal"> Add New User </a>
             </div>
+
             <div>
                 <table class="table table-hover">
                     <thead>
@@ -244,8 +248,7 @@
                             <th> Phone </th>
                             <th> Password </th>
                             <th> Address </th>
-                            <th> City ID </th>
-                            <th> Cart ID </th>
+                            <th> City </th>
                             <th> Roles </th>
                             <th> Managed Store </th>
                             <th> Delete </th>
@@ -263,10 +266,9 @@
                                 <td> @u.phone  </td>
                                 <td> @u.password </td>
                                 <td> @u.address </td>
-                                <td> @u.cityID</td>
-                                <td> @u.cartID</td>
+                                <td> @if (u.cityID != null) { @u.Cities.name; } </td>
                                 <td> @u.roles</td>
-                                <td> @u.managedStore</td>
+                                <td> @if (u.managedStore != null) { @u.Stores.name; } </td>
                                 <td> <a class="btn btn-danger delModal" data-uID="@u.id" data-firstname="@u.firstName" data-lastname="@u.lastName" data-email="@u.email" data-phone="@u.phone" data-password="@u.password" data-address="@u.address" data-cityID="@u.cityID" data-cartID="@u.cartID" data-roles="@u.roles" data-managedStore="@u.managedStore" data-bs-toggle="modal" data-bs-target="#deleteModal"> Delete </a> </td>
                                 <td> <a class="btn btn-info updUser" data-uID="@u.id" data-firstname="@u.firstName" data-lastname="@u.lastName" data-email="@u.email" data-phone="@u.phone" data-password="@u.password" data-address="@u.address" data-cityID="@u.cityID" data-cartID="@u.cartID" data-roles="@u.roles" data-managedStore="@u.managedStore" data-bs-toggle="modal" data-bs-target="#updateModal"> Update </a> </td>
                             </tr>

@@ -5,9 +5,11 @@
     ViewBag.Title = "Orders";
 }
 
+
+
 @section body {
     <!-- The Modal -->
-    <div class="modal modal-lg" id="detailsModal">
+    <div class="modal modal-lg fade" id="detailsModal">
         <div class="modal-dialog">
             <div class="modal-content">
 
@@ -48,16 +50,18 @@
                         <tr>
                             <th> Date </th>
                             <th> Status </th>
+                            <th> Store </th>
                             <th> Total Price </th>
                             <th> Details </th>
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach (var item in Model)
+                        @foreach (var item in Model.OrderByDescending(o => o.date))
                         {
                             <tr>
                                 <td> @item.date </td>
                                 <td> @item.status </td>
+                                <td> @item.Stores.name  </td>
                                 <td> @item.totalPrice </td>
                                 <td> <a class="btn btn-info detOrder" data-orID="@item.id" data-bs-toggle="modal" data-bs-target="#detailsModal"> Details </a> </td>
                             </tr>
@@ -73,12 +77,12 @@
     <script src="~/Shared/js/jquery-3.7.1.min.js"></script>
     <script>
         $('.detOrder').click(function () {
-            var orderId = $(this).data('orID');
+            var orderID = $(this).attr('data-orID');
 
             $.ajax({
                 url: '/Account/GetOrderItems/',
                 type: 'GET',
-                data: { orderId: orderId },
+                data: { orderID: orderID },
                 success: function (result) {
                     $('#orderDetailsBody').html(result);
                     $('#detailsModal').modal('show');

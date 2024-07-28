@@ -33,24 +33,13 @@
     <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="name" Type="nvarchar" MaxLength="50" Nullable="false" />
   </EntityType>
-  <EntityType Name="Deliveries">
-    <Key>
-      <PropertyRef Name="id" />
-    </Key>
-    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="orderID" Type="int" Nullable="false" />
-    <Property Name="delPersonID" Type="int" Nullable="false" />
-    <Property Name="status" Type="nvarchar" MaxLength="50" Nullable="false" />
-    <Property Name="deliveryTime" Type="timestamp" StoreGeneratedPattern="Computed" />
-  </EntityType>
-  <EntityType Name="DeliveryPerson">
+  <EntityType Name="Drivers">
     <Key>
       <PropertyRef Name="id" />
     </Key>
     <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="name" Type="nvarchar" MaxLength="255" Nullable="false" />
-    <Property Name="phone" Type="nvarchar" MaxLength="20" />
-    <Property Name="status" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="phone" Type="nvarchar" MaxLength="255" Nullable="false" />
   </EntityType>
   <EntityType Name="OrderItems">
     <Key>
@@ -68,9 +57,17 @@
     </Key>
     <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="userID" Type="int" Nullable="false" />
+    <Property Name="storeID" Type="int" Nullable="false" />
+    <Property Name="driverID" Type="int" Nullable="false" />
     <Property Name="status" Type="nvarchar" MaxLength="50" Nullable="false" />
     <Property Name="totalPrice" Type="decimal" Precision="10" Scale="2" Nullable="false" />
     <Property Name="date" Type="datetime" />
+    <Property Name="firstName" Type="nvarchar" MaxLength="255" Nullable="false" />
+    <Property Name="lastName" Type="nvarchar" MaxLength="255" Nullable="false" />
+    <Property Name="address" Type="nvarchar" MaxLength="255" Nullable="false" />
+    <Property Name="email" Type="nvarchar" MaxLength="75" Nullable="false" />
+    <Property Name="phone" Type="nvarchar" MaxLength="20" />
+    <Property Name="cityID" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="Products">
     <Key>
@@ -146,32 +143,10 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__Deliverie__delPe__558AAF1E">
-    <End Role="DeliveryPerson" Type="Self.DeliveryPerson" Multiplicity="1" />
-    <End Role="Deliveries" Type="Self.Deliveries" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="DeliveryPerson">
-        <PropertyRef Name="id" />
-      </Principal>
-      <Dependent Role="Deliveries">
-        <PropertyRef Name="delPersonID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK__Deliverie__order__54968AE5">
-    <End Role="Orders" Type="Self.Orders" Multiplicity="1" />
-    <End Role="Deliveries" Type="Self.Deliveries" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Orders">
-        <PropertyRef Name="id" />
-      </Principal>
-      <Dependent Role="Deliveries">
-        <PropertyRef Name="orderID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK__OrderItem__order__4EDDB18F">
-    <End Role="Orders" Type="Self.Orders" Multiplicity="1" />
+  <Association Name="FK__OrderItem__order__24B26D99">
+    <End Role="Orders" Type="Self.Orders" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
     <End Role="OrderItems" Type="Self.OrderItems" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Orders">
@@ -191,6 +166,42 @@
       </Principal>
       <Dependent Role="OrderItems">
         <PropertyRef Name="productID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Orders__cityID__1758727B">
+    <End Role="Cities" Type="Self.Cities" Multiplicity="1" />
+    <End Role="Orders" Type="Self.Orders" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Cities">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Orders">
+        <PropertyRef Name="cityID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Orders__driverID__184C96B4">
+    <End Role="Drivers" Type="Self.Drivers" Multiplicity="1" />
+    <End Role="Orders" Type="Self.Orders" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Drivers">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Orders">
+        <PropertyRef Name="driverID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Orders__storeID__16644E42">
+    <End Role="Stores" Type="Self.Stores" Multiplicity="1" />
+    <End Role="Orders" Type="Self.Orders" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Stores">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Orders">
+        <PropertyRef Name="storeID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -259,8 +270,7 @@
     <EntitySet Name="Carts" EntityType="Self.Carts" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Categories" EntityType="Self.Categories" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Cities" EntityType="Self.Cities" Schema="dbo" store:Type="Tables" />
-    <EntitySet Name="Deliveries" EntityType="Self.Deliveries" Schema="dbo" store:Type="Tables" />
-    <EntitySet Name="DeliveryPerson" EntityType="Self.DeliveryPerson" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Drivers" EntityType="Self.Drivers" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="OrderItems" EntityType="Self.OrderItems" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Orders" EntityType="Self.Orders" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Products" EntityType="Self.Products" Schema="dbo" store:Type="Tables" />
@@ -278,21 +288,25 @@
       <End Role="Stores" EntitySet="Stores" />
       <End Role="Categories" EntitySet="Categories" />
     </AssociationSet>
-    <AssociationSet Name="FK__Deliverie__delPe__558AAF1E" Association="Self.FK__Deliverie__delPe__558AAF1E">
-      <End Role="DeliveryPerson" EntitySet="DeliveryPerson" />
-      <End Role="Deliveries" EntitySet="Deliveries" />
-    </AssociationSet>
-    <AssociationSet Name="FK__Deliverie__order__54968AE5" Association="Self.FK__Deliverie__order__54968AE5">
-      <End Role="Orders" EntitySet="Orders" />
-      <End Role="Deliveries" EntitySet="Deliveries" />
-    </AssociationSet>
-    <AssociationSet Name="FK__OrderItem__order__4EDDB18F" Association="Self.FK__OrderItem__order__4EDDB18F">
+    <AssociationSet Name="FK__OrderItem__order__24B26D99" Association="Self.FK__OrderItem__order__24B26D99">
       <End Role="Orders" EntitySet="Orders" />
       <End Role="OrderItems" EntitySet="OrderItems" />
     </AssociationSet>
     <AssociationSet Name="FK__OrderItem__produ__4FD1D5C8" Association="Self.FK__OrderItem__produ__4FD1D5C8">
       <End Role="Products" EntitySet="Products" />
       <End Role="OrderItems" EntitySet="OrderItems" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Orders__cityID__1758727B" Association="Self.FK__Orders__cityID__1758727B">
+      <End Role="Cities" EntitySet="Cities" />
+      <End Role="Orders" EntitySet="Orders" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Orders__driverID__184C96B4" Association="Self.FK__Orders__driverID__184C96B4">
+      <End Role="Drivers" EntitySet="Drivers" />
+      <End Role="Orders" EntitySet="Orders" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Orders__storeID__16644E42" Association="Self.FK__Orders__storeID__16644E42">
+      <End Role="Stores" EntitySet="Stores" />
+      <End Role="Orders" EntitySet="Orders" />
     </AssociationSet>
     <AssociationSet Name="FK__Products__catego__45544755" Association="Self.FK__Products__catego__45544755">
       <End Role="Categories" EntitySet="Categories" />

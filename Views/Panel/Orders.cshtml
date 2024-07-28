@@ -1,8 +1,8 @@
 ﻿@using GroceryDeliverySystem.Models
-@model List<Cities>
+@model List<Orders>
 
 @{
-    ViewBag.Title = "Cities";
+    ViewBag.Title = "Orders";
 }
 
 @section head {
@@ -15,13 +15,32 @@
 
 @section body {
     <!-- The Modal -->
+    <div class="modal modal-lg fade" id="detailsModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">Order Details</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+
+                <!-- Modal body -->
+                <div class="modal-body" id="orderDetailsBody">
+                    <!-- Order details will be dynamically loaded here -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- The Modal -->
     <div class="modal fade" id="deleteModal">
         <div class="modal-dialog">
             <div class="modal-content">
 
                 <!-- Modal Header -->
                 <div class="modal-header">
-                    <h4 class="modal-title">Delete City</h4>
+                    <h4 class="modal-title">Delete Order</h4>
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
 
@@ -34,35 +53,7 @@
                 <!-- Modal footer -->
                 <div class="modal-footer">
                     <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Cancel</button>
-                    <button type="button" class="btn btn-danger cityDel">Delete</button>
-                </div>
-
-            </div>
-        </div>
-    </div>
-
-    <div class="modal fade" id="addModal">
-        <div class="modal-dialog">
-            <div class="modal-content">
-
-                <!-- Modal Header -->
-                <div class="modal-header">
-                    <h4 class="modal-title">Add City</h4>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                </div>
-
-                <!-- Modal body -->
-                <div class="modal-body">
-                    <form action="/Panel/AddCity/" method="post" id="form1">
-                        <label>Name</label>
-                        <input type="text" class="form-control" name="name" id="name1" placeholder="Enter city name" required />
-                    </form>
-                </div>
-
-                <!-- Modal footer -->
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancel</button>
-                    <button type="submit" class="btn btn-primary cityAdd" form="form1">Add</button>
+                    <button type="button" class="btn btn-danger orderDel">Delete</button>
                 </div>
 
             </div>
@@ -75,17 +66,17 @@
 
                 <!-- Modal Header -->
                 <div class="modal-header">
-                    <h4 class="modal-title">Update City</h4>
+                    <h4 class="modal-title">Change Status</h4>
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
 
                 <!-- Modal body -->
                 <div class="modal-body">
-                    <form action="/Panel/AddCity/" method="post" id="form2">
+                    <form action="/Panel/ChangeStatus/" method="post" id="form2">
                         <input type="hidden" class="form-control" name="id" id="id" />
 
-                        <label>Name</label>
-                        <input type="text" class="form-control" name="name" id="name2" placeholder="Enter city name" required />
+                        <label>Status</label>
+                        <input type="text" class="form-control" name="status" id="status2" placeholder="Enter status" required />
                     </form>
                     <p class="message"></p>
                 </div>
@@ -93,7 +84,7 @@
                 <!-- Modal footer -->
                 <div class="modal-footer">
                     <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancel</button>
-                    <button type="submit" class="btn btn-primary cityUpd" form="form2">Update</button>
+                    <button type="submit" class="btn btn-primary orderUpd" form="form2">Update</button>
                 </div>
 
             </div>
@@ -123,28 +114,35 @@
             </div>
         </div>
         <div class="col-lg-9">
-            <h2>City Details</h2>
-            <div>
-                <a class="btn btn-success rounded-2" data-bs-toggle="modal" data-bs-target="#addModal"> Add New City </a>
-            </div>
+            <h2>Order Details</h2>
             <div>
                 <table class="table table-hover">
                     <thead>
                         <tr>
                             <th> ID </th>
-                            <th> Name </th>
+                            <th> Date </th>
+                            <th> Status </th>
+                            <th> Courier </th>
+                            <th> Store </th>
+                            <th> Total Price </th>
+                            <th> Details </th>
                             <th> Delete </th>
-                            <th> Update </th>
+                            <th> Change Status </th>
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach (Cities c in Model)
+                        @foreach (var item in Model.OrderByDescending(o => o.date))
                         {
                             <tr>
-                                <td> @c.id </td>
-                                <td> @c.name </td>
-                                <td> <a class="btn btn-danger delModal" data-cID="@c.id" data-name="@c.name" data-bs-toggle="modal" data-bs-target="#deleteModal"> Delete </a> </td>
-                                <td> <a class="btn btn-info updCity" data-cID="@c.id" data-name="@c.name" data-bs-toggle="modal" data-bs-target="#updateModal"> Update </a> </td>
+                                <td> @item.id  </td>
+                                <td> @item.date </td>
+                                <td> @item.status </td>
+                                <td> @item.Drivers.name </td>
+                                <td> @item.Stores.name </td>
+                                <td> @item.totalPrice </td>
+                                <td> <a class="btn btn-info detOrder" data-orID="@item.id" data-bs-toggle="modal" data-bs-target="#detailsModal"> Details </a> </td>
+                                <td> <a class="btn btn-danger delModal" data-orID="@item.id" data-bs-toggle="modal" data-bs-target="#deleteModal"> Delete </a> </td>
+                                <td> <a class="btn btn-warning updOrder" data-orID="@item.id" data-status="@item.status" data-bs-toggle="modal" data-bs-target="#updateModal"> Change </a> </td>
                             </tr>
                         }
                     </tbody>
@@ -154,28 +152,41 @@
     </div>
 </div>
 
-@section scripts{
+@section scripts {
     <script src="~/Shared/js/jquery-3.7.1.min.js"></script>
     <script>
+        $('.detOrder').click(function () {
+            var orderID = $(this).attr('data-orID');
+
+            $.ajax({
+                url: '/Account/GetOrderItems/',
+                type: 'GET',
+                data: { orderID: orderID },
+                success: function (result) {
+                    $('#orderDetailsBody').html(result);
+                    $('#detailsModal').modal('show');
+                }
+            });
+        });
+
         $(".delModal").click(
             function () {
-                var id = $(this).attr("data-cID");
-                var name = $(this).attr("data-name");
-                $(".modal-body > p.message").html("Should the city<strong> " + name + " </strong>with the ID<strong> " + id + " </strong>get deleted?");
-                $(".cityDel").data("cID", id);
+                var id = $(this).attr("data-orID");
+                $(".modal-body > p.message").html("Should the order with the ID<strong> " + id + " </strong>get deleted?");
+                $(".orderDel").data("orID", id);
             }
         );
 
-        $(".cityDel").click(
+        $(".orderDel").click(
             function () {
-                var id = $(this).data("cID");
+                var id = $(this).data("orID");
                 $.ajax(
                     {
                         type: "POST",
-                        url: "/Panel/DeleteCity/" + id,
+                        url: "/Panel/DeleteOrder/" + id,
                         success: function (result) {
                             if (result == "successful") {
-                                window.location.replace("/Panel/Cities/");
+                                window.location.replace("/Panel/Orders/");
                             }
                             else {
                                 $(".modal-body > p.error").html("An error occurred");
@@ -186,16 +197,14 @@
             }
         );
 
-        $(".updCity").click(
+        $(".updOrder").click(
             function () {
-                var id = $(this).attr("data-cID");
-                var name = $(this).attr("data-name");
+                var id = $(this).attr("data-orID");
+                var status = $(this).attr("data-status");
 
                 $(".modal-body #id").val(id);
-                $(".modal-body #name2").val(name);
+                $(".modal-body #status2").val(status);
             }
         );
-
     </script>
 }
-

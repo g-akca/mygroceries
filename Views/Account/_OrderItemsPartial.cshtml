@@ -1,33 +1,134 @@
 ﻿@using GroceryDeliverySystem.Models
+@using System.Linq
 @model List<OrderItems>
 
-<table class="table table-striped">
-    <thead>
-        <tr>
-            <th>Image</th>
-            <th>Product Name</th>
-            <th>Quantity</th>
-            <th>Price</th>
-        </tr>
-    </thead>
-    <tbody>
+@{
+    Orders order = ViewBag.Order;
+    decimal totalPrice = Model.Sum(item => item.price);
+    string cityName = ViewBag.CityName;
+}
+
+<head>
+    <style>
+
+        .checkout-header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .section-divider {
+            border-top: 1px solid #ddd;
+            margin: 15px 0; /* Adjust spacing as needed */
+        }
+
+        .checkout-section {
+            margin-bottom: 20px;
+        }
+
+            .checkout-section h3 {
+                margin-bottom: 10px;
+            }
+
+            .checkout-section textarea {
+                width: 100%;
+                padding: 10px;
+                margin-bottom: 10px;
+                border: 1px solid #ccc;
+                border-radius: 5px;
+            }
+
+            .checkout-section .cart-item {
+                display: flex;
+                align-items: center; /* Vertically align items */
+                justify-content: space-between; /* Space items evenly */
+                padding: 10px;
+                border-bottom: 1px solid #ddd;
+                gap: 10px; /* Add space between columns */
+            }
+
+                .checkout-section .cart-item img {
+                    width: 80px;
+                    height: auto;
+                    margin-right: 15px;
+                }
+
+                .checkout-section .cart-item .item-details {
+                    flex: 1;
+                    display: flex;
+                    flex-direction: column; /* Stack name and price vertically */
+                    align-items: flex-start; /* Align items to the start */
+                }
+
+                    .checkout-section .cart-item .item-details .item-name {
+                        font-weight: bold;
+                    }
+
+                    .checkout-section .cart-item .item-details .item-price {
+                        color: #888;
+                    }
+
+                .checkout-section .cart-item .item-quantity {
+                    display: flex;
+                    align-items: center;
+                    margin-left: auto; /* Push quantity controls to the right */
+                }
+
+                    .checkout-section .cart-item .item-quantity span {
+                        margin: 0 10px;
+                        font-size: 16px;
+                    }
+
+                .checkout-section .cart-item .item-total {
+                    text-align: right;
+                    min-width: 100px; /* Ensure total column has enough width */
+                }
+
+            .checkout-section .total-price {
+                text-align: right;
+                font-weight: bold;
+                margin-top: 10px;
+            }
+    </style>
+</head>
+
+<div class="checkout-container">
+    <div class="checkout-section">
+        <h3>Shipping Information</h3>
+        <p><strong>First Name:</strong> @order.firstName</p>
+        <p><strong>Last Name:</strong> @order.lastName</p>
+        <p><strong>Email:</strong> @order.email</p>
+        <p><strong>Phone:</strong> @order.phone</p>
+        <p><strong>Address:</strong> @order.address</p>
+        <p><strong>City:</strong> @cityName</p>
+        <p><strong>Order Date:</strong> @order.date</p>
+        <!-- Section Divider -->
+        <div class="section-divider"></div>
+        <h3>Order Details</h3>
         @foreach (var item in Model)
         {
-            <tr>
-                <td style="max-width: 70px;">
+            <div class="cart-item">
                 @if (!string.IsNullOrEmpty(item.Products.imageURL))
                 {
-                    <img class="card-img-top" src="@item.Products.imageURL" alt="..." />
+                    <img src="@item.Products.imageURL" alt="Product Image" />
                 }
                 else
                 {
-                    <img class="card-img-top" src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg" alt="..." />
+                    <img src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg" alt="Placeholder Image" />
                 }
-                </td>
-                <td class="align-middle">@item.Products.name</td>
-                <td class="align-middle">@item.quantity</td>
-                <td class="align-middle">@item.price</td>
-            </tr>
+                <div class="item-details">
+                    <div class="item-name">@item.Products.name</div>
+                    <div class="item-price">@item.Products.price TL</div>
+                </div>
+                <div class="item-quantity">
+                    <span>Quantity: @item.quantity</span>
+                </div>
+                <div class="item-total">
+                    @item.price TL
+                </div>
+            </div>
         }
-    </tbody>
-</table>
+        <div class="total-price">
+            Total: @totalPrice TL
+        </div>
+    </div>
+</div>

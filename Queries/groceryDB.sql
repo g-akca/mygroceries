@@ -86,7 +86,7 @@ create table Orders (
 
 create table OrderItems ( 
 	[id]			int				IDENTITY (1,1) PRIMARY KEY NOT NULL,
-	[orderID]		int				NOT NULL FOREIGN KEY REFERENCES Orders(id),
+	[orderID]		int				NOT NULL FOREIGN KEY REFERENCES Orders(id) ON DELETE CASCADE,
 	[productID]		int				NOT NULL FOREIGN KEY REFERENCES Products(id),
 	[quantity]		int				NOT NULL,
 	[price]			decimal (10,2)	NOT NULL

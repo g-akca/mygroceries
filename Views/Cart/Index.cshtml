@@ -19,7 +19,6 @@
             align-items: center;
             padding: 15px;
             border-bottom: 1px solid #ddd;
-            margin-bottom: 10px;
         }
 
             .cart-item img {
@@ -47,7 +46,6 @@
 
         .item-product-price {
             color: #888;
-            margin-bottom: 10px;
         }
 
         .item-price {
@@ -58,26 +56,43 @@
         .quantity-controls {
             display: flex;
             align-items: center;
+            border: 1px solid #7fad39;
+            border-radius: 8px;
         }
 
-            .quantity-controls button {
-                background-color: #3e8e41;
-                color: white;
-                border: none;
+            .quantity-controls button, .quantity-controls span {
                 padding: 5px 10px;
-                cursor: pointer;
                 font-size: 16px;
-                margin: 0 5px;
+                margin: 0;
+                border: none;
             }
 
-                .quantity-controls button:hover {
-                    background-color: #357b36;
-                }
+            .quantity-controls button {
+                background-color: #7fad39;
+                color: white;
+                cursor: pointer;
+            }
 
             .quantity-controls span {
-                margin: 0 10px;
-                font-size: 16px;
+                background-color: white;
+                color: black;
                 font-weight: bold;
+                text-align: center;
+                width: 35px;
+                border-left: 1px solid #7fad39;
+                border-right: 1px solid #7fad39;
+            }
+
+            .quantity-controls button:first-child {
+                border-radius: 5px 0 0 5px;
+            }
+
+            .quantity-controls button:last-child {
+                border-radius: 0 5px 5px 0;
+            }
+
+            .quantity-controls button:hover {
+                background-color: #357b36;
             }
 
         .total-price {
@@ -96,7 +111,7 @@
             margin: 0 auto;
             width: 200px;
             padding: 10px;
-            background-color: #3e8e41;
+            background-color: #7fad39;
             color: white;
             border: none;
             border-radius: 5px;
