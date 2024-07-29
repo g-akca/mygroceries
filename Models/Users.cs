@@ -18,7 +18,6 @@ namespace GroceryDeliverySystem.Models
         public Users()
         {
             this.Carts = new HashSet<Carts>();
-            this.Orders = new HashSet<Orders>();
         }
     
         public int id { get; set; }
@@ -32,14 +31,12 @@ namespace GroceryDeliverySystem.Models
         public Nullable<int> cartID { get; set; }
         public string roles { get; set; }
         public Nullable<int> managedStore { get; set; }
-        public bool isActive { get; set; }
+        public int isActive { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Carts> Carts { get; set; }
         public virtual Carts Carts1 { get; set; }
         public virtual Cities Cities { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Orders> Orders { get; set; }
         public virtual Stores Stores { get; set; }
     }
 }

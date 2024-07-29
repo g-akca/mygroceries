@@ -21,6 +21,7 @@
         <p class="text-center">Please fill out the form below to get in touch with us.</p>
 
         <form action="/Home/ContactUs/" method="post">
+            <input type="hidden" class="form-control" value="0" id="isActive" name="isActive" />
             <div class="form-outline mb-4">
                 <label for="name">Name</label>
                 <input type="text" id="name" name="name" class="form-control" placeholder="Enter your name" required />

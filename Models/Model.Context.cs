@@ -29,12 +29,12 @@ namespace GroceryDeliverySystem.Models
         public virtual DbSet<Carts> Carts { get; set; }
         public virtual DbSet<Categories> Categories { get; set; }
         public virtual DbSet<Cities> Cities { get; set; }
+        public virtual DbSet<Couriers> Couriers { get; set; }
+        public virtual DbSet<Inquiries> Inquiries { get; set; }
         public virtual DbSet<OrderItems> OrderItems { get; set; }
         public virtual DbSet<Orders> Orders { get; set; }
         public virtual DbSet<Products> Products { get; set; }
         public virtual DbSet<Stores> Stores { get; set; }
         public virtual DbSet<Users> Users { get; set; }
-        public virtual DbSet<Couriers> Couriers { get; set; }
-        public virtual DbSet<Inquiries> Inquiries { get; set; }
     }
 }

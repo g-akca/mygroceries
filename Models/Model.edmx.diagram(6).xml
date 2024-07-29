@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="e35a8711694048b0a7240372fc558f68" Name="Diagram1" ZoomLevel="86">
+        <AssociationConnector Association="groceryDBModel.FK__CartItems__cartI__0F2D40CE" />
+        <AssociationConnector Association="groceryDBModel.FK__CartItems__produ__10216507" />
+        <AssociationConnector Association="groceryDBModel.FK__Users__cartID__214BF109" />
+        <AssociationConnector Association="groceryDBModel.FK__Categorie__store__09746778" />
+        <AssociationConnector Association="groceryDBModel.FK__Products__catego__0C50D423" />
+        <AssociationConnector Association="groceryDBModel.FK__Stores__cityID__0697FACD" />
+        <AssociationConnector Association="groceryDBModel.FK__Users__cityID__2057CCD0" />
+        <AssociationConnector Association="groceryDBModel.FK__Deliverie__delPe__1C873BEC" />
+        <AssociationConnector Association="groceryDBModel.FK__Deliverie__order__1B9317B3" />
+        <AssociationConnector Association="groceryDBModel.FK__OrderItem__order__15DA3E5D" />
+        <AssociationConnector Association="groceryDBModel.FK__OrderItem__produ__16CE6296" />
+        <AssociationConnector Association="groceryDBModel.FK__Carts__userID__79FD19BE" />
+        <EntityTypeShape EntityType="groceryDBModel.CartItems" Width="1.5" PointX="9.75" PointY="11.75" />
+        <EntityTypeShape EntityType="groceryDBModel.Carts" Width="1.5" PointX="7.5" PointY="7.625" />
+        <EntityTypeShape EntityType="groceryDBModel.Categories" Width="1.5" PointX="5.25" PointY="11.875" />
+        <EntityTypeShape EntityType="groceryDBModel.Cities" Width="1.5" PointX="0.75" PointY="6.125" />
+        <EntityTypeShape EntityType="groceryDBModel.Deliveries" Width="1.5" PointX="9.75" PointY="4.5" />
+        <EntityTypeShape EntityType="groceryDBModel.DeliveryPerson" Width="1.5" PointX="7.5" PointY="1.75" />
+        <EntityTypeShape EntityType="groceryDBModel.OrderItems" Width="1.5" PointX="12.75" PointY="11.75" />
+        <EntityTypeShape EntityType="groceryDBModel.Orders" Width="1.5" PointX="7.5" PointY="4.5" />
+        <EntityTypeShape EntityType="groceryDBModel.Products" Width="1.5" PointX="7.5" PointY="11.625" />
+        <EntityTypeShape EntityType="groceryDBModel.Stores" Width="1.5" PointX="3" PointY="5.75" />
+        <EntityTypeShape EntityType="groceryDBModel.Users" Width="1.5" PointX="5.25" PointY="5" />
+        <AssociationConnector Association="groceryDBModel.FK__CartItems__cartI__4830B400" />
+        <AssociationConnector Association="groceryDBModel.FK__CartItems__produ__4924D839" />
+        <AssociationConnector Association="groceryDBModel.FK__Carts__userID__3EA749C6" />
+        <AssociationConnector Association="groceryDBModel.UC" />
+        <AssociationConnector Association="groceryDBModel.FK__Categorie__store__4277DAAA" />
+        <AssociationConnector Association="groceryDBModel.FK__Products__catego__45544755" />
+        <AssociationConnector Association="groceryDBModel.FK__Stores__cityID__361203C5" />
+        <AssociationConnector Association="groceryDBModel.FK__Users__cityID__39E294A9" />
+        <AssociationConnector Association="groceryDBModel.FK__Deliverie__delPe__558AAF1E" />
+        <AssociationConnector Association="groceryDBModel.FK__Deliverie__order__54968AE5" />
+        <AssociationConnector Association="groceryDBModel.FK__OrderItem__order__4EDDB18F" />
+        <AssociationConnector Association="groceryDBModel.FK__OrderItem__produ__4FD1D5C8" />
+        <AssociationConnector Association="groceryDBModel.FK__Orders__userID__4C0144E4" />
+        <AssociationConnector Association="groceryDBModel.FK__Users__managedSt__3BCADD1B" />
+        </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

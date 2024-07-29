@@ -34,12 +34,20 @@
                     @TempData["EmailError"]
                 </div>
             }
+            else if (TempData["UpdateSuccess"] != null)
+            {
+                <div class="alert alert-success" role="alert">
+                    @TempData["UpdateSuccess"]
+                </div>
+            }
             <div>
                 <form action="/Account/UpdateUser/" method="post" id="form">
                     <input type="hidden" class="form-control" value="@Model.id" name="id" id="id" />
                     <input type="hidden" class="form-control" value="@Model.cartID" name="cartID" id="cartID" />
                     <input type="hidden" class="form-control" value="@Model.roles" name="roles" id="roles" />
                     <input type="hidden" class="form-control" value="@Model.managedStore" name="managedStore" id="managedStore" />
+                    <input type="hidden" class="form-control" value="@Model.isActive" name="isActive" id="isActive" />
+
                     <div class="row">
                         <div class="col-md-6">
                             <div data-mdb-input-init class="form-outline">

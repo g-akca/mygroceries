@@ -1,11 +1,6 @@
 ﻿using GroceryDeliverySystem.Models;
 using GroceryDeliverySystem.Security;
-using System;
-using System.Collections.Generic;
-using System.Data.Entity.Migrations;
 using System.Linq;
-using System.Runtime.InteropServices;
-using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
 
@@ -21,11 +16,11 @@ namespace GroceryDeliverySystem.Controllers
             {
                 var email = User.Identity.Name;
                 var user = gdb.Users.FirstOrDefault(x => x.email == email);
-                return View(gdb.Stores.Where(x => x.cityID == user.cityID && x.isActive == true).ToList());
+                return View(gdb.Stores.Where(x => x.cityID == user.cityID && x.isActive == 0).ToList());
             }
             else
             {
-                return View(gdb.Stores.Where(x => x.isActive == true).ToList());
+                return View(gdb.Stores.Where(x => x.isActive == 0).ToList());
             }
         }
 
@@ -41,14 +36,15 @@ namespace GroceryDeliverySystem.Controllers
         public ActionResult Login(Users u)
         {
             Users us = gdb.Users.FirstOrDefault(x => x.email == u.email && x.password == u.password);
-            if (us != null)
+
+            if (us != null && us.isActive == 0)
             {
                 FormsAuthentication.SetAuthCookie(u.email, false);
                 return RedirectToAction("Index");
             }
             else
             {
-                ViewBag.hata = "Incorrect email or password!";
+                TempData["Error"] = "Incorrect email or password!";
                 return View();
             }
         }
@@ -71,6 +67,12 @@ namespace GroceryDeliverySystem.Controllers
         [MyAuthorization]
         public ActionResult Signup(Users u)
         {
+            bool isAvailable = gdb.Users.Any(user => user.email == u.email);
+            if (isAvailable)
+            {
+                TempData["EmailError"] = "The email address you've entered is already in use. Please choose another one.";
+                return RedirectToAction("Signup");
+            }
             gdb.Users.Add(u);
             gdb.SaveChanges();
             var c = new Carts { userID = u.id };
@@ -78,7 +80,6 @@ namespace GroceryDeliverySystem.Controllers
             gdb.SaveChanges();
             u.cartID = c.id;
             u.roles = "C";
-            u.isActive = true;
             gdb.SaveChanges();
             if (u != null)
             {
@@ -123,7 +124,6 @@ namespace GroceryDeliverySystem.Controllers
         public ActionResult ContactUs(Inquiries i)
         {
             TempData["Success"] = "Thank you for contacting us. We will get back to you soon.";
-            i.isActive = true;
             gdb.Inquiries.Add(i);
             gdb.SaveChanges();
             return RedirectToAction("ContactUs");
@@ -139,7 +139,7 @@ namespace GroceryDeliverySystem.Controllers
             var cartItems = gdb.CartItems.Where(x => x.cartID == cart.id).ToList();
 
             ViewBag.User = user;
-            ViewBag.Cities = gdb.Cities.Where(x => x.isActive == true).ToList();
+            ViewBag.Cities = gdb.Cities.Where(x => x.isActive == 0).ToList();
 
             return PartialView("_NavBar1", cartItems);
         }

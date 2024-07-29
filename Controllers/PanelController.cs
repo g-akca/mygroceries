@@ -3,8 +3,6 @@ using System;
 using System.Collections.Generic;
 using System.Data.Entity.Migrations;
 using System.Linq;
-using System.Security.Cryptography.Pkcs;
-using System.Web;
 using System.Web.Mvc;
 using System.Web.UI.WebControls;
 
@@ -24,14 +22,14 @@ namespace GroceryDeliverySystem.Controllers
         [Authorize(Roles = "A")]
         public ActionResult Users()
         {
-            ViewBag.Cities = gdb.Cities.Where(x => x.isActive == true).ToList();
-            ViewBag.Stores = gdb.Stores.Where(x => x.isActive == true).ToList();
+            ViewBag.Cities = gdb.Cities.Where(x => x.isActive == 0).ToList();
+            ViewBag.Stores = gdb.Stores.Where(x => x.isActive == 0).ToList();
 
             var userEmail = User.Identity.Name;
             var user = gdb.Users.FirstOrDefault(x => x.email == userEmail);
             if (User.IsInRole("A") || user.managedStore != null)
             {
-                return View(gdb.Users.Where(x => x.isActive == true).ToList());
+                return View(gdb.Users.Where(x => x.isActive == 0).ToList());
             }
             else
             {
@@ -46,7 +44,7 @@ namespace GroceryDeliverySystem.Controllers
             var user = gdb.Users.FirstOrDefault(x => x.email == userEmail);
             if (User.IsInRole("A") || user.managedStore != null)
             {
-                return View(gdb.Cities.Where(x => x.isActive == true).ToList());
+                return View(gdb.Cities.Where(x => x.isActive == 0).ToList());
             }
             else
             {
@@ -56,10 +54,10 @@ namespace GroceryDeliverySystem.Controllers
 
         public ActionResult Stores()
         {
-            ViewBag.Cities = gdb.Cities.Where(x => x.isActive == true).ToList();
+            ViewBag.Cities = gdb.Cities.Where(x => x.isActive == 0).ToList();
             if (User.IsInRole("A"))
             {
-                return View(gdb.Stores.Where(x => x.isActive == true).ToList());
+                return View(gdb.Stores.Where(x => x.isActive == 0).ToList());
             }
             else
             {
@@ -67,7 +65,7 @@ namespace GroceryDeliverySystem.Controllers
                 var user = gdb.Users.FirstOrDefault(x => x.email == userEmail);
                 if (user.managedStore != null)
                 {
-                    return View(gdb.Stores.Where(x => x.id == user.managedStore && x.isActive == true).ToList());
+                    return View(gdb.Stores.Where(x => x.id == user.managedStore && x.isActive == 0).ToList());
                 }
                 else
                 {
@@ -78,10 +76,10 @@ namespace GroceryDeliverySystem.Controllers
 
         public ActionResult Categories()
         {
-            ViewBag.Stores = gdb.Stores.Where(x => x.isActive == true).ToList();
+            ViewBag.Stores = gdb.Stores.Where(x => x.isActive == 0).ToList();
             if (User.IsInRole("A"))
             {
-                return View(gdb.Categories.Where(x => x.isActive == true).ToList());
+                return View(gdb.Categories.Where(x => x.isActive == 0).ToList());
             }
             else
             {
@@ -90,7 +88,7 @@ namespace GroceryDeliverySystem.Controllers
                 if (user.managedStore != null)
                 {
                     var store = gdb.Stores.FirstOrDefault(x => x.id == user.managedStore);
-                    return View(gdb.Categories.Where(x => x.storeID == store.id && x.isActive == true).ToList());
+                    return View(gdb.Categories.Where(x => x.storeID == store.id && x.isActive == 0).ToList());
                 }
                 else
                 {
@@ -103,8 +101,8 @@ namespace GroceryDeliverySystem.Controllers
         {
             if (User.IsInRole("A"))
             {
-                ViewBag.Categories = gdb.Categories.Where(x => x.isActive == true).ToList();
-                return View(gdb.Products.Where(x => x.isActive == true).ToList());
+                ViewBag.Categories = gdb.Categories.Where(x => x.isActive == 0).ToList();
+                return View(gdb.Products.Where(x => x.isActive == 0).ToList());
             }
             else
             {
@@ -113,14 +111,14 @@ namespace GroceryDeliverySystem.Controllers
                 if (user.managedStore != null)
                 {
                     var store = gdb.Stores.FirstOrDefault(x => x.id == user.managedStore);
-                    var ctg = gdb.Categories.Where(x => x.storeID == store.id && x.isActive == true).ToList();
+                    var ctg = gdb.Categories.Where(x => x.storeID == store.id && x.isActive == 0).ToList();
                     ViewBag.Categories = ctg;
                     List<Products> p = new List<Products>();
 
                     foreach (var c in ctg)
                     {
                         var products = from prod in gdb.Products
-                                       where prod.categoryID == c.id && prod.isActive == true
+                                       where prod.categoryID == c.id && prod.isActive == 0
                                        select prod;
 
                         p.AddRange(products);
@@ -138,7 +136,7 @@ namespace GroceryDeliverySystem.Controllers
         {
             if (User.IsInRole("A"))
             {
-                return View(gdb.Orders.Where(x => x.isActive == true).ToList());
+                return View(gdb.Orders.Where(x => x.isActive == 0).ToList());
             }
             else
             {
@@ -147,7 +145,7 @@ namespace GroceryDeliverySystem.Controllers
                 if (user.managedStore != null)
                 {
                     var store = gdb.Stores.FirstOrDefault(x => x.id == user.managedStore);
-                    return View(gdb.Orders.Where(x => x.storeID == store.id && x.isActive == true).ToList());
+                    return View(gdb.Orders.Where(x => x.storeID == store.id && x.isActive == 0).ToList());
                 }
                 else
                 {
@@ -162,7 +160,7 @@ namespace GroceryDeliverySystem.Controllers
             var user = gdb.Users.FirstOrDefault(x => x.email == userEmail);
             if (User.IsInRole("A") || user.managedStore != null)
             {
-                return View(gdb.Couriers.Where(x => x.isActive == true).ToList());
+                return View(gdb.Couriers.Where(x => x.isActive == 0).ToList());
             }
             else
             {
@@ -173,7 +171,7 @@ namespace GroceryDeliverySystem.Controllers
         [Authorize(Roles = "A")]
         public ActionResult Inquiries()
         {
-            return View(gdb.Inquiries.Where(x => x.isActive == true).ToList());
+            return View(gdb.Inquiries.Where(x => x.isActive == 0).ToList());
         }
 
         [Authorize(Roles = "A")]
@@ -183,7 +181,7 @@ namespace GroceryDeliverySystem.Controllers
             Users u = gdb.Users.FirstOrDefault(x => x.id == id);
             try
             {
-                u.isActive = false;
+                u.isActive = 1;
                 gdb.SaveChanges();
                 return "successful";
             }
@@ -203,20 +201,28 @@ namespace GroceryDeliverySystem.Controllers
                 TempData["EmailError"] = "The email address you've entered is already in use. Please choose another one.";
                 return RedirectToAction("Users");
             }
+
             gdb.Users.AddOrUpdate(user);
             gdb.SaveChanges();
+
+            var oldUser = gdb.Users.FirstOrDefault(x => x.id == user.id);
+            if (oldUser != null && user.cityID != oldUser.cityID)
+            {
+                var cartItems = gdb.CartItems.Where(x => x.cartID == user.cartID).ToList();
+                gdb.CartItems.RemoveRange(cartItems);
+            }
+
             if (user.cartID == null)
             {
                 var c = new Carts { userID = user.id };
                 gdb.Carts.Add(c);
-                gdb.SaveChanges();
                 user.cartID = c.id;
-                user.isActive = true;
             }
             if (user.roles == null)
             {
                 user.roles = "C";
             }
+
             gdb.SaveChanges();
             return RedirectToAction("Users");
         }
@@ -228,22 +234,31 @@ namespace GroceryDeliverySystem.Controllers
             Cities c = gdb.Cities.FirstOrDefault(x => x.id == id);
             try
             {
-                c.isActive = false;
+                c.isActive = 1;
                 var stores = gdb.Stores.Where(x => x.cityID == c.id).ToList();
                 foreach (var st in stores)
                 {
-                    st.isActive = false;
+                    st.isActive = 1;
                     var categories = gdb.Categories.Where(x => x.storeID == st.id).ToList();
                     foreach (var ct in categories)
                     {
-                        ct.isActive = false;
+                        ct.isActive = 1;
                         var products = gdb.Products.Where(x => x.categoryID == ct.id).ToList();
                         foreach (var pr in products)
                         {
-                            pr.isActive = false;
+                            pr.isActive = 1;
+                            var cartitems = gdb.CartItems.Where(x => x.productID == pr.id).ToList();
+                            gdb.CartItems.RemoveRange(cartitems);
                         }
                     }
                 }
+
+                var userCity = gdb.Users.Where(x => x.cityID == id).ToList();
+                foreach (var user in userCity)
+                {
+                    user.cityID = null;
+                }
+
                 gdb.SaveChanges();
                 return "successful";
             }
@@ -257,7 +272,6 @@ namespace GroceryDeliverySystem.Controllers
         [HttpPost]
         public ActionResult AddCity(Cities c)
         {   
-            c.isActive = true;
             gdb.Cities.AddOrUpdate(c);
             gdb.SaveChanges();
             return RedirectToAction("Cities");
@@ -270,7 +284,7 @@ namespace GroceryDeliverySystem.Controllers
             Inquiries i = gdb.Inquiries.FirstOrDefault(x => x.id == id);
             try
             {
-                i.isActive = false;
+                i.isActive = 1;
                 gdb.SaveChanges();
                 return "successful";
             }
@@ -286,15 +300,17 @@ namespace GroceryDeliverySystem.Controllers
             Stores st = gdb.Stores.FirstOrDefault(x => x.id == id);
             try
             {
-                st.isActive = false;
+                st.isActive = 1;
                 var categories = gdb.Categories.Where(x => x.storeID == st.id).ToList();
                 foreach (var ct in categories)
                 {
-                    ct.isActive = false;
+                    ct.isActive = 1;
                     var products = gdb.Products.Where(x => x.categoryID == ct.id).ToList();
                     foreach (var pr in products)
                     {
-                        pr.isActive = false;
+                        pr.isActive = 1;
+                        var cartitems = gdb.CartItems.Where(x => x.productID == pr.id).ToList();
+                        gdb.CartItems.RemoveRange(cartitems);
                     }
                 }
                 gdb.SaveChanges();
@@ -310,7 +326,6 @@ namespace GroceryDeliverySystem.Controllers
         [HttpPost]
         public ActionResult AddStore(Stores st)
         {
-            st.isActive = true;
             gdb.Stores.AddOrUpdate(st);
             gdb.SaveChanges();
             return RedirectToAction("Stores");
@@ -322,11 +337,13 @@ namespace GroceryDeliverySystem.Controllers
             Categories ct = gdb.Categories.FirstOrDefault(x => x.id == id);
             try
             {
-                ct.isActive = false;
+                ct.isActive = 1;
                 var products = gdb.Products.Where(x => x.categoryID == ct.id).ToList();
                 foreach (var pr in products)
                 {
-                    pr.isActive = false;
+                    pr.isActive = 1;
+                    var cartitems = gdb.CartItems.Where(x => x.productID == pr.id).ToList();
+                    gdb.CartItems.RemoveRange(cartitems);
                 }
                 gdb.SaveChanges();
                 return "successful";
@@ -340,7 +357,6 @@ namespace GroceryDeliverySystem.Controllers
         [HttpPost]
         public ActionResult AddCategory(Categories ct)
         {
-            ct.isActive = true;
             gdb.Categories.AddOrUpdate(ct);
             gdb.SaveChanges();
             return RedirectToAction("Categories");
@@ -352,7 +368,9 @@ namespace GroceryDeliverySystem.Controllers
             Products pr = gdb.Products.FirstOrDefault(x => x.id == id);
             try
             {
-                pr.isActive = false;
+                pr.isActive = 1;
+                var cartitems = gdb.CartItems.Where(x => x.productID == pr.id).ToList();
+                gdb.CartItems.RemoveRange(cartitems);
                 gdb.SaveChanges();
                 return "successful";
             }
@@ -365,7 +383,6 @@ namespace GroceryDeliverySystem.Controllers
         [HttpPost]
         public ActionResult AddProduct(Products pr)
         {
-            pr.isActive = true;
             gdb.Products.AddOrUpdate(pr);
             gdb.SaveChanges();
             return RedirectToAction("Products");
@@ -377,7 +394,7 @@ namespace GroceryDeliverySystem.Controllers
             Orders or = gdb.Orders.FirstOrDefault(x => x.id == id);
             try
             {
-                or.isActive = false;
+                or.isActive = 1;
                 gdb.SaveChanges();
                 return "successful";
             }
@@ -403,7 +420,7 @@ namespace GroceryDeliverySystem.Controllers
             Couriers cour = gdb.Couriers.FirstOrDefault(x => x.id == id);
             try
             {
-                cour.isActive = false;
+                cour.isActive = 1;
                 gdb.SaveChanges();
                 return "successful";
             }
@@ -417,7 +434,6 @@ namespace GroceryDeliverySystem.Controllers
         [HttpPost]
         public ActionResult AddCourier(Couriers cour)
         {
-            cour.isActive = true;
             gdb.Couriers.AddOrUpdate(cour);
             gdb.SaveChanges();
             return RedirectToAction("Couriers");

@@ -54,6 +54,8 @@
                 <!-- Modal body -->
                 <div class="modal-body">
                     <form action="/Panel/AddProduct/" method="post" id="form1">
+                        <input type="hidden" class="form-control" value="0" name="isActive" id="isActive1" />
+
                         <label>Name</label>
                         <input type="text" class="form-control" name="name" id="name1" placeholder="Enter name" required />
 
@@ -67,7 +69,7 @@
                             {
                                 <option value="@ctg.id">@ctg.name</option>
                             }
-                            </select>
+                        </select>
 
                         <label>Image URL (Optional)</label>
                         <input type="text" class="form-control" name="imageURL" id="imageURL1" placeholder="Enter image URL" />
@@ -98,6 +100,7 @@
                 <div class="modal-body">
                     <form action="/Panel/AddProduct/" method="post" id="form2">
                         <input type="hidden" class="form-control" name="id" id="id" />
+                        <input type="hidden" class="form-control" name="isActive" id="isActive2" />
 
                         <label>Name</label>
                         <input type="text" class="form-control" name="name" id="name2" placeholder="Enter name" required />
@@ -112,7 +115,7 @@
                             {
                                 <option value="@ctg.id">@ctg.name</option>
                             }
-                            </select>
+                        </select>
 
                         <label>Image URL (Optional)</label>
                         <input type="text" class="form-control" name="imageURL" id="imageURL2" placeholder="Enter image URL" />
@@ -168,8 +171,8 @@
                                 <td> @pr.Categories.name </td>
                                 <td> @pr.Categories.Stores.name </td>
                                 <td> @pr.imageURL </td>
-                                <td> <a class="btn btn-danger delModal" data-prID="@pr.id" data-name="@pr.name" data-price="@pr.price" data-ctgID="@pr.categoryID" data-image="@pr.imageURL" data-bs-toggle="modal" data-bs-target="#deleteModal"> Delete </a> </td>
-                                <td> <a class="btn btn-info updPrd" data-prID="@pr.id" data-name="@pr.name" data-price="@pr.price" data-ctgID="@pr.categoryID" data-image="@pr.imageURL" data-bs-toggle="modal" data-bs-target="#updateModal"> Update </a> </td>
+                                <td> <a class="btn btn-danger delModal" data-prID="@pr.id" data-name="@pr.name" data-bs-toggle="modal" data-bs-target="#deleteModal"> Delete </a> </td>
+                                <td> <a class="btn btn-info updPrd" data-prID="@pr.id" data-name="@pr.name" data-price="@pr.price" data-ctgID="@pr.categoryID" data-image="@pr.imageURL" data-isActive="@pr.isActive" data-bs-toggle="modal" data-bs-target="#updateModal"> Update </a> </td>
                             </tr>
                         }
                     </tbody>
@@ -218,12 +221,14 @@
                 var price = $(this).attr("data-price");
                 var ctgID = $(this).attr("data-ctgID");
                 var image = $(this).attr("data-image");
+                var isActive = $(this).attr("data-isActive");
 
                 $(".modal-body #id").val(id);
                 $(".modal-body #name2").val(name);
                 $(".modal-body #price2").val(price);
                 $(".modal-body #categoryID2").val(ctgID);
                 $(".modal-body #imageURL2").val(image);
+                $(".modal-body #isActive2").val(isActive);
             }
         );
 

@@ -57,6 +57,8 @@
                 <!-- Modal body -->
                 <div class="modal-body">
                     <form action="/Panel/AddCategory/" method="post" id="form1">
+                        <input type="hidden" class="form-control" value="0" name="isActive" id="isActive1" />
+
                         <label>Name</label>
                         <input type="text" class="form-control" name="name" id="name1" placeholder="Enter name" required />
 
@@ -105,6 +107,7 @@
                 <div class="modal-body">
                     <form action="/Panel/AddCategory/" method="post" id="form2">
                         <input type="hidden" class="form-control" name="id" id="id" />
+                        <input type="hidden" class="form-control" name="isActive" id="isActive2" />
 
                         <label>Name</label>
                         <input type="text" class="form-control" name="name" id="name2" placeholder="Enter name" required />
@@ -181,8 +184,8 @@
                                     <td> @ct.Stores.name </td>
                                 }
                                 <td> @ct.imageURL </td>
-                                <td> <a class="btn btn-danger delModal" data-ctID="@ct.id" data-name="@ct.name" data-storeID="@ct.storeID" data-image="@ct.imageURL" data-bs-toggle="modal" data-bs-target="#deleteModal"> Delete </a> </td>
-                                <td> <a class="btn btn-info updCtg" data-ctID="@ct.id" data-name="@ct.name" data-storeID="@ct.storeID" data-image="@ct.imageURL" data-bs-toggle="modal" data-bs-target="#updateModal"> Update </a> </td>
+                                <td> <a class="btn btn-danger delModal" data-ctID="@ct.id" data-name="@ct.name" data-bs-toggle="modal" data-bs-target="#deleteModal"> Delete </a> </td>
+                                <td> <a class="btn btn-info updCtg" data-ctID="@ct.id" data-name="@ct.name" data-storeID="@ct.storeID" data-image="@ct.imageURL" data-isActive="@ct.isActive" data-bs-toggle="modal" data-bs-target="#updateModal"> Update </a> </td>
                             </tr>
                         }
                     </tbody>
@@ -230,11 +233,13 @@
                 var name = $(this).attr("data-name");
                 var storeID = $(this).attr("data-storeID");
                 var image = $(this).attr("data-image");
+                var isActive = $(this).attr("data-isActive");
 
                 $(".modal-body #id").val(id);
                 $(".modal-body #name2").val(name);
                 $(".modal-body #storeID2").val(storeID);
                 $(".modal-body #imageURL2").val(image);
+                $(".modal-body #isActive2").val(isActive);
             }
         );
 

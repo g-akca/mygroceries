@@ -25,7 +25,7 @@
     <Property Name="name" Type="nvarchar" MaxLength="100" Nullable="false" />
     <Property Name="storeID" Type="int" Nullable="false" />
     <Property Name="imageURL" Type="nvarchar" MaxLength="255" />
-    <Property Name="isActive" Type="bit" Nullable="false" />
+    <Property Name="isActive" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="Cities">
     <Key>
@@ -33,7 +33,7 @@
     </Key>
     <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="name" Type="nvarchar" MaxLength="50" Nullable="false" />
-    <Property Name="isActive" Type="bit" Nullable="false" />
+    <Property Name="isActive" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="Couriers">
     <Key>
@@ -42,7 +42,7 @@
     <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="name" Type="nvarchar" MaxLength="255" Nullable="false" />
     <Property Name="phone" Type="nvarchar" MaxLength="255" Nullable="false" />
-    <Property Name="isActive" Type="bit" Nullable="false" />
+    <Property Name="isActive" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="Inquiries">
     <Key>
@@ -53,7 +53,7 @@
     <Property Name="email" Type="nvarchar" MaxLength="75" Nullable="false" />
     <Property Name="subject" Type="nvarchar" MaxLength="75" Nullable="false" />
     <Property Name="message" Type="nvarchar" MaxLength="255" Nullable="false" />
-    <Property Name="isActive" Type="bit" Nullable="false" />
+    <Property Name="isActive" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="OrderItems">
     <Key>
@@ -82,7 +82,7 @@
     <Property Name="email" Type="nvarchar" MaxLength="75" Nullable="false" />
     <Property Name="phone" Type="nvarchar" MaxLength="20" />
     <Property Name="cityID" Type="int" Nullable="false" />
-    <Property Name="isActive" Type="bit" Nullable="false" />
+    <Property Name="isActive" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="Products">
     <Key>
@@ -93,7 +93,7 @@
     <Property Name="price" Type="decimal" Precision="10" Scale="2" Nullable="false" />
     <Property Name="categoryID" Type="int" Nullable="false" />
     <Property Name="imageURL" Type="nvarchar" MaxLength="255" />
-    <Property Name="isActive" Type="bit" Nullable="false" />
+    <Property Name="isActive" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="Stores">
     <Key>
@@ -104,7 +104,7 @@
     <Property Name="cityID" Type="int" Nullable="false" />
     <Property Name="imageURL" Type="nvarchar" MaxLength="255" />
     <Property Name="description" Type="nvarchar" MaxLength="255" />
-    <Property Name="isActive" Type="bit" Nullable="false" />
+    <Property Name="isActive" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="Users">
     <Key>
@@ -121,7 +121,7 @@
     <Property Name="cartID" Type="int" />
     <Property Name="roles" Type="nvarchar" MaxLength="3" />
     <Property Name="managedStore" Type="int" />
-    <Property Name="isActive" Type="bit" Nullable="false" />
+    <Property Name="isActive" Type="int" Nullable="false" />
   </EntityType>
   <Association Name="FK__CartItems__cartI__1BE81D6E">
     <End Role="Carts" Type="Self.Carts" Multiplicity="1">

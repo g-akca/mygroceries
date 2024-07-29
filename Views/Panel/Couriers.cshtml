@@ -54,6 +54,8 @@
                 <!-- Modal body -->
                 <div class="modal-body">
                     <form action="/Panel/AddCourier/" method="post" id="form1">
+                        <input type="hidden" class="form-control" value="0" name="isActive" id="isActive1" />
+
                         <label>Name</label>
                         <input type="text" class="form-control" name="name" id="name1" placeholder="Enter name" required />
 
@@ -86,12 +88,13 @@
                 <div class="modal-body">
                     <form action="/Panel/AddCourier/" method="post" id="form2">
                         <input type="hidden" class="form-control" name="id" id="id" />
+                        <input type="hidden" class="form-control" name="isActive" id="isActive2" />
 
                         <label>Name</label>
                         <input type="text" class="form-control" name="name" id="name2" placeholder="Enter name" required />
 
                         <label for="phone">Phone number</label>
-                        <input type="tel" class="form-control phone-upd" name="phone" id="phone" pattern="\(\d{3}\)-\d{3}-\d{4}" placeholder="(123)-456-7890" required/>
+                        <input type="tel" class="form-control phone-upd" name="phone" id="phone" pattern="\(\d{3}\)-\d{3}-\d{4}" placeholder="(123)-456-7890" required />
                     </form>
                 </div>
 
@@ -146,8 +149,8 @@
                                 <td> @d.phone </td>
                                 @if (User.IsInRole("A"))
                                 {
-                                    <td> <a class="btn btn-danger delModal" data-dpID="@d.id" data-name="@d.name" data-phone="@d.phone" data-bs-toggle="modal" data-bs-target="#deleteModal"> Delete </a> </td>
-                                    <td> <a class="btn btn-info updCour" data-dpID="@d.id" data-name="@d.name" data-phone="@d.phone" data-bs-toggle="modal" data-bs-target="#updateModal"> Update </a> </td>
+                                    <td> <a class="btn btn-danger delModal" data-dpID="@d.id" data-name="@d.name" data-bs-toggle="modal" data-bs-target="#deleteModal"> Delete </a> </td>
+                                    <td> <a class="btn btn-info updCour" data-dpID="@d.id" data-name="@d.name" data-phone="@d.phone" data-isActive="@d.isActive" data-bs-toggle="modal" data-bs-target="#updateModal"> Update </a> </td>
                                 }
                             </tr>
                         }
@@ -196,11 +199,13 @@
                 var name = $(this).attr("data-name");
                 var phone = $(this).attr("data-phone");
                 var status = $(this).attr("data-status");
+                var isActive = $(this).attr("data-isActive");
 
                 $(".modal-body #id").val(id);
                 $(".modal-body #name2").val(name);
                 $(".modal-body .phone-upd").val(phone);
                 $(".modal-body #status2").val(status);
+                $(".modal-body #isActive2").val(isActive);
             }
         );
 

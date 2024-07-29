@@ -40,6 +40,28 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="Couriers">
+      <EntityTypeMapping TypeName="groceryDBModel.Couriers">
+        <MappingFragment StoreEntitySet="Couriers">
+          <ScalarProperty Name="isActive" ColumnName="isActive" />
+          <ScalarProperty Name="phone" ColumnName="phone" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Inquiries">
+      <EntityTypeMapping TypeName="groceryDBModel.Inquiries">
+        <MappingFragment StoreEntitySet="Inquiries">
+          <ScalarProperty Name="isActive" ColumnName="isActive" />
+          <ScalarProperty Name="message" ColumnName="message" />
+          <ScalarProperty Name="subject" ColumnName="subject" />
+          <ScalarProperty Name="email" ColumnName="email" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <EntitySetMapping Name="OrderItems">
       <EntityTypeMapping TypeName="groceryDBModel.OrderItems">
         <MappingFragment StoreEntitySet="OrderItems">
@@ -55,17 +77,17 @@
       <EntityTypeMapping TypeName="groceryDBModel.Orders">
         <MappingFragment StoreEntitySet="Orders">
           <ScalarProperty Name="isActive" ColumnName="isActive" />
-          <ScalarProperty Name="courierID" ColumnName="courierID" />
           <ScalarProperty Name="cityID" ColumnName="cityID" />
           <ScalarProperty Name="phone" ColumnName="phone" />
           <ScalarProperty Name="email" ColumnName="email" />
           <ScalarProperty Name="address" ColumnName="address" />
           <ScalarProperty Name="lastName" ColumnName="lastName" />
           <ScalarProperty Name="firstName" ColumnName="firstName" />
-          <ScalarProperty Name="storeID" ColumnName="storeID" />
           <ScalarProperty Name="date" ColumnName="date" />
           <ScalarProperty Name="totalPrice" ColumnName="totalPrice" />
           <ScalarProperty Name="status" ColumnName="status" />
+          <ScalarProperty Name="courierID" ColumnName="courierID" />
+          <ScalarProperty Name="storeID" ColumnName="storeID" />
           <ScalarProperty Name="userID" ColumnName="userID" />
           <ScalarProperty Name="id" ColumnName="id" />
         </MappingFragment>
@@ -109,28 +131,6 @@
           <ScalarProperty Name="email" ColumnName="email" />
           <ScalarProperty Name="lastName" ColumnName="lastName" />
           <ScalarProperty Name="firstName" ColumnName="firstName" />
-          <ScalarProperty Name="id" ColumnName="id" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="Couriers">
-      <EntityTypeMapping TypeName="groceryDBModel.Couriers">
-        <MappingFragment StoreEntitySet="Couriers">
-          <ScalarProperty Name="isActive" ColumnName="isActive" />
-          <ScalarProperty Name="phone" ColumnName="phone" />
-          <ScalarProperty Name="name" ColumnName="name" />
-          <ScalarProperty Name="id" ColumnName="id" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="Inquiries">
-      <EntityTypeMapping TypeName="groceryDBModel.Inquiries">
-        <MappingFragment StoreEntitySet="Inquiries">
-          <ScalarProperty Name="isActive" ColumnName="isActive" />
-          <ScalarProperty Name="name" ColumnName="name" />
-          <ScalarProperty Name="message" ColumnName="message" />
-          <ScalarProperty Name="subject" ColumnName="subject" />
-          <ScalarProperty Name="email" ColumnName="email" />
           <ScalarProperty Name="id" ColumnName="id" />
         </MappingFragment>
       </EntityTypeMapping>

@@ -54,6 +54,8 @@
                 <!-- Modal body -->
                 <div class="modal-body">
                     <form action="/Panel/AddCity/" method="post" id="form1">
+                        <input type="hidden" class="form-control" value="0" name="isActive" id="isActive1" />
+
                         <label>Name</label>
                         <input type="text" class="form-control" name="name" id="name1" placeholder="Enter city name" required />
                     </form>
@@ -83,6 +85,7 @@
                 <div class="modal-body">
                     <form action="/Panel/AddCity/" method="post" id="form2">
                         <input type="hidden" class="form-control" name="id" id="id" />
+                        <input type="hidden" class="form-control" name="isActive" id="isActive2" />
 
                         <label>Name</label>
                         <input type="text" class="form-control" name="name" id="name2" placeholder="Enter city name" required />
@@ -131,7 +134,7 @@
                                 <td> @c.id </td>
                                 <td> @c.name </td>
                                 <td> <a class="btn btn-danger delModal" data-cID="@c.id" data-name="@c.name" data-bs-toggle="modal" data-bs-target="#deleteModal"> Delete </a> </td>
-                                <td> <a class="btn btn-info updCity" data-cID="@c.id" data-name="@c.name" data-bs-toggle="modal" data-bs-target="#updateModal"> Update </a> </td>
+                                <td> <a class="btn btn-info updCity" data-cID="@c.id" data-name="@c.name" data-isActive="@c.isActive" data-bs-toggle="modal" data-bs-target="#updateModal"> Update </a> </td>
                             </tr>
                         }
                         </tbody>
@@ -177,9 +180,11 @@
             function () {
                 var id = $(this).attr("data-cID");
                 var name = $(this).attr("data-name");
+                var isActive = $(this).attr("data-isActive");
 
                 $(".modal-body #id").val(id);
                 $(".modal-body #name2").val(name);
+                $(".modal-body #isActive2").val(isActive);
             }
         );
 

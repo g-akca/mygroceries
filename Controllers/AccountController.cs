@@ -1,9 +1,5 @@
 ﻿using GroceryDeliverySystem.Models;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Security.Cryptography.X509Certificates;
-using System.Web;
 using System.Web.Mvc;
 using System.Data.Entity.Migrations;
 
@@ -16,7 +12,7 @@ namespace GroceryDeliverySystem.Controllers
         // GET: Account
         public ActionResult Settings()
         {
-            ViewBag.Cities = gdb.Cities.Where(x => x.isActive == true).ToList();
+            ViewBag.Cities = gdb.Cities.Where(x => x.isActive == 0).ToList();
             var email = User.Identity.Name;
             var user = gdb.Users.FirstOrDefault(x => x.email == email);
             return View(user);
@@ -26,7 +22,7 @@ namespace GroceryDeliverySystem.Controllers
         {
             var email = User.Identity.Name;
             var user = gdb.Users.FirstOrDefault(x => x.email == email);
-            var ord = gdb.Orders.Where(x => x.userID == user.id && x.isActive == true).ToList();
+            var ord = gdb.Orders.Where(x => x.userID == user.id && x.isActive == 0).ToList();
             return View(ord);
         }
 
@@ -35,7 +31,6 @@ namespace GroceryDeliverySystem.Controllers
             var orderItems = gdb.OrderItems.Where(o => o.orderID == orderID).ToList();
             var order = gdb.Orders.FirstOrDefault(o => o.id == orderID);
             ViewBag.Order = order;
-            ViewBag.CityName = gdb.Cities.FirstOrDefault(x => x.id == order.cityID).name;
             return PartialView("_OrderItemsPartial", orderItems);
         }
 
@@ -48,13 +43,15 @@ namespace GroceryDeliverySystem.Controllers
             }
             else
             {
+                TempData["UpdateSuccess"] = "Your account has been updated successfully.";
+                
                 gdb.Users.AddOrUpdate(user);
                 gdb.SaveChanges();
             }
             return RedirectToAction("Settings");
         }
 
-        public ActionResult UpdateAddress(int userID, string address, int cityID)
+        public ActionResult UpdateAddress(int userID, string address, int? cityID)
         {
             var user = gdb.Users.FirstOrDefault(x => x.id == userID);
             user.address = address;

@@ -16,25 +16,25 @@
         <ul>
             @if (User.IsInRole("A"))
             {
-                <li><a href="/Panel/Users/">Users <span style="color:gray;">(@gdb.Users.Where(x => x.isActive == true).ToList().Count)</span></a></li>
-                <li><a href="/Panel/Inquiries/">Inquiries <span style="color:gray;">(@gdb.Inquiries.Where(x => x.isActive == true).ToList().Count)</span></a></li>
-                <li><a href="/Panel/Cities/">Cities <span style="color:gray;">(@gdb.Cities.Where(x => x.isActive == true).ToList().Count)</span></a></li>
-                <li><a href="/Panel/Stores/">Stores <span style="color:gray;">(@gdb.Stores.Where(x => x.isActive == true).ToList().Count)</span></a></li>
-                <li><a href="/Panel/Categories/">Categories <span style="color:gray;">(@gdb.Categories.Where(x => x.isActive == true).ToList().Count)</span></a></li>
-                <li><a href="/Panel/Products/">Products <span style="color:gray;">(@gdb.Products.Where(x => x.isActive == true).ToList().Count)</span></a></li>
-                <li><a href="/Panel/Orders/">Orders <span style="color:gray;">(@gdb.Orders.Where(x => x.isActive == true).ToList().Count)</span></a></li>
+                <li><a href="/Panel/Users/">Users <span style="color:gray;">(@gdb.Users.Where(x => x.isActive == 0).ToList().Count)</span></a></li>
+                <li><a href="/Panel/Inquiries/">Inquiries <span style="color:gray;">(@gdb.Inquiries.Where(x => x.isActive == 0).ToList().Count)</span></a></li>
+                <li><a href="/Panel/Cities/">Cities <span style="color:gray;">(@gdb.Cities.Where(x => x.isActive == 0).ToList().Count)</span></a></li>
+                <li><a href="/Panel/Stores/">Stores <span style="color:gray;">(@gdb.Stores.Where(x => x.isActive == 0).ToList().Count)</span></a></li>
+                <li><a href="/Panel/Categories/">Categories <span style="color:gray;">(@gdb.Categories.Where(x => x.isActive == 0).ToList().Count)</span></a></li>
+                <li><a href="/Panel/Products/">Products <span style="color:gray;">(@gdb.Products.Where(x => x.isActive == 0).ToList().Count)</span></a></li>
+                <li><a href="/Panel/Orders/">Orders <span style="color:gray;">(@gdb.Orders.Where(x => x.isActive == 0).ToList().Count)</span></a></li>
             }
             else
             {
                 <li><a href="/Panel/Stores/">Stores <span style="color:gray;">(1)</span></a></li>
 
-                <li><a href="/Panel/Categories/">Categories <span style="color:gray;">@if (user.Stores.Categories != null) {<text>(@user.Stores.Categories.Where(x => x.isActive == true).ToList().Count)</text> } else { <text>(0)</text>}</span></a></li>
+                <li><a href="/Panel/Categories/">Categories <span style="color:gray;">@if (user.Stores.Categories != null) {<text>(@user.Stores.Categories.Where(x => x.isActive == 0).ToList().Count)</text> } else { <text>(0)</text>}</span></a></li>
 
-                <li><a href="/Panel/Products/">Products <span style="color:gray;">@if (products != null) {<text>(@products.Where(x => x.isActive == true).ToList()Count)</text> } else{ <text>(0)</text>}</span></a></li>
+                <li><a href="/Panel/Products/">Products <span style="color:gray;">@if (products != null) {<text>(@products.Where(x => x.isActive == 0).ToList()Count)</text> } else{ <text>(0)</text>}</span></a></li>
 
-                <li><a href="/Panel/Orders/">Orders <span style="color:gray;">@if (user.Stores.Orders != null) {<text>(@user.Stores.Orders.Where(x => x.isActive == true).ToList().Count)</text> }else{ <text>(0)</text>}</span></a></li>
+                <li><a href="/Panel/Orders/">Orders <span style="color:gray;">@if (user.Stores.Orders != null) {<text>(@user.Stores.Orders.Where(x => x.isActive == 0).ToList().Count)</text> }else{ <text>(0)</text>}</span></a></li>
             }
-            <li><a href="/Panel/Couriers/">Couriers <span style="color:gray;">(@gdb.Couriers.Where(x => x.isActive == true).ToList().Count)</span></a></li>
+            <li><a href="/Panel/Couriers/">Couriers <span style="color:gray;">(@gdb.Couriers.Where(x => x.isActive == 0).ToList().Count)</span></a></li>
         </ul>
     </div>
 </div>

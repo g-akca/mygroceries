@@ -24,7 +24,7 @@ namespace GroceryDeliverySystem.Models
         public string name { get; set; }
         public int storeID { get; set; }
         public string imageURL { get; set; }
-        public bool isActive { get; set; }
+        public int isActive { get; set; }
     
         public virtual Stores Stores { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

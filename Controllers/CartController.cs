@@ -1,12 +1,7 @@
 ﻿using GroceryDeliverySystem.Models;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Security.Claims;
-using System.Web;
 using System.Web.Mvc;
-using System.Diagnostics;
-using System.Xml.Linq;
 using System.Data.Entity.Migrations;
 
 namespace GroceryDeliverySystem.Controllers
@@ -29,8 +24,6 @@ namespace GroceryDeliverySystem.Controllers
             var userEmail = User.Identity.Name;
             var user = gdb.Users.FirstOrDefault(x => x.email == userEmail);
             var cart = gdb.Carts.FirstOrDefault(x => x.userID == user.id);
-
-            ViewBag.User = user;
             return View(gdb.CartItems.Where(x => x.cartID == cart.id).ToList());
         }
 
@@ -38,11 +31,10 @@ namespace GroceryDeliverySystem.Controllers
         public ActionResult PlaceOrder(Orders o)
         {
             o.date = DateTime.Now;
-            var couriers = gdb.Couriers.Where(x => x.isActive == true).ToList();
+            var couriers = gdb.Couriers.Where(x => x.isActive == 0).ToList();
             Random rnd = new Random();
             int index = rnd.Next(couriers.Count);
             o.courierID = couriers[index].id;
-            o.isActive = true;
             gdb.Orders.Add(o);
 
             var email = User.Identity.Name;
@@ -138,14 +130,6 @@ namespace GroceryDeliverySystem.Controllers
             {
                 return Json(new { success = false, message = "Your cart has products from another store!" });
             }
-        }
-
-        [HttpPost]
-        public void DeleteFromCart(int cartitemID)
-        {
-            var cartItem = gdb.CartItems.FirstOrDefault(x => x.id == cartitemID);
-            gdb.CartItems.Remove(cartItem);
-            gdb.SaveChanges();
         }
 
         [HttpPost]

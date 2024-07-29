@@ -15,10 +15,10 @@ namespace GroceryDeliverySystem.Models
     public partial class Inquiries
     {
         public int id { get; set; }
+        public string name { get; set; }
         public string email { get; set; }
         public string subject { get; set; }
         public string message { get; set; }
-        public string name { get; set; }
-        public bool isActive { get; set; }
+        public int isActive { get; set; }
     }
 }

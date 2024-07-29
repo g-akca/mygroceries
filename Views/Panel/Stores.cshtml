@@ -54,6 +54,8 @@
                 <!-- Modal body -->
                 <div class="modal-body">
                     <form action="/Panel/AddStore/" method="post" id="form1">
+                        <input type="hidden" class="form-control" value="0" name="isActive" id="isActive1" />
+
                         <label>Name</label>
                         <input type="text" class="form-control" name="name" id="name1" placeholder="Enter name" required />
 
@@ -64,7 +66,7 @@
                             {
                                 <option value="@city.id">@city.name</option>
                             }
-                            </select>
+                        </select>
 
                         <label>Image URL (Optional)</label>
                         <input type="text" class="form-control" name="imageURL" id="imageURL1" placeholder="Enter image URL" />
@@ -98,6 +100,7 @@
                 <div class="modal-body">
                     <form action="/Panel/AddStore/" method="post" id="form2">
                         <input type="hidden" class="form-control" name="id" id="id" />
+                        <input type="hidden" class="form-control" name="isActive" id="isActive2" />
 
                         <label>Name</label>
                         <input type="text" class="form-control" name="name" id="name2" placeholder="Enter name" required />
@@ -109,7 +112,7 @@
                             {
                                 <option value="@city.id">@city.name</option>
                             }
-                            </select>
+                        </select>
 
                         <label>Image URL (Optional)</label>
                         <input type="text" class="form-control" name="imageURL" id="imageURL2" placeholder="Enter image URL" />
@@ -169,8 +172,8 @@
                                 <td> @st.Cities.name </td>
                                 <td> @st.imageURL </td>
                                 <td> @st.description </td>
-                                <td> <a class="btn btn-danger delModal" data-stID="@st.id" data-name="@st.name" data-cityID="@st.cityID" data-image="@st.imageURL" data-desc="@st.description" data-bs-toggle="modal" data-bs-target="#deleteModal"> Delete </a> </td>
-                                <td> <a class="btn btn-info updStore" data-stID="@st.id" data-name="@st.name" data-cityID="@st.cityID" data-image="@st.imageURL" data-desc="@st.description" data-bs-toggle="modal" data-bs-target="#updateModal"> Update </a> </td>
+                                <td> <a class="btn btn-danger delModal" data-stID="@st.id" data-name="@st.name" data-bs-toggle="modal" data-bs-target="#deleteModal"> Delete </a> </td>
+                                <td> <a class="btn btn-info updStore" data-stID="@st.id" data-name="@st.name" data-cityID="@st.cityID" data-image="@st.imageURL" data-desc="@st.description" data-isActive="@st.isActive" data-bs-toggle="modal" data-bs-target="#updateModal"> Update </a> </td>
                             </tr>
                         }
                     </tbody>
@@ -219,12 +222,14 @@
                 var cityID = $(this).attr("data-cityID");
                 var image = $(this).attr("data-image");
                 var desc = $(this).attr("data-desc");
+                var isActive = $(this).attr("data-isActive");
 
                 $(".modal-body #id").val(id);
                 $(".modal-body #name2").val(name);
                 $(".modal-body #cityID2").val(cityID);
                 $(".modal-body #imageURL2").val(image);
                 $(".modal-body #description2").val(desc);
+                $(".modal-body #isActive2").val(isActive);
             }
         );
 

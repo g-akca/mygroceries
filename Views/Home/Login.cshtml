@@ -1,9 +1,6 @@
-﻿
-@{
+﻿@{
     ViewBag.Title = "Login";
 }
-
-@ViewBag.hata
 
 <nav aria-label="breadcrumb">
     <ol class="breadcrumb bg-light p-3 rounded container mt-4">
@@ -16,6 +13,12 @@
 
 <div class="row justify-content-center login-form">
     <div class="col-md-6 col-lg-4">
+        @if (TempData["Error"] != null)
+        {
+            <div class="alert alert-danger" role="alert">
+                @TempData["Error"]
+            </div>
+        }
         <form action="/Home/Login/" method="post">
             <div data-mdb-input-init class="form-outline mb-4">
                 <label>Email address</label>

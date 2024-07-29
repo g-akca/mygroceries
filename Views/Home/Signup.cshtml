@@ -17,9 +17,16 @@
             </div>
 
             <div class="col-lg-6 mb-5 mb-lg-0">
+                @if (TempData["EmailError"] != null)
+                {
+                    <div class="alert alert-danger" role="alert">
+                        @TempData["EmailError"]
+                    </div>
+                }
                 <div class="card">
                     <div class="card-body py-5 px-md-5">
                         <form action="/Home/Signup/" method="post" id="form1">
+                            <input type="hidden" value="0" id="isActive" name="isActive" class="form-control" />
                             <!-- 2 column grid layout with text inputs for the first and last names -->
                             <div class="row">
                                 <div class="col-md-6 mb-4">

@@ -7,7 +7,7 @@ go
 create table Cities (
 	[id]			int				IDENTITY (1,1) PRIMARY KEY NOT NULL,
 	[name]			nvarchar(50)	NOT NULL,
-	[isActive]		bit				NOT NULL DEFAULT 1
+	[isActive]		int				NOT NULL DEFAULT 1
 );
 
 create table Stores (
@@ -16,7 +16,7 @@ create table Stores (
 	[cityID]		int				NOT NULL FOREIGN KEY REFERENCES Cities(id),
 	[imageURL]		nvarchar(255)	NULL,
 	[description]	nvarchar(255)	NULL,
-	[isActive]		bit				NOT NULL DEFAULT 1
+	[isActive]		int				NOT NULL DEFAULT 1
 );
 
 create table Users (
@@ -31,7 +31,7 @@ create table Users (
 	[cartID]		int				UNIQUE NULL,
 	[roles]			nvarchar(3)		DEFAULT 'C',
 	[managedStore]	int				NULL FOREIGN KEY REFERENCES Stores(id),
-	[isActive]		bit				NOT NULL DEFAULT 1
+	[isActive]		int				NOT NULL DEFAULT 1
 );
 
 create table Carts (
@@ -47,7 +47,7 @@ create table Categories (
 	[name]			nvarchar(100)	NOT NULL,
 	[storeID]		int				NOT NULL FOREIGN KEY REFERENCES Stores(id),
 	[imageURL]		nvarchar(255)	NULL,
-	[isActive]		bit				NOT NULL DEFAULT 1
+	[isActive]		int				NOT NULL DEFAULT 1
 );
 
 create table Products (
@@ -56,7 +56,7 @@ create table Products (
 	[price]			decimal (10,2)	NOT NULL,
 	[categoryID]	int				NOT NULL FOREIGN KEY REFERENCES Categories(id),
 	[imageURL]		nvarchar(255)	NULL,
-	[isActive]		bit				NOT NULL DEFAULT 1
+	[isActive]		int				NOT NULL DEFAULT 1
 );
 
 create table CartItems (
@@ -71,7 +71,7 @@ create table Couriers (
 	[id]			int				IDENTITY (1,1) PRIMARY KEY NOT NULL,
 	[name]			nvarchar(255)	NOT NULL,
 	[phone]			nvarchar(255)	NOT NULL,
-	[isActive]		bit				NOT NULL DEFAULT 1
+	[isActive]		int				NOT NULL DEFAULT 1
 );
 
 create table Orders (
@@ -88,7 +88,7 @@ create table Orders (
 	[email]			nvarchar(75)	NOT NULL,
 	[phone]			nvarchar(20)	NULL,
 	[cityID]		int				NOT NULL FOREIGN KEY REFERENCES Cities(id),
-	[isActive]		bit				NOT NULL DEFAULT 1
+	[isActive]		int				NOT NULL DEFAULT 1
 );
 
 create table OrderItems ( 
@@ -105,7 +105,7 @@ create table Inquiries (
 	[email]			nvarchar(75)	NOT NULL,
 	[subject]		nvarchar(75)	NOT NULL,
 	[message]		nvarchar(255)	NOT NULL,
-	[isActive]		bit				NOT NULL DEFAULT 1
+	[isActive]		int				NOT NULL DEFAULT 1
 );
 
 insert into Cities (name)

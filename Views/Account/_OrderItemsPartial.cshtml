@@ -5,7 +5,6 @@
 @{
     Orders order = ViewBag.Order;
     decimal totalPrice = Model.Sum(item => item.price);
-    string cityName = ViewBag.CityName;
 }
 
 <head>
@@ -99,7 +98,7 @@
         <p><strong>Email:</strong> @order.email</p>
         <p><strong>Phone:</strong> @order.phone</p>
         <p><strong>Address:</strong> @order.address</p>
-        <p><strong>City:</strong> @cityName</p>
+        <p><strong>City:</strong> @order.Cities.name</p>
         <p><strong>Order Date:</strong> @order.date</p>
         <!-- Section Divider -->
         <div class="section-divider"></div>

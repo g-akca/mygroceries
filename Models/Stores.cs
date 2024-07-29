@@ -18,8 +18,8 @@ namespace GroceryDeliverySystem.Models
         public Stores()
         {
             this.Categories = new HashSet<Categories>();
-            this.Users = new HashSet<Users>();
             this.Orders = new HashSet<Orders>();
+            this.Users = new HashSet<Users>();
         }
     
         public int id { get; set; }
@@ -27,14 +27,14 @@ namespace GroceryDeliverySystem.Models
         public int cityID { get; set; }
         public string imageURL { get; set; }
         public string description { get; set; }
-        public bool isActive { get; set; }
+        public int isActive { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Categories> Categories { get; set; }
         public virtual Cities Cities { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Users> Users { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Orders> Orders { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Users> Users { get; set; }
     }
 }

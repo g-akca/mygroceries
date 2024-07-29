@@ -55,6 +55,8 @@
                 <!-- Modal body -->
                 <div class="modal-body">
                     <form action="/Panel/AddUser/" method="post" id="form1">
+                        <input type="hidden" class="form-control" value="0" name="isActive" id="isActive1" />
+
                         <div class="row">
                             <div class="col-md-6">
                                 <div data-mdb-input-init class="form-outline">
@@ -149,6 +151,8 @@
                 <div class="modal-body">
                     <form action="/Panel/AddUser/" method="post" id="form2">
                         <input type="hidden" class="form-control" name="id" id="id" />
+                        <input type="hidden" class="form-control" name="isActive" id="isActive2" />
+
                         <div class="row">
                             <div class="col-md-6">
                                 <div data-mdb-input-init class="form-outline">
@@ -293,8 +297,8 @@
                                     {@u.Stores.name;
                                 }
                                 </td>
-                                <td> <a class="btn btn-danger delModal" data-uID="@u.id" data-firstname="@u.firstName" data-lastname="@u.lastName" data-email="@u.email" data-phone="@u.phone" data-password="@u.password" data-address="@u.address" data-cityID="@u.cityID" data-cartID="@u.cartID" data-roles="@u.roles" data-managedStore="@u.managedStore" data-bs-toggle="modal" data-bs-target="#deleteModal"> Delete </a> </td>
-                                <td> <a class="btn btn-info updUser" data-uID="@u.id" data-firstname="@u.firstName" data-lastname="@u.lastName" data-email="@u.email" data-phone="@u.phone" data-password="@u.password" data-address="@u.address" data-cityID="@u.cityID" data-cartID="@u.cartID" data-roles="@u.roles" data-managedStore="@u.managedStore" data-bs-toggle="modal" data-bs-target="#updateModal"> Update </a> </td>
+                                <td> <a class="btn btn-danger delModal" data-uID="@u.id" data-firstname="@u.firstName" data-lastname="@u.lastName" data-bs-toggle="modal" data-bs-target="#deleteModal"> Delete </a> </td>
+                                <td> <a class="btn btn-info updUser" data-uID="@u.id" data-firstname="@u.firstName" data-lastname="@u.lastName" data-email="@u.email" data-phone="@u.phone" data-password="@u.password" data-address="@u.address" data-cityID="@u.cityID" data-cartID="@u.cartID" data-roles="@u.roles" data-managedStore="@u.managedStore" data-isActive="@u.isActive" data-bs-toggle="modal" data-bs-target="#updateModal"> Update </a> </td>
                             </tr>
                         }
                     </tbody>
@@ -350,6 +354,7 @@
                 var cartID = $(this).attr("data-cartID");
                 var roles = $(this).attr("data-roles");
                 var manstore = $(this).attr("data-managedStore");
+                var isActive = $(this).attr("data-isActive");
 
                 $(".modal-body #id").val(id);
                 $(".modal-body #firstName2").val(firstname);
@@ -372,6 +377,7 @@
                 } else {
                     $(".modal-body #managedStore2").val(manstore).prop("selected", true);
                 }
+                $(".modal-body #isActive2").val(isActive);
             }
         );
 
