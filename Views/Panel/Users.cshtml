@@ -1,6 +1,11 @@
 ﻿@using GroceryDeliverySystem.Models
 @model List<Users>
 
+@{ 
+    List<Cities> cities = ViewBag.Cities;
+    List<Stores> stores = ViewBag.Stores;
+}
+
 @section head {
     <style>
         .error {
@@ -78,13 +83,19 @@
                             <div class="col-md-6">
                                 <div data-mdb-input-init class="form-outline">
                                     <label>Address (Optional)</label>
-                                    <input type="text" class="form-control" name="address" id="address1" placeholder="Enter address" />
+                                    <textarea class="form-control" name="address" id="address1" rows="3" cols="50" placeholder="Enter address"></textarea>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div data-mdb-input-init class="form-outline">
-                                    <label>City ID (Optional)</label>
-                                    <input type="number" class="form-control" name="cityID" id="cityID1" placeholder="Enter city ID" />
+                                    <label>City (Optional)</label>
+                                    <select class="form-select" name="cityID" id="cityID1">
+                                        <option value="null" selected>Select a city</option>
+                                        @foreach (var city in cities)
+                                        {
+                                            <option value="@city.id">@city.name</option>
+                                        }
+                                    </select>
                                 </div>
                             </div>
                         </div>
@@ -95,13 +106,19 @@
                             <div class="col-md-6">
                                 <div data-mdb-input-init class="form-outline">
                                     <label>Roles (Optional)</label>
-                                    <input type="text" class="form-control" name="roles" id="roles1" placeholder="Enter roles" />
+                                    <input type="text" class="form-control" name="roles" id="roles1" placeholder="Enter roles (ex: ASC)" />
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div data-mdb-input-init class="form-outline">
                                     <label>Managed Store (Optional)</label>
-                                    <input type="number" class="form-control" name="managedStore" id="managedStore1" placeholder="Enter managed store" />
+                                    <select class="form-select" name="managedStore" id="managedStore1">
+                                        <option value="null" selected>Select managed store</option>
+                                        @foreach (var store in stores)
+                                        {
+                                            <option value="@store.id">@store.name</option>
+                                        }
+                                    </select>
                                 </div>
                             </div>
                         </div>
@@ -160,13 +177,19 @@
                             <div class="col-md-6">
                                 <div data-mdb-input-init class="form-outline">
                                     <label>Address (Optional)</label>
-                                    <input type="text" class="form-control" name="address" id="address2" placeholder="Enter address" />
+                                    <textarea class="form-control" name="address" id="address2" rows="3" cols="50" placeholder="Enter address"></textarea>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div data-mdb-input-init class="form-outline">
-                                    <label>City ID (Optional)</label>
-                                    <input type="number" class="form-control" name="cityID" id="cityID2" placeholder="Enter city ID" />
+                                    <label>City (Optional)</label>
+                                    <select class="form-select" name="cityID" id="cityID2">
+                                        <option value="null" selected>Select a city</option>
+                                        @foreach (var city in cities)
+                                        {
+                                            <option value="@city.id">@city.name</option>
+                                        }
+                                    </select>
                                 </div>
                             </div>
                         </div>
@@ -177,18 +200,23 @@
                             <div class="col-md-6">
                                 <div data-mdb-input-init class="form-outline">
                                     <label>Roles (Optional)</label>
-                                    <input type="text" class="form-control" name="roles" id="roles2" placeholder="Enter roles" />
+                                    <input type="text" class="form-control" name="roles" id="roles2" placeholder="Enter roles (ex: ASC)" />
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div data-mdb-input-init class="form-outline">
                                     <label>Managed Store (Optional)</label>
-                                    <input type="number" class="form-control" name="managedStore" id="managedStore2" placeholder="Enter managed store" />
+                                    <select class="form-select" name="managedStore" id="managedStore2">
+                                        <option value="null" selected>Select managed store</option>
+                                        @foreach (var store in stores)
+                                        {
+                                            <option value="@store.id">@store.name</option>
+                                        }
+                                    </select>
                                 </div>
                             </div>
                         </div>
                     </form>
-                    <p class="message"></p>
                 </div>
 
                 <!-- Modal footer -->
@@ -203,26 +231,14 @@
 }
 
 <div class="container mt-4">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb bg-light p-3 rounded">
+            <li class="breadcrumb-item"><a>Management Panel</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Users</li>
+        </ol>
+    </nav>
     <div class="row">
-        <div style="width:20%;">
-            <div class="sidemenu__categories">
-                <div class="sidemenu__categories__title">
-                    <span>Management Panel</span>
-                </div>
-                <ul>
-                    @if (User.IsInRole("A"))
-                    {
-                        <li><a href="/Panel/Users/">Users</a></li>
-                        <li><a href="/Panel/Cities/">Cities</a></li>
-                    }
-                    <li><a href="/Panel/Stores/">Stores</a></li>
-                    <li><a href="/Panel/Categories/">Categories</a></li>
-                    <li><a href="/Panel/Products/">Products</a></li>
-                    <li><a href="/Panel/Orders/">Orders</a></li>
-                    <li><a href="/Panel/Couriers/">Couriers</a></li>
-                </ul>
-            </div>
-        </div>
+        @Html.Partial("_Sidemenu")
         <div class="col-lg-9">
             <h2>User Details</h2>
 
@@ -266,9 +282,17 @@
                                 <td> @u.phone  </td>
                                 <td> @u.password </td>
                                 <td> @u.address </td>
-                                <td> @if (u.cityID != null) { @u.Cities.name; } </td>
+                                <td>
+                                    @if (u.cityID != null)
+                                    {@u.Cities.name;
+                                }
+                                </td>
                                 <td> @u.roles</td>
-                                <td> @if (u.managedStore != null) { @u.Stores.name; } </td>
+                                <td>
+                                    @if (u.managedStore != null)
+                                    {@u.Stores.name;
+                                }
+                                </td>
                                 <td> <a class="btn btn-danger delModal" data-uID="@u.id" data-firstname="@u.firstName" data-lastname="@u.lastName" data-email="@u.email" data-phone="@u.phone" data-password="@u.password" data-address="@u.address" data-cityID="@u.cityID" data-cartID="@u.cartID" data-roles="@u.roles" data-managedStore="@u.managedStore" data-bs-toggle="modal" data-bs-target="#deleteModal"> Delete </a> </td>
                                 <td> <a class="btn btn-info updUser" data-uID="@u.id" data-firstname="@u.firstName" data-lastname="@u.lastName" data-email="@u.email" data-phone="@u.phone" data-password="@u.password" data-address="@u.address" data-cityID="@u.cityID" data-cartID="@u.cartID" data-roles="@u.roles" data-managedStore="@u.managedStore" data-bs-toggle="modal" data-bs-target="#updateModal"> Update </a> </td>
                             </tr>
@@ -334,10 +358,20 @@
                 $(".modal-body #phone2").val(phone);
                 $(".modal-body #password2").val(password);
                 $(".modal-body #address2").val(address);
-                $(".modal-body #cityID2").val(cityID);
+                // Set city selection
+                if (!cityID) {
+                    $(".modal-body #cityID2").val("null").prop("selected", true);
+                } else {
+                    $(".modal-body #cityID2").val(cityID).prop("selected", true);
+                }
                 $(".modal-body #cartID2").val(cartID);
                 $(".modal-body #roles2").val(roles);
-                $(".modal-body #managedStore2").val(manstore);
+                // Set managed store selection
+                if (!manstore) {
+                    $(".modal-body #managedStore2").val("null").prop("selected", true);
+                } else {
+                    $(".modal-body #managedStore2").val(manstore).prop("selected", true);
+                }
             }
         );
 

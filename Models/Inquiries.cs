@@ -12,22 +12,13 @@ namespace GroceryDeliverySystem.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Categories
+    public partial class Inquiries
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Categories()
-        {
-            this.Products = new HashSet<Products>();
-        }
-    
         public int id { get; set; }
+        public string email { get; set; }
+        public string subject { get; set; }
+        public string message { get; set; }
         public string name { get; set; }
-        public int storeID { get; set; }
-        public string imageURL { get; set; }
         public bool isActive { get; set; }
-    
-        public virtual Stores Stores { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Products> Products { get; set; }
     }
 }

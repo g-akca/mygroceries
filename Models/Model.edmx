@@ -30,6 +30,7 @@
           <Property Name="name" Type="nvarchar" MaxLength="100" Nullable="false" />
           <Property Name="storeID" Type="int" Nullable="false" />
           <Property Name="imageURL" Type="nvarchar" MaxLength="255" />
+          <Property Name="isActive" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="Cities">
           <Key>
@@ -37,14 +38,27 @@
           </Key>
           <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="isActive" Type="bit" Nullable="false" />
         </EntityType>
-        <EntityType Name="Drivers">
+        <EntityType Name="Couriers">
           <Key>
             <PropertyRef Name="id" />
           </Key>
           <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="name" Type="nvarchar" MaxLength="255" Nullable="false" />
           <Property Name="phone" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="isActive" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Inquiries">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="email" Type="nvarchar" MaxLength="75" Nullable="false" />
+          <Property Name="subject" Type="nvarchar" MaxLength="75" Nullable="false" />
+          <Property Name="message" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="isActive" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="OrderItems">
           <Key>
@@ -63,7 +77,7 @@
           <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="userID" Type="int" Nullable="false" />
           <Property Name="storeID" Type="int" Nullable="false" />
-          <Property Name="driverID" Type="int" Nullable="false" />
+          <Property Name="courierID" Type="int" Nullable="false" />
           <Property Name="status" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="totalPrice" Type="decimal" Precision="10" Scale="2" Nullable="false" />
           <Property Name="date" Type="datetime" />
@@ -73,6 +87,7 @@
           <Property Name="email" Type="nvarchar" MaxLength="75" Nullable="false" />
           <Property Name="phone" Type="nvarchar" MaxLength="20" />
           <Property Name="cityID" Type="int" Nullable="false" />
+          <Property Name="isActive" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="Products">
           <Key>
@@ -83,6 +98,7 @@
           <Property Name="price" Type="decimal" Precision="10" Scale="2" Nullable="false" />
           <Property Name="categoryID" Type="int" Nullable="false" />
           <Property Name="imageURL" Type="nvarchar" MaxLength="255" />
+          <Property Name="isActive" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="Stores">
           <Key>
@@ -93,6 +109,7 @@
           <Property Name="cityID" Type="int" Nullable="false" />
           <Property Name="imageURL" Type="nvarchar" MaxLength="255" />
           <Property Name="description" Type="nvarchar" MaxLength="255" />
+          <Property Name="isActive" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="Users">
           <Key>
@@ -109,7 +126,22 @@
           <Property Name="cartID" Type="int" />
           <Property Name="roles" Type="nvarchar" MaxLength="3" />
           <Property Name="managedStore" Type="int" />
+          <Property Name="isActive" Type="bit" Nullable="false" />
         </EntityType>
+        <Association Name="FK__CartItems__cartI__1BE81D6E">
+          <End Role="Carts" Type="Self.Carts" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="CartItems" Type="Self.CartItems" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Carts">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="CartItems">
+              <PropertyRef Name="cartID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK__CartItems__produ__4924D839">
           <End Role="Products" Type="Self.Products" Multiplicity="1" />
           <End Role="CartItems" Type="Self.CartItems" Multiplicity="*" />
@@ -122,7 +154,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Carts__userID__63D8CE75">
+        <Association Name="FK__Carts__userID__1AF3F935">
           <End Role="Users" Type="Self.Users" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
@@ -148,7 +180,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__OrderItem__order__24B26D99">
+        <Association Name="FK__OrderItem__order__451F3D2B">
           <End Role="Orders" Type="Self.Orders" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
@@ -174,7 +206,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Orders__cityID__1758727B">
+        <Association Name="FK__Orders__cityID__4707859D">
           <End Role="Cities" Type="Self.Cities" Multiplicity="1" />
           <End Role="Orders" Type="Self.Orders" Multiplicity="*" />
           <ReferentialConstraint>
@@ -186,19 +218,19 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Orders__driverID__184C96B4">
-          <End Role="Drivers" Type="Self.Drivers" Multiplicity="1" />
+        <Association Name="FK__Orders__courierI__47FBA9D6">
+          <End Role="Couriers" Type="Self.Couriers" Multiplicity="1" />
           <End Role="Orders" Type="Self.Orders" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Drivers">
+            <Principal Role="Couriers">
               <PropertyRef Name="id" />
             </Principal>
             <Dependent Role="Orders">
-              <PropertyRef Name="driverID" />
+              <PropertyRef Name="courierID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Orders__storeID__16644E42">
+        <Association Name="FK__Orders__storeID__46136164">
           <End Role="Stores" Type="Self.Stores" Multiplicity="1" />
           <End Role="Orders" Type="Self.Orders" Multiplicity="*" />
           <ReferentialConstraint>
@@ -275,17 +307,22 @@
           <EntitySet Name="Carts" EntityType="Self.Carts" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Categories" EntityType="Self.Categories" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Cities" EntityType="Self.Cities" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Drivers" EntityType="Self.Drivers" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Couriers" EntityType="Self.Couriers" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Inquiries" EntityType="Self.Inquiries" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="OrderItems" EntityType="Self.OrderItems" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Orders" EntityType="Self.Orders" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Products" EntityType="Self.Products" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Stores" EntityType="Self.Stores" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__CartItems__cartI__1BE81D6E" Association="Self.FK__CartItems__cartI__1BE81D6E">
+            <End Role="Carts" EntitySet="Carts" />
+            <End Role="CartItems" EntitySet="CartItems" />
+          </AssociationSet>
           <AssociationSet Name="FK__CartItems__produ__4924D839" Association="Self.FK__CartItems__produ__4924D839">
             <End Role="Products" EntitySet="Products" />
             <End Role="CartItems" EntitySet="CartItems" />
           </AssociationSet>
-          <AssociationSet Name="FK__Carts__userID__63D8CE75" Association="Self.FK__Carts__userID__63D8CE75">
+          <AssociationSet Name="FK__Carts__userID__1AF3F935" Association="Self.FK__Carts__userID__1AF3F935">
             <End Role="Users" EntitySet="Users" />
             <End Role="Carts" EntitySet="Carts" />
           </AssociationSet>
@@ -293,7 +330,7 @@
             <End Role="Stores" EntitySet="Stores" />
             <End Role="Categories" EntitySet="Categories" />
           </AssociationSet>
-          <AssociationSet Name="FK__OrderItem__order__24B26D99" Association="Self.FK__OrderItem__order__24B26D99">
+          <AssociationSet Name="FK__OrderItem__order__451F3D2B" Association="Self.FK__OrderItem__order__451F3D2B">
             <End Role="Orders" EntitySet="Orders" />
             <End Role="OrderItems" EntitySet="OrderItems" />
           </AssociationSet>
@@ -301,15 +338,15 @@
             <End Role="Products" EntitySet="Products" />
             <End Role="OrderItems" EntitySet="OrderItems" />
           </AssociationSet>
-          <AssociationSet Name="FK__Orders__cityID__1758727B" Association="Self.FK__Orders__cityID__1758727B">
+          <AssociationSet Name="FK__Orders__cityID__4707859D" Association="Self.FK__Orders__cityID__4707859D">
             <End Role="Cities" EntitySet="Cities" />
             <End Role="Orders" EntitySet="Orders" />
           </AssociationSet>
-          <AssociationSet Name="FK__Orders__driverID__184C96B4" Association="Self.FK__Orders__driverID__184C96B4">
-            <End Role="Drivers" EntitySet="Drivers" />
+          <AssociationSet Name="FK__Orders__courierI__47FBA9D6" Association="Self.FK__Orders__courierI__47FBA9D6">
+            <End Role="Couriers" EntitySet="Couriers" />
             <End Role="Orders" EntitySet="Orders" />
           </AssociationSet>
-          <AssociationSet Name="FK__Orders__storeID__16644E42" Association="Self.FK__Orders__storeID__16644E42">
+          <AssociationSet Name="FK__Orders__storeID__46136164" Association="Self.FK__Orders__storeID__46136164">
             <End Role="Stores" EntitySet="Stores" />
             <End Role="Orders" EntitySet="Orders" />
           </AssociationSet>
@@ -404,11 +441,12 @@
             <End Role="Stores" EntitySet="Stores" />
             <End Role="Orders" EntitySet="Orders" />
           </AssociationSet>
-          <EntitySet Name="Drivers" EntityType="groceryDBModel.Drivers" />
-          <AssociationSet Name="FK__Orders__driverID__184C96B4" Association="groceryDBModel.FK__Orders__driverID__184C96B4">
-            <End Role="Drivers" EntitySet="Drivers" />
+          <EntitySet Name="Couriers" EntityType="groceryDBModel.Couriers" />
+          <AssociationSet Name="FK__Orders__courierI__47FBA9D6" Association="groceryDBModel.FK__Orders__courierI__47FBA9D6">
+            <End Role="Couriers" EntitySet="Couriers" />
             <End Role="Orders" EntitySet="Orders" />
           </AssociationSet>
+          <EntitySet Name="Inquiries" EntityType="groceryDBModel.Inquiries" />
         </EntityContainer>
         <EntityType Name="CartItems">
           <Key>
@@ -442,6 +480,7 @@
           <Property Name="imageURL" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Stores" Relationship="groceryDBModel.FK__Categorie__store__395884C4" FromRole="Categories" ToRole="Stores" />
           <NavigationProperty Name="Products" Relationship="groceryDBModel.FK__Products__catego__3C34F16F" FromRole="Categories" ToRole="Products" />
+          <Property Name="isActive" Type="Boolean" Nullable="false" />
         </EntityType>
         <EntityType Name="Cities">
           <Key>
@@ -452,6 +491,7 @@
           <NavigationProperty Name="Stores" Relationship="groceryDBModel.FK__Stores__cityID__2B0A656D" FromRole="Cities" ToRole="Stores" />
           <NavigationProperty Name="Users" Relationship="groceryDBModel.FK__Users__cityID__2FCF1A8A" FromRole="Cities" ToRole="Users" />
           <NavigationProperty Name="Orders" Relationship="groceryDBModel.FK__Orders__cityID__035179CE" FromRole="Cities" ToRole="Orders" />
+          <Property Name="isActive" Type="Boolean" Nullable="false" />
         </EntityType>
         <EntityType Name="OrderItems">
           <Key>
@@ -485,8 +525,9 @@
           <Property Name="cityID" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Cities" Relationship="groceryDBModel.FK__Orders__cityID__035179CE" FromRole="Orders" ToRole="Cities" />
           <NavigationProperty Name="Stores" Relationship="groceryDBModel.FK__Orders__storeID__025D5595" FromRole="Orders" ToRole="Stores" />
-          <Property Name="driverID" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Drivers" Relationship="groceryDBModel.FK__Orders__driverID__184C96B4" FromRole="Orders" ToRole="Drivers" />
+          <Property Name="courierID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Couriers" Relationship="groceryDBModel.FK__Orders__courierI__47FBA9D6" FromRole="Orders" ToRole="Couriers" />
+          <Property Name="isActive" Type="Boolean" Nullable="false" />
         </EntityType>
         <EntityType Name="Products">
           <Key>
@@ -500,6 +541,7 @@
           <NavigationProperty Name="CartItems" Relationship="groceryDBModel.FK__CartItems__produ__40058253" FromRole="Products" ToRole="CartItems" />
           <NavigationProperty Name="Categories" Relationship="groceryDBModel.FK__Products__catego__3C34F16F" FromRole="Products" ToRole="Categories" />
           <NavigationProperty Name="OrderItems" Relationship="groceryDBModel.FK__OrderItem__produ__46B27FE2" FromRole="Products" ToRole="OrderItems" />
+          <Property Name="isActive" Type="Boolean" Nullable="false" />
         </EntityType>
         <EntityType Name="Stores">
           <Key>
@@ -514,6 +556,7 @@
           <NavigationProperty Name="Cities" Relationship="groceryDBModel.FK__Stores__cityID__2B0A656D" FromRole="Stores" ToRole="Cities" />
           <NavigationProperty Name="Users" Relationship="groceryDBModel.FK__Users__managedSt__31B762FC" FromRole="Stores" ToRole="Users" />
           <NavigationProperty Name="Orders" Relationship="groceryDBModel.FK__Orders__storeID__025D5595" FromRole="Stores" ToRole="Orders" />
+          <Property Name="isActive" Type="Boolean" Nullable="false" />
         </EntityType>
         <EntityType Name="Users">
           <Key>
@@ -535,6 +578,7 @@
           <NavigationProperty Name="Cities" Relationship="groceryDBModel.FK__Users__cityID__2FCF1A8A" FromRole="Users" ToRole="Cities" />
           <NavigationProperty Name="Orders" Relationship="groceryDBModel.FK__Orders__userID__42E1EEFE" FromRole="Users" ToRole="Orders" />
           <NavigationProperty Name="Stores" Relationship="groceryDBModel.FK__Users__managedSt__31B762FC" FromRole="Users" ToRole="Stores" />
+          <Property Name="isActive" Type="Boolean" Nullable="false" />
         </EntityType>
         <Association Name="FK__CartItems__cartI__3F115E1A">
           <End Type="groceryDBModel.Carts" Role="Carts" Multiplicity="1" />
@@ -706,27 +750,39 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityType Name="Drivers">
+        <EntityType Name="Couriers">
           <Key>
             <PropertyRef Name="id" />
           </Key>
           <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="name" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Name="phone" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Orders" Relationship="groceryDBModel.FK__Orders__driverID__184C96B4" FromRole="Drivers" ToRole="Orders" />
+          <NavigationProperty Name="Orders" Relationship="groceryDBModel.FK__Orders__courierI__47FBA9D6" FromRole="Couriers" ToRole="Orders" />
+          <Property Name="isActive" Type="Boolean" Nullable="false" />
         </EntityType>
-        <Association Name="FK__Orders__driverID__184C96B4">
-          <End Type="groceryDBModel.Drivers" Role="Drivers" Multiplicity="1" />
+        <Association Name="FK__Orders__courierI__47FBA9D6">
+          <End Type="groceryDBModel.Couriers" Role="Couriers" Multiplicity="1" />
           <End Type="groceryDBModel.Orders" Role="Orders" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Drivers">
+            <Principal Role="Couriers">
               <PropertyRef Name="id" />
             </Principal>
             <Dependent Role="Orders">
-              <PropertyRef Name="driverID" />
+              <PropertyRef Name="courierID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="Inquiries">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="email" Type="String" Nullable="false" MaxLength="75" FixedLength="false" Unicode="true" />
+          <Property Name="subject" Type="String" Nullable="false" MaxLength="75" FixedLength="false" Unicode="true" />
+          <Property Name="message" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="name" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="isActive" Type="Boolean" Nullable="false" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -755,6 +811,7 @@
           <EntitySetMapping Name="Categories">
             <EntityTypeMapping TypeName="groceryDBModel.Categories">
               <MappingFragment StoreEntitySet="Categories">
+                <ScalarProperty Name="isActive" ColumnName="isActive" />
                 <ScalarProperty Name="imageURL" ColumnName="imageURL" />
                 <ScalarProperty Name="storeID" ColumnName="storeID" />
                 <ScalarProperty Name="name" ColumnName="name" />
@@ -765,6 +822,7 @@
           <EntitySetMapping Name="Cities">
             <EntityTypeMapping TypeName="groceryDBModel.Cities">
               <MappingFragment StoreEntitySet="Cities">
+                <ScalarProperty Name="isActive" ColumnName="isActive" />
                 <ScalarProperty Name="name" ColumnName="name" />
                 <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
@@ -784,7 +842,8 @@
           <EntitySetMapping Name="Orders">
             <EntityTypeMapping TypeName="groceryDBModel.Orders">
               <MappingFragment StoreEntitySet="Orders">
-                <ScalarProperty Name="driverID" ColumnName="driverID" />
+                <ScalarProperty Name="isActive" ColumnName="isActive" />
+                <ScalarProperty Name="courierID" ColumnName="courierID" />
                 <ScalarProperty Name="cityID" ColumnName="cityID" />
                 <ScalarProperty Name="phone" ColumnName="phone" />
                 <ScalarProperty Name="email" ColumnName="email" />
@@ -803,6 +862,7 @@
           <EntitySetMapping Name="Products">
             <EntityTypeMapping TypeName="groceryDBModel.Products">
               <MappingFragment StoreEntitySet="Products">
+                <ScalarProperty Name="isActive" ColumnName="isActive" />
                 <ScalarProperty Name="imageURL" ColumnName="imageURL" />
                 <ScalarProperty Name="categoryID" ColumnName="categoryID" />
                 <ScalarProperty Name="price" ColumnName="price" />
@@ -814,6 +874,7 @@
           <EntitySetMapping Name="Stores">
             <EntityTypeMapping TypeName="groceryDBModel.Stores">
               <MappingFragment StoreEntitySet="Stores">
+                <ScalarProperty Name="isActive" ColumnName="isActive" />
                 <ScalarProperty Name="description" ColumnName="description" />
                 <ScalarProperty Name="imageURL" ColumnName="imageURL" />
                 <ScalarProperty Name="cityID" ColumnName="cityID" />
@@ -825,6 +886,7 @@
           <EntitySetMapping Name="Users">
             <EntityTypeMapping TypeName="groceryDBModel.Users">
               <MappingFragment StoreEntitySet="Users">
+                <ScalarProperty Name="isActive" ColumnName="isActive" />
                 <ScalarProperty Name="managedStore" ColumnName="managedStore" />
                 <ScalarProperty Name="roles" ColumnName="roles" />
                 <ScalarProperty Name="cartID" ColumnName="cartID" />
@@ -839,11 +901,24 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Drivers">
-            <EntityTypeMapping TypeName="groceryDBModel.Drivers">
-              <MappingFragment StoreEntitySet="Drivers">
+          <EntitySetMapping Name="Couriers">
+            <EntityTypeMapping TypeName="groceryDBModel.Couriers">
+              <MappingFragment StoreEntitySet="Couriers">
+                <ScalarProperty Name="isActive" ColumnName="isActive" />
                 <ScalarProperty Name="phone" ColumnName="phone" />
                 <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Inquiries">
+            <EntityTypeMapping TypeName="groceryDBModel.Inquiries">
+              <MappingFragment StoreEntitySet="Inquiries">
+                <ScalarProperty Name="isActive" ColumnName="isActive" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="message" ColumnName="message" />
+                <ScalarProperty Name="subject" ColumnName="subject" />
+                <ScalarProperty Name="email" ColumnName="email" />
                 <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -920,8 +995,9 @@
         <AssociationConnector Association="groceryDBModel.FK__Users__managedSt__31B762FC" />
         <AssociationConnector Association="groceryDBModel.FK__Orders__cityID__035179CE" />
         <AssociationConnector Association="groceryDBModel.FK__Orders__storeID__025D5595" />
-        <EntityTypeShape EntityType="groceryDBModel.Drivers" Width="1.5" PointX="7.875" PointY="9.875" />
-        <AssociationConnector Association="groceryDBModel.FK__Orders__driverID__184C96B4" />
+        <EntityTypeShape EntityType="groceryDBModel.Couriers" Width="1.5" PointX="7.25" PointY="9.875" />
+        <AssociationConnector Association="groceryDBModel.FK__Orders__courierI__47FBA9D6" />
+        <EntityTypeShape EntityType="groceryDBModel.Inquiries" Width="1.5" PointX="1.125" PointY="0.75" />
       </Diagram>
     </Diagrams>
   </Designer>

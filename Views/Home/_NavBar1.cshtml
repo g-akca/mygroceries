@@ -11,9 +11,12 @@
     var isCartPage = currentUrl.Contains("/Cart");
 }
 
-<!DOCTYPE html>
 <head>
     <style>
+        .dropbtn {
+            background-color: white;
+        }
+
         .dropdown-content {
             display: none;
             position: absolute;
@@ -169,6 +172,10 @@
             margin-top: 10px;
         }
 
+            .total-checkout a:hover {
+                background-color: #357b36;
+            }
+
         .total-price {
             margin-left: 20px; /* Shift total price to the right */
         }
@@ -204,18 +211,17 @@
                     <input type="hidden" class="form-control" value="@user.id" name="userID" id="userID" />
 
                     <label>Address (Optional)</label>
-                    <input type="text" class="form-control" value="@user.address" name="address" id="address" placeholder="Enter address" />
+                    <textarea class="form-control" name="address" id="address" rows="3" cols="50" placeholder="Enter address">@user.address</textarea>
 
                     <label>City</label>
                     <select class="form-select" name="cityID" id="cityID">
-                        <option value="" disabled selected>Select a city</option>
+                        <option value="null" selected>Select a city</option>
                         @foreach (var city in cities)
                         {
                             <option value="@city.id" @(city.id == user.cityID ? "selected" : "")>@city.name</option>
                         }
                     </select>
                 </form>
-                <p class="message"></p>
             </div>
 
             <!-- Modal footer -->

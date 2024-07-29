@@ -25,6 +25,7 @@
     <Property Name="name" Type="nvarchar" MaxLength="100" Nullable="false" />
     <Property Name="storeID" Type="int" Nullable="false" />
     <Property Name="imageURL" Type="nvarchar" MaxLength="255" />
+    <Property Name="isActive" Type="bit" Nullable="false" />
   </EntityType>
   <EntityType Name="Cities">
     <Key>
@@ -32,14 +33,27 @@
     </Key>
     <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="name" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="isActive" Type="bit" Nullable="false" />
   </EntityType>
-  <EntityType Name="Drivers">
+  <EntityType Name="Couriers">
     <Key>
       <PropertyRef Name="id" />
     </Key>
     <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="name" Type="nvarchar" MaxLength="255" Nullable="false" />
     <Property Name="phone" Type="nvarchar" MaxLength="255" Nullable="false" />
+    <Property Name="isActive" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Inquiries">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="name" Type="nvarchar" MaxLength="255" Nullable="false" />
+    <Property Name="email" Type="nvarchar" MaxLength="75" Nullable="false" />
+    <Property Name="subject" Type="nvarchar" MaxLength="75" Nullable="false" />
+    <Property Name="message" Type="nvarchar" MaxLength="255" Nullable="false" />
+    <Property Name="isActive" Type="bit" Nullable="false" />
   </EntityType>
   <EntityType Name="OrderItems">
     <Key>
@@ -58,7 +72,7 @@
     <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="userID" Type="int" Nullable="false" />
     <Property Name="storeID" Type="int" Nullable="false" />
-    <Property Name="driverID" Type="int" Nullable="false" />
+    <Property Name="courierID" Type="int" Nullable="false" />
     <Property Name="status" Type="nvarchar" MaxLength="50" Nullable="false" />
     <Property Name="totalPrice" Type="decimal" Precision="10" Scale="2" Nullable="false" />
     <Property Name="date" Type="datetime" />
@@ -68,6 +82,7 @@
     <Property Name="email" Type="nvarchar" MaxLength="75" Nullable="false" />
     <Property Name="phone" Type="nvarchar" MaxLength="20" />
     <Property Name="cityID" Type="int" Nullable="false" />
+    <Property Name="isActive" Type="bit" Nullable="false" />
   </EntityType>
   <EntityType Name="Products">
     <Key>
@@ -78,6 +93,7 @@
     <Property Name="price" Type="decimal" Precision="10" Scale="2" Nullable="false" />
     <Property Name="categoryID" Type="int" Nullable="false" />
     <Property Name="imageURL" Type="nvarchar" MaxLength="255" />
+    <Property Name="isActive" Type="bit" Nullable="false" />
   </EntityType>
   <EntityType Name="Stores">
     <Key>
@@ -88,6 +104,7 @@
     <Property Name="cityID" Type="int" Nullable="false" />
     <Property Name="imageURL" Type="nvarchar" MaxLength="255" />
     <Property Name="description" Type="nvarchar" MaxLength="255" />
+    <Property Name="isActive" Type="bit" Nullable="false" />
   </EntityType>
   <EntityType Name="Users">
     <Key>
@@ -104,7 +121,22 @@
     <Property Name="cartID" Type="int" />
     <Property Name="roles" Type="nvarchar" MaxLength="3" />
     <Property Name="managedStore" Type="int" />
+    <Property Name="isActive" Type="bit" Nullable="false" />
   </EntityType>
+  <Association Name="FK__CartItems__cartI__1BE81D6E">
+    <End Role="Carts" Type="Self.Carts" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="CartItems" Type="Self.CartItems" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Carts">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="CartItems">
+        <PropertyRef Name="cartID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK__CartItems__produ__4924D839">
     <End Role="Products" Type="Self.Products" Multiplicity="1" />
     <End Role="CartItems" Type="Self.CartItems" Multiplicity="*" />
@@ -117,7 +149,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__Carts__userID__63D8CE75">
+  <Association Name="FK__Carts__userID__1AF3F935">
     <End Role="Users" Type="Self.Users" Multiplicity="1">
       <OnDelete Action="Cascade" />
     </End>
@@ -143,7 +175,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__OrderItem__order__24B26D99">
+  <Association Name="FK__OrderItem__order__451F3D2B">
     <End Role="Orders" Type="Self.Orders" Multiplicity="1">
       <OnDelete Action="Cascade" />
     </End>
@@ -169,7 +201,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__Orders__cityID__1758727B">
+  <Association Name="FK__Orders__cityID__4707859D">
     <End Role="Cities" Type="Self.Cities" Multiplicity="1" />
     <End Role="Orders" Type="Self.Orders" Multiplicity="*" />
     <ReferentialConstraint>
@@ -181,19 +213,19 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__Orders__driverID__184C96B4">
-    <End Role="Drivers" Type="Self.Drivers" Multiplicity="1" />
+  <Association Name="FK__Orders__courierI__47FBA9D6">
+    <End Role="Couriers" Type="Self.Couriers" Multiplicity="1" />
     <End Role="Orders" Type="Self.Orders" Multiplicity="*" />
     <ReferentialConstraint>
-      <Principal Role="Drivers">
+      <Principal Role="Couriers">
         <PropertyRef Name="id" />
       </Principal>
       <Dependent Role="Orders">
-        <PropertyRef Name="driverID" />
+        <PropertyRef Name="courierID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__Orders__storeID__16644E42">
+  <Association Name="FK__Orders__storeID__46136164">
     <End Role="Stores" Type="Self.Stores" Multiplicity="1" />
     <End Role="Orders" Type="Self.Orders" Multiplicity="*" />
     <ReferentialConstraint>
@@ -270,17 +302,22 @@
     <EntitySet Name="Carts" EntityType="Self.Carts" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Categories" EntityType="Self.Categories" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Cities" EntityType="Self.Cities" Schema="dbo" store:Type="Tables" />
-    <EntitySet Name="Drivers" EntityType="Self.Drivers" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Couriers" EntityType="Self.Couriers" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Inquiries" EntityType="Self.Inquiries" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="OrderItems" EntityType="Self.OrderItems" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Orders" EntityType="Self.Orders" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Products" EntityType="Self.Products" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Stores" EntityType="Self.Stores" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK__CartItems__cartI__1BE81D6E" Association="Self.FK__CartItems__cartI__1BE81D6E">
+      <End Role="Carts" EntitySet="Carts" />
+      <End Role="CartItems" EntitySet="CartItems" />
+    </AssociationSet>
     <AssociationSet Name="FK__CartItems__produ__4924D839" Association="Self.FK__CartItems__produ__4924D839">
       <End Role="Products" EntitySet="Products" />
       <End Role="CartItems" EntitySet="CartItems" />
     </AssociationSet>
-    <AssociationSet Name="FK__Carts__userID__63D8CE75" Association="Self.FK__Carts__userID__63D8CE75">
+    <AssociationSet Name="FK__Carts__userID__1AF3F935" Association="Self.FK__Carts__userID__1AF3F935">
       <End Role="Users" EntitySet="Users" />
       <End Role="Carts" EntitySet="Carts" />
     </AssociationSet>
@@ -288,7 +325,7 @@
       <End Role="Stores" EntitySet="Stores" />
       <End Role="Categories" EntitySet="Categories" />
     </AssociationSet>
-    <AssociationSet Name="FK__OrderItem__order__24B26D99" Association="Self.FK__OrderItem__order__24B26D99">
+    <AssociationSet Name="FK__OrderItem__order__451F3D2B" Association="Self.FK__OrderItem__order__451F3D2B">
       <End Role="Orders" EntitySet="Orders" />
       <End Role="OrderItems" EntitySet="OrderItems" />
     </AssociationSet>
@@ -296,15 +333,15 @@
       <End Role="Products" EntitySet="Products" />
       <End Role="OrderItems" EntitySet="OrderItems" />
     </AssociationSet>
-    <AssociationSet Name="FK__Orders__cityID__1758727B" Association="Self.FK__Orders__cityID__1758727B">
+    <AssociationSet Name="FK__Orders__cityID__4707859D" Association="Self.FK__Orders__cityID__4707859D">
       <End Role="Cities" EntitySet="Cities" />
       <End Role="Orders" EntitySet="Orders" />
     </AssociationSet>
-    <AssociationSet Name="FK__Orders__driverID__184C96B4" Association="Self.FK__Orders__driverID__184C96B4">
-      <End Role="Drivers" EntitySet="Drivers" />
+    <AssociationSet Name="FK__Orders__courierI__47FBA9D6" Association="Self.FK__Orders__courierI__47FBA9D6">
+      <End Role="Couriers" EntitySet="Couriers" />
       <End Role="Orders" EntitySet="Orders" />
     </AssociationSet>
-    <AssociationSet Name="FK__Orders__storeID__16644E42" Association="Self.FK__Orders__storeID__16644E42">
+    <AssociationSet Name="FK__Orders__storeID__46136164" Association="Self.FK__Orders__storeID__46136164">
       <End Role="Stores" EntitySet="Stores" />
       <End Role="Orders" EntitySet="Orders" />
     </AssociationSet>

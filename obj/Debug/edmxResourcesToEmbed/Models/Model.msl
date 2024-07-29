@@ -23,6 +23,7 @@
     <EntitySetMapping Name="Categories">
       <EntityTypeMapping TypeName="groceryDBModel.Categories">
         <MappingFragment StoreEntitySet="Categories">
+          <ScalarProperty Name="isActive" ColumnName="isActive" />
           <ScalarProperty Name="imageURL" ColumnName="imageURL" />
           <ScalarProperty Name="storeID" ColumnName="storeID" />
           <ScalarProperty Name="name" ColumnName="name" />
@@ -33,6 +34,7 @@
     <EntitySetMapping Name="Cities">
       <EntityTypeMapping TypeName="groceryDBModel.Cities">
         <MappingFragment StoreEntitySet="Cities">
+          <ScalarProperty Name="isActive" ColumnName="isActive" />
           <ScalarProperty Name="name" ColumnName="name" />
           <ScalarProperty Name="id" ColumnName="id" />
         </MappingFragment>
@@ -52,7 +54,8 @@
     <EntitySetMapping Name="Orders">
       <EntityTypeMapping TypeName="groceryDBModel.Orders">
         <MappingFragment StoreEntitySet="Orders">
-          <ScalarProperty Name="driverID" ColumnName="driverID" />
+          <ScalarProperty Name="isActive" ColumnName="isActive" />
+          <ScalarProperty Name="courierID" ColumnName="courierID" />
           <ScalarProperty Name="cityID" ColumnName="cityID" />
           <ScalarProperty Name="phone" ColumnName="phone" />
           <ScalarProperty Name="email" ColumnName="email" />
@@ -71,6 +74,7 @@
     <EntitySetMapping Name="Products">
       <EntityTypeMapping TypeName="groceryDBModel.Products">
         <MappingFragment StoreEntitySet="Products">
+          <ScalarProperty Name="isActive" ColumnName="isActive" />
           <ScalarProperty Name="imageURL" ColumnName="imageURL" />
           <ScalarProperty Name="categoryID" ColumnName="categoryID" />
           <ScalarProperty Name="price" ColumnName="price" />
@@ -82,6 +86,7 @@
     <EntitySetMapping Name="Stores">
       <EntityTypeMapping TypeName="groceryDBModel.Stores">
         <MappingFragment StoreEntitySet="Stores">
+          <ScalarProperty Name="isActive" ColumnName="isActive" />
           <ScalarProperty Name="description" ColumnName="description" />
           <ScalarProperty Name="imageURL" ColumnName="imageURL" />
           <ScalarProperty Name="cityID" ColumnName="cityID" />
@@ -93,6 +98,7 @@
     <EntitySetMapping Name="Users">
       <EntityTypeMapping TypeName="groceryDBModel.Users">
         <MappingFragment StoreEntitySet="Users">
+          <ScalarProperty Name="isActive" ColumnName="isActive" />
           <ScalarProperty Name="managedStore" ColumnName="managedStore" />
           <ScalarProperty Name="roles" ColumnName="roles" />
           <ScalarProperty Name="cartID" ColumnName="cartID" />
@@ -107,11 +113,24 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="Drivers">
-      <EntityTypeMapping TypeName="groceryDBModel.Drivers">
-        <MappingFragment StoreEntitySet="Drivers">
+    <EntitySetMapping Name="Couriers">
+      <EntityTypeMapping TypeName="groceryDBModel.Couriers">
+        <MappingFragment StoreEntitySet="Couriers">
+          <ScalarProperty Name="isActive" ColumnName="isActive" />
           <ScalarProperty Name="phone" ColumnName="phone" />
           <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Inquiries">
+      <EntityTypeMapping TypeName="groceryDBModel.Inquiries">
+        <MappingFragment StoreEntitySet="Inquiries">
+          <ScalarProperty Name="isActive" ColumnName="isActive" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="message" ColumnName="message" />
+          <ScalarProperty Name="subject" ColumnName="subject" />
+          <ScalarProperty Name="email" ColumnName="email" />
           <ScalarProperty Name="id" ColumnName="id" />
         </MappingFragment>
       </EntityTypeMapping>

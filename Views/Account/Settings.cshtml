@@ -6,6 +6,13 @@
 }
 
 <div class="container mt-4">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb bg-light p-3 rounded">
+            <li class="breadcrumb-item"><a href="/">Home</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Account Settings</li>
+        </ol>
+    </nav>
+
     <div class="row">
         <div style="width:20%;">
             <div class="sidemenu__categories">
@@ -61,14 +68,14 @@
                         <div class="col-md-6">
                             <div data-mdb-input-init class="form-outline">
                                 <label>Address (Optional)</label>
-                                <input type="text" class="form-control" value="@Model.address" name="address" id="address" placeholder="Enter address" />
+                                <textarea class="form-control" name="address" id="address" rows="3" cols="50" placeholder="Enter address">@Model.address</textarea>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div data-mdb-input-init class="form-outline">
                                 <label>City (Optional)</label>
                                 <select class="form-select" name="cityID" id="cityID">
-                                    <option value="" disabled selected>Select a city</option>
+                                    <option value="null" selected>Select a city</option>
                                     @foreach (var city in cities)
                                     {
                                         <option value="@city.id" @(city.id == Model.cityID ? "selected" : "")>@city.name</option>

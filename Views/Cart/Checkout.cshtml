@@ -113,100 +113,105 @@
                 }
     </style>
 </head>
-<body>
-    <div class="checkout-container">
-        <div class="checkout-header">
-            <h1>Checkout</h1>
-        </div>
-        @if (Model.Any())
-        {
-            <div class="checkout-section">
-                <h3>Review Your Cart</h3>
-                @foreach (var item in Model)
-                {
-                    <div class="cart-item">
-                        @if (!string.IsNullOrEmpty(item.Products.imageURL))
-                        {
-                            <img src="@item.Products.imageURL" alt="Product Image" />
-                        }
-                        else
-                        {
-                            <img src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg" alt="Placeholder Image" />
-                        }
-                        <div class="item-details">
-                            <div class="item-name">@item.Products.name</div>
-                            <div class="item-price">@item.Products.price TL</div>
-                        </div>
-                        <div class="item-quantity">
-                            <span>Quantity: @item.quantity</span>
-                        </div>
-                        <div class="item-total">
-                            @item.price TL
-                        </div>
-                    </div>
-                }
-                <div class="total-price">
-                    Total: @totalPrice TL
-                </div>
-            </div>
 
-            <div class="checkout-section">
-                <h3>Shipping Information</h3>
-                <form action="/Cart/PlaceOrder/" method="post" id="form">
-                    <input type="hidden" class="form-control" value="@user.id" name="userID" id="userID" />
-                    <input type="hidden" class="form-control" value="@Model.First().Products.Categories.storeID" name="storeID" id="storeID" />
-                    <input type="hidden" class="form-control" value="@user.Cities.id" name="cityID" id="cityID" />
-                    <input type="hidden" class="form-control" value="On Road" name="status" id="status" />
-                    <input type="hidden" class="form-control" value="@totalPrice" name="totalPrice" id="totalPrice" />
-                    <input type="hidden" class="form-control" value="@Model" name="cartItems" id="cartItems" />
-
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div data-mdb-input-init class="form-outline">
-                                <label>First name</label>
-                                <input type="text" id="firstName" name="firstName" value="@user.firstName" class="form-control" maxlength="40" required />
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div data-mdb-input-init class="form-outline">
-                                <label>Last name</label>
-                                <input type="text" id="lastName" name="lastName" value="@user.lastName" class="form-control" maxlength="30" required />
-                            </div>
-                        </div>
-                    </div>
-
-                    <div data-mdb-input-init class="form-outline">
-                        <label>Email address</label>
-                        <input type="email" id="email" name="email" value="@user.email" class="form-control" placeholder="example@email.com" required />
-                    </div>
-
-                    <div data-mdb-input-init class="form-outline">
-                        <label for="phone">Phone number (Optional)</label>
-                        <input type="tel" id="phone" name="phone" value="@user.phone" class="form-control" pattern="\(\d{3}\)-\d{3}-\d{4}" placeholder="(123)-456-7890" />
-                    </div>
-
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div data-mdb-input-init class="form-outline">
-                                <label>Address</label>
-                                <input type="text" id="address" name="address" value="@user.address" class="form-control" placeholder="Enter delivery address" required />
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div data-mdb-input-init class="form-outline">
-                                <label>City</label>
-                                <input type="text" value="@user.Cities.name" class="form-control" readonly disabled />
-                            </div>
-                        </div>
-                    </div>
-
-                    <button type="submit" class="place-order-btn">Place Order</button>
-                </form>
-            </div>
-        }
-        else
-        {
-            <p>Your cart is empty.</p>
-        }
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb bg-light p-3 rounded mt-4 container">
+        <li class="breadcrumb-item"><a href="../">Cart</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Checkout</li>
+    </ol>
+</nav>
+<div class="checkout-container mt-4">
+    <div class="checkout-header">
+        <h1>Checkout</h1>
     </div>
-</body>
+    @if (Model.Any())
+    {
+        <div class="checkout-section">
+            <h3>Review Your Cart</h3>
+            @foreach (var item in Model)
+            {
+                <div class="cart-item">
+                    @if (!string.IsNullOrEmpty(item.Products.imageURL))
+                    {
+                        <img src="@item.Products.imageURL" alt="Product Image" />
+                    }
+                    else
+                    {
+                        <img src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg" alt="Placeholder Image" />
+                    }
+                    <div class="item-details">
+                        <div class="item-name">@item.Products.name</div>
+                        <div class="item-price">@item.Products.price TL</div>
+                    </div>
+                    <div class="item-quantity">
+                        <span>Quantity: @item.quantity</span>
+                    </div>
+                    <div class="item-total">
+                        @item.price TL
+                    </div>
+                </div>
+            }
+            <div class="total-price">
+                Total: @totalPrice TL
+            </div>
+        </div>
+
+        <div class="checkout-section">
+            <h3>Shipping Information</h3>
+            <form action="/Cart/PlaceOrder/" method="post" id="form">
+                <input type="hidden" class="form-control" value="@user.id" name="userID" id="userID" />
+                <input type="hidden" class="form-control" value="@Model.First().Products.Categories.storeID" name="storeID" id="storeID" />
+                <input type="hidden" class="form-control" value="@user.Cities.id" name="cityID" id="cityID" />
+                <input type="hidden" class="form-control" value="On Road" name="status" id="status" />
+                <input type="hidden" class="form-control" value="@totalPrice" name="totalPrice" id="totalPrice" />
+                <input type="hidden" class="form-control" value="@Model" name="cartItems" id="cartItems" />
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <div data-mdb-input-init class="form-outline">
+                            <label>First name</label>
+                            <input type="text" id="firstName" name="firstName" value="@user.firstName" class="form-control" maxlength="40" required />
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div data-mdb-input-init class="form-outline">
+                            <label>Last name</label>
+                            <input type="text" id="lastName" name="lastName" value="@user.lastName" class="form-control" maxlength="30" required />
+                        </div>
+                    </div>
+                </div>
+
+                <div data-mdb-input-init class="form-outline">
+                    <label>Email address</label>
+                    <input type="email" id="email" name="email" value="@user.email" class="form-control" placeholder="example@email.com" required />
+                </div>
+
+                <div data-mdb-input-init class="form-outline">
+                    <label for="phone">Phone number (Optional)</label>
+                    <input type="tel" id="phone" name="phone" value="@user.phone" class="form-control" pattern="\(\d{3}\)-\d{3}-\d{4}" placeholder="(123)-456-7890" />
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <div data-mdb-input-init class="form-outline">
+                            <label>Address</label>
+                            <textarea class="form-control" name="address" id="address" rows="3" cols="50" placeholder="Enter delivery address" required>@user.address</textarea>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div data-mdb-input-init class="form-outline">
+                            <label>City</label>
+                            <input type="text" value="@user.Cities.name" class="form-control" readonly disabled required />
+                        </div>
+                    </div>
+                </div>
+
+                <button type="submit" class="place-order-btn">Place Order</button>
+            </form>
+        </div>
+    }
+    else
+    {
+        <p>Your cart is empty.</p>
+    }
+</div>

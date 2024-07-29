@@ -32,13 +32,14 @@ namespace GroceryDeliverySystem.Models
         public string email { get; set; }
         public string phone { get; set; }
         public int cityID { get; set; }
-        public int driverID { get; set; }
+        public int courierID { get; set; }
+        public bool isActive { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<OrderItems> OrderItems { get; set; }
         public virtual Users Users { get; set; }
         public virtual Cities Cities { get; set; }
         public virtual Stores Stores { get; set; }
-        public virtual Drivers Drivers { get; set; }
+        public virtual Couriers Couriers { get; set; }
     }
 }

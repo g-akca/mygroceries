@@ -1,0 +1,141 @@
+﻿@using GroceryDeliverySystem.Models
+@model List<Inquiries>
+
+@{
+    ViewBag.Title = "Inquiries";
+}
+
+@section body {
+    <div class="modal fade" id="detailsModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">Inquiry Message</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <p id="messageContent"></p>
+                </div>
+
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="deleteModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">Delete Inquiry</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <p class="message"></p>
+                    <p class="error"></p>
+                </div>
+
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-danger inquiryDel">Delete</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+}
+
+<div class="container mt-4">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb bg-light p-3 rounded">
+            <li class="breadcrumb-item"><a>Management Panel</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Inquiries</li>
+        </ol>
+    </nav>
+    <div class="row">
+        @Html.Partial("_Sidemenu")
+        <div class="col-lg-9">
+            <h2>Customer Inquiries</h2>
+            <div>
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th> ID </th>
+                            <th> Name </th>
+                            <th> Email </th>
+                            <th> Subject </th>
+                            <th> Message </th>
+                            <th> Delete </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (Inquiries inq in Model.OrderByDescending(i => i.id))
+                        {
+                            <tr>
+                                <td> @inq.id </td>
+                                <td> @inq.name </td>
+                                <td> @inq.email </td>
+                                <td> @inq.subject </td>
+                                <td> <a class="btn btn-info detInq" data-message="@inq.message" data-bs-toggle="modal" data-bs-target="#detailsModal"> Message </a> </td>
+                                <td> <a class="btn btn-danger delModal" data-inqID="@inq.id" data-bs-toggle="modal" data-bs-target="#deleteModal"> Delete </a> </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts{
+    <script src="~/Shared/js/jquery-3.7.1.min.js"></script>
+    <script>
+        $('.detInq').click(
+            function () {
+                var message = $(this).data('message');
+
+                $('#messageContent').text(message);
+            });
+
+        $(".delModal").click(
+            function () {
+                var id = $(this).attr("data-inqID");
+                $(".modal-body > p.message").html("Should the inquiry with the ID<strong> " + id + " </strong>get deleted?");
+                $(".inquiryDel").data("inqID", id);
+            }
+        );
+
+        $(".inquiryDel").click(
+            function () {
+                var id = $(this).data("inqID");
+                $.ajax(
+                    {
+                        type: "POST",
+                        url: "/Panel/DeleteInquiry/" + id,
+                        success: function (result) {
+                            if (result == "successful") {
+                                window.location.replace("/Panel/Inquiries/");
+                            }
+                            else {
+                                $(".modal-body > p.error").html("An error occurred");
+                            }
+                        }
+                    }
+                )
+            }
+        );
+    </script>
+}
+

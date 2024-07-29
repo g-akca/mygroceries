@@ -26,6 +26,7 @@ namespace GroceryDeliverySystem.Models
         public decimal price { get; set; }
         public int categoryID { get; set; }
         public string imageURL { get; set; }
+        public bool isActive { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CartItems> CartItems { get; set; }

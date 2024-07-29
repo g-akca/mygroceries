@@ -21,11 +21,11 @@ namespace GroceryDeliverySystem.Controllers
             {
                 var email = User.Identity.Name;
                 var user = gdb.Users.FirstOrDefault(x => x.email == email);
-                return View(gdb.Stores.Where(x => x.cityID == user.cityID).ToList());
+                return View(gdb.Stores.Where(x => x.cityID == user.cityID && x.isActive == true).ToList());
             }
             else
             {
-                return View(gdb.Stores.ToList());
+                return View(gdb.Stores.Where(x => x.isActive == true).ToList());
             }
         }
 
@@ -78,6 +78,7 @@ namespace GroceryDeliverySystem.Controllers
             gdb.SaveChanges();
             u.cartID = c.id;
             u.roles = "C";
+            u.isActive = true;
             gdb.SaveChanges();
             if (u != null)
             {
@@ -92,6 +93,43 @@ namespace GroceryDeliverySystem.Controllers
         }
 
         [HttpGet]
+        public ActionResult ForgotPassword()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult ForgotPassword(string email)
+        {
+            bool exists = gdb.Users.Any(u => u.email == email);
+            if (exists)
+            {
+                TempData["EmailSuccess"] = "We have sent you an email to reset your password. Please check your inbox.";
+            }
+            else
+            {
+                TempData["EmailError"] = "We couldn't find the email address you've entered. Please try again.";
+            }
+            return RedirectToAction("ForgotPassword");
+        }
+
+        [HttpGet]
+        public ActionResult ContactUs()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult ContactUs(Inquiries i)
+        {
+            TempData["Success"] = "Thank you for contacting us. We will get back to you soon.";
+            i.isActive = true;
+            gdb.Inquiries.Add(i);
+            gdb.SaveChanges();
+            return RedirectToAction("ContactUs");
+        }
+
+        [HttpGet]
         [Authorize]
         public ActionResult NavBar1()
         {
@@ -101,7 +139,7 @@ namespace GroceryDeliverySystem.Controllers
             var cartItems = gdb.CartItems.Where(x => x.cartID == cart.id).ToList();
 
             ViewBag.User = user;
-            ViewBag.Cities = gdb.Cities.ToList();
+            ViewBag.Cities = gdb.Cities.Where(x => x.isActive == true).ToList();
 
             return PartialView("_NavBar1", cartItems);
         }

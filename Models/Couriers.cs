@@ -12,24 +12,19 @@ namespace GroceryDeliverySystem.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Cities
+    public partial class Couriers
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Cities()
+        public Couriers()
         {
-            this.Stores = new HashSet<Stores>();
-            this.Users = new HashSet<Users>();
             this.Orders = new HashSet<Orders>();
         }
     
         public int id { get; set; }
         public string name { get; set; }
+        public string phone { get; set; }
         public bool isActive { get; set; }
     
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Stores> Stores { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Users> Users { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Orders> Orders { get; set; }
     }

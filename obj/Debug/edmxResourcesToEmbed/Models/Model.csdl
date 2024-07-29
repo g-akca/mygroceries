@@ -66,11 +66,12 @@
       <End Role="Stores" EntitySet="Stores" />
       <End Role="Orders" EntitySet="Orders" />
     </AssociationSet>
-    <EntitySet Name="Drivers" EntityType="groceryDBModel.Drivers" />
-    <AssociationSet Name="FK__Orders__driverID__184C96B4" Association="groceryDBModel.FK__Orders__driverID__184C96B4">
-      <End Role="Drivers" EntitySet="Drivers" />
+    <EntitySet Name="Couriers" EntityType="groceryDBModel.Couriers" />
+    <AssociationSet Name="FK__Orders__courierI__47FBA9D6" Association="groceryDBModel.FK__Orders__courierI__47FBA9D6">
+      <End Role="Couriers" EntitySet="Couriers" />
       <End Role="Orders" EntitySet="Orders" />
     </AssociationSet>
+    <EntitySet Name="Inquiries" EntityType="groceryDBModel.Inquiries" />
   </EntityContainer>
   <EntityType Name="CartItems">
     <Key>
@@ -104,6 +105,7 @@
     <Property Name="imageURL" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
     <NavigationProperty Name="Stores" Relationship="groceryDBModel.FK__Categorie__store__395884C4" FromRole="Categories" ToRole="Stores" />
     <NavigationProperty Name="Products" Relationship="groceryDBModel.FK__Products__catego__3C34F16F" FromRole="Categories" ToRole="Products" />
+    <Property Name="isActive" Type="Boolean" Nullable="false" />
   </EntityType>
   <EntityType Name="Cities">
     <Key>
@@ -114,6 +116,7 @@
     <NavigationProperty Name="Stores" Relationship="groceryDBModel.FK__Stores__cityID__2B0A656D" FromRole="Cities" ToRole="Stores" />
     <NavigationProperty Name="Users" Relationship="groceryDBModel.FK__Users__cityID__2FCF1A8A" FromRole="Cities" ToRole="Users" />
     <NavigationProperty Name="Orders" Relationship="groceryDBModel.FK__Orders__cityID__035179CE" FromRole="Cities" ToRole="Orders" />
+    <Property Name="isActive" Type="Boolean" Nullable="false" />
   </EntityType>
   <EntityType Name="OrderItems">
     <Key>
@@ -147,8 +150,9 @@
     <Property Name="cityID" Type="Int32" Nullable="false" />
     <NavigationProperty Name="Cities" Relationship="groceryDBModel.FK__Orders__cityID__035179CE" FromRole="Orders" ToRole="Cities" />
     <NavigationProperty Name="Stores" Relationship="groceryDBModel.FK__Orders__storeID__025D5595" FromRole="Orders" ToRole="Stores" />
-    <Property Name="driverID" Type="Int32" Nullable="false" />
-    <NavigationProperty Name="Drivers" Relationship="groceryDBModel.FK__Orders__driverID__184C96B4" FromRole="Orders" ToRole="Drivers" />
+    <Property Name="courierID" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Couriers" Relationship="groceryDBModel.FK__Orders__courierI__47FBA9D6" FromRole="Orders" ToRole="Couriers" />
+    <Property Name="isActive" Type="Boolean" Nullable="false" />
   </EntityType>
   <EntityType Name="Products">
     <Key>
@@ -162,6 +166,7 @@
     <NavigationProperty Name="CartItems" Relationship="groceryDBModel.FK__CartItems__produ__40058253" FromRole="Products" ToRole="CartItems" />
     <NavigationProperty Name="Categories" Relationship="groceryDBModel.FK__Products__catego__3C34F16F" FromRole="Products" ToRole="Categories" />
     <NavigationProperty Name="OrderItems" Relationship="groceryDBModel.FK__OrderItem__produ__46B27FE2" FromRole="Products" ToRole="OrderItems" />
+    <Property Name="isActive" Type="Boolean" Nullable="false" />
   </EntityType>
   <EntityType Name="Stores">
     <Key>
@@ -176,6 +181,7 @@
     <NavigationProperty Name="Cities" Relationship="groceryDBModel.FK__Stores__cityID__2B0A656D" FromRole="Stores" ToRole="Cities" />
     <NavigationProperty Name="Users" Relationship="groceryDBModel.FK__Users__managedSt__31B762FC" FromRole="Stores" ToRole="Users" />
     <NavigationProperty Name="Orders" Relationship="groceryDBModel.FK__Orders__storeID__025D5595" FromRole="Stores" ToRole="Orders" />
+    <Property Name="isActive" Type="Boolean" Nullable="false" />
   </EntityType>
   <EntityType Name="Users">
     <Key>
@@ -197,6 +203,7 @@
     <NavigationProperty Name="Cities" Relationship="groceryDBModel.FK__Users__cityID__2FCF1A8A" FromRole="Users" ToRole="Cities" />
     <NavigationProperty Name="Orders" Relationship="groceryDBModel.FK__Orders__userID__42E1EEFE" FromRole="Users" ToRole="Orders" />
     <NavigationProperty Name="Stores" Relationship="groceryDBModel.FK__Users__managedSt__31B762FC" FromRole="Users" ToRole="Stores" />
+    <Property Name="isActive" Type="Boolean" Nullable="false" />
   </EntityType>
   <Association Name="FK__CartItems__cartI__3F115E1A">
     <End Type="groceryDBModel.Carts" Role="Carts" Multiplicity="1" />
@@ -368,25 +375,37 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <EntityType Name="Drivers">
+  <EntityType Name="Couriers">
     <Key>
       <PropertyRef Name="id" />
     </Key>
     <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="name" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
     <Property Name="phone" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
-    <NavigationProperty Name="Orders" Relationship="groceryDBModel.FK__Orders__driverID__184C96B4" FromRole="Drivers" ToRole="Orders" />
+    <NavigationProperty Name="Orders" Relationship="groceryDBModel.FK__Orders__courierI__47FBA9D6" FromRole="Couriers" ToRole="Orders" />
+    <Property Name="isActive" Type="Boolean" Nullable="false" />
   </EntityType>
-  <Association Name="FK__Orders__driverID__184C96B4">
-    <End Type="groceryDBModel.Drivers" Role="Drivers" Multiplicity="1" />
+  <Association Name="FK__Orders__courierI__47FBA9D6">
+    <End Type="groceryDBModel.Couriers" Role="Couriers" Multiplicity="1" />
     <End Type="groceryDBModel.Orders" Role="Orders" Multiplicity="*" />
     <ReferentialConstraint>
-      <Principal Role="Drivers">
+      <Principal Role="Couriers">
         <PropertyRef Name="id" />
       </Principal>
       <Dependent Role="Orders">
-        <PropertyRef Name="driverID" />
+        <PropertyRef Name="courierID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <EntityType Name="Inquiries">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="email" Type="String" Nullable="false" MaxLength="75" FixedLength="false" Unicode="true" />
+    <Property Name="subject" Type="String" Nullable="false" MaxLength="75" FixedLength="false" Unicode="true" />
+    <Property Name="message" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Name="name" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Name="isActive" Type="Boolean" Nullable="false" />
+  </EntityType>
 </Schema>

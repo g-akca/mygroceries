@@ -7,13 +7,34 @@
     string categoryName = ViewBag.CategoryName;
 }
 
+<head>
+    <style>
+        .toast {
+            position: fixed;
+            bottom: 60px;
+            right: 20px;
+            min-width: 200px;
+            background: rgba(127, 173, 57, 0.8);
+            color: #fff;
+            padding: 10px;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+
+<div id="toast" class="toast" style="display: none;">
+    <div class="toast-body">
+        Item added to cart successfully!
+    </div>
+</div>
+
 <div class="container mt-4">
     <!-- Breadcrumb navigation -->
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb bg-light p-3 rounded">
             <li class="breadcrumb-item"><a href="/">Home</a></li>
-                <li class="breadcrumb-item"><a href="/Store/@store.id/">@store.name</a></li>
-                <li class="breadcrumb-item active" aria-current="page">@categoryName</li>
+            <li class="breadcrumb-item"><a href="/Store/@store.id/">@store.name</a></li>
+            <li class="breadcrumb-item active" aria-current="page">@categoryName</li>
         </ol>
     </nav>
 
@@ -27,7 +48,7 @@
                 <ul>
                     @foreach (var ctg in Ctg)
                     {
-                        <li><a href="/Store/@store.id/@ctg.id/">@ctg.name</a></li>
+                        <li><a href="/Store/@store.id/@ctg.id/">@ctg.name <span style="color:gray;">(@ctg.Products.Count)</span></a></li>
                     }
                 </ul>
             </div>
@@ -76,10 +97,11 @@
                 $.ajax(
                     {
                         type: "POST",
-                        url: "@Url.Action("AddToCart", "Cart")",
+                        url: "/Cart/AddToCart/",
                         data: { productID: productID },
                         success: function (response) {
                             if (response.success) {
+                                $("#toast").fadeIn().delay(1000).fadeOut();
                                 updateCartDropdown();
                             }
                             else if (response.notAuth) {

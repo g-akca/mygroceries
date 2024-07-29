@@ -32,6 +32,7 @@ namespace GroceryDeliverySystem.Models
         public Nullable<int> cartID { get; set; }
         public string roles { get; set; }
         public Nullable<int> managedStore { get; set; }
+        public bool isActive { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Carts> Carts { get; set; }

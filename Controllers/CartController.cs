@@ -38,10 +38,11 @@ namespace GroceryDeliverySystem.Controllers
         public ActionResult PlaceOrder(Orders o)
         {
             o.date = DateTime.Now;
-            var drivers = gdb.Drivers.ToList();
+            var couriers = gdb.Couriers.Where(x => x.isActive == true).ToList();
             Random rnd = new Random();
-            int index = rnd.Next(drivers.Count);
-            o.driverID = drivers[index].id;
+            int index = rnd.Next(couriers.Count);
+            o.courierID = couriers[index].id;
+            o.isActive = true;
             gdb.Orders.Add(o);
 
             var email = User.Identity.Name;

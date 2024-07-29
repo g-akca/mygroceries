@@ -87,7 +87,6 @@
                         <label>Name</label>
                         <input type="text" class="form-control" name="name" id="name2" placeholder="Enter city name" required />
                     </form>
-                    <p class="message"></p>
                 </div>
 
                 <!-- Modal footer -->
@@ -102,26 +101,14 @@
 }
 
 <div class="container mt-4">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb bg-light p-3 rounded">
+            <li class="breadcrumb-item"><a>Management Panel</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Cities</li>
+        </ol>
+    </nav>
     <div class="row">
-        <div style="width:20%;">
-            <div class="sidemenu__categories">
-                <div class="sidemenu__categories__title">
-                    <span>Management Panel</span>
-                </div>
-                <ul>
-                    @if (User.IsInRole("A"))
-                    {
-                        <li><a href="/Panel/Users/">Users</a></li>
-                        <li><a href="/Panel/Cities/">Cities</a></li>
-                    }
-                    <li><a href="/Panel/Stores/">Stores</a></li>
-                    <li><a href="/Panel/Categories/">Categories</a></li>
-                    <li><a href="/Panel/Products/">Products</a></li>
-                    <li><a href="/Panel/Orders/">Orders</a></li>
-                    <li><a href="/Panel/Couriers/">Couriers</a></li>
-                </ul>
-            </div>
-        </div>
+        @Html.Partial("_Sidemenu")
         <div class="col-lg-9">
             <h2>City Details</h2>
             <div>
@@ -147,7 +134,7 @@
                                 <td> <a class="btn btn-info updCity" data-cID="@c.id" data-name="@c.name" data-bs-toggle="modal" data-bs-target="#updateModal"> Update </a> </td>
                             </tr>
                         }
-                    </tbody>
+                        </tbody>
                 </table>
             </div>
         </div>

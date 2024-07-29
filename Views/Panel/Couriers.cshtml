@@ -1,5 +1,5 @@
 ﻿@using GroceryDeliverySystem.Models
-@model List<Drivers>
+@model List<Couriers>
 
 @{
     ViewBag.Title = "Couriers";
@@ -57,8 +57,8 @@
                         <label>Name</label>
                         <input type="text" class="form-control" name="name" id="name1" placeholder="Enter name" required />
 
-                        <label for="phone">Phone number (Optional)</label>
-                        <input type="tel" class="form-control" name="phone" id="phone" pattern="\(\d{3}\)-\d{3}-\d{4}" placeholder="(123)-456-7890" />
+                        <label for="phone">Phone number</label>
+                        <input type="tel" class="form-control" name="phone" id="phone" pattern="\(\d{3}\)-\d{3}-\d{4}" placeholder="(123)-456-7890" required />
                     </form>
                 </div>
 
@@ -90,10 +90,9 @@
                         <label>Name</label>
                         <input type="text" class="form-control" name="name" id="name2" placeholder="Enter name" required />
 
-                        <label for="phone">Phone number (Optional)</label>
-                        <input type="tel" class="form-control phone-upd" name="phone" id="phone" pattern="\(\d{3}\)-\d{3}-\d{4}" placeholder="(123)-456-7890" />
+                        <label for="phone">Phone number</label>
+                        <input type="tel" class="form-control phone-upd" name="phone" id="phone" pattern="\(\d{3}\)-\d{3}-\d{4}" placeholder="(123)-456-7890" required/>
                     </form>
-                    <p class="message"></p>
                 </div>
 
                 <!-- Modal footer -->
@@ -108,32 +107,21 @@
 }
 
 <div class="container mt-4">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb bg-light p-3 rounded">
+            <li class="breadcrumb-item"><a>Management Panel</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Couriers</li>
+        </ol>
+    </nav>
     <div class="row">
-        <div style="width:20%;">
-            <div class="sidemenu__categories">
-                <div class="sidemenu__categories__title">
-                    <span>Management Panel</span>
-                </div>
-                <ul>
-                    @if (User.IsInRole("A"))
-                    {
-                        <li><a href="/Panel/Users/">Users</a></li>
-                        <li><a href="/Panel/Cities/">Cities</a></li>
-                    }
-                    <li><a href="/Panel/Stores/">Stores</a></li>
-                    <li><a href="/Panel/Categories/">Categories</a></li>
-                    <li><a href="/Panel/Products/">Products</a></li>
-                    <li><a href="/Panel/Orders/">Orders</a></li>
-                    <li><a href="/Panel/Couriers/">Couriers</a></li>
-                </ul>
-            </div>
-        </div>
+        @Html.Partial("_Sidemenu")
         <div class="col-lg-9">
             <h2>Courier Details</h2>
-            @if (User.IsInRole("A")) {
-            <div>
-                <a class="btn btn-success rounded-2" data-bs-toggle="modal" data-bs-target="#addModal"> Add New Courier </a>
-            </div>
+            @if (User.IsInRole("A"))
+            {
+                <div>
+                    <a class="btn btn-success rounded-2" data-bs-toggle="modal" data-bs-target="#addModal"> Add New Courier </a>
+                </div>
             }
             <div>
                 <table class="table table-hover">
@@ -150,7 +138,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach (Drivers d in Model)
+                        @foreach (Couriers d in Model)
                         {
                             <tr>
                                 <td> @d.id </td>
@@ -217,7 +205,7 @@
         );
 
         document.addEventListener('DOMContentLoaded', function () {
-            const phoneInput = document.getElementById('phone');
+            const phoneInput = document.getElementById('phone2');
 
             phoneInput.addEventListener('input', function () {
                 let input = phoneInput.value.replace(/\D/g, ''); // Remove non-digit characters

@@ -2,7 +2,7 @@
 @model List<Stores>
 
 @{
-    ViewBag.Title = "Stores";
+    List<Cities> cities = ViewBag.Cities;
 }
 
 @section head {
@@ -57,14 +57,20 @@
                         <label>Name</label>
                         <input type="text" class="form-control" name="name" id="name1" placeholder="Enter name" required />
 
-                        <label>City ID</label>
-                        <input type="number" class="form-control" name="cityID" id="cityID1" placeholder="Enter city ID" required />
+                        <label>City</label>
+                        <select class="form-select" name="cityID" id="cityID1" required>
+                            <option value="" disabled selected>Select a city</option>
+                            @foreach (var city in cities)
+                            {
+                                <option value="@city.id">@city.name</option>
+                            }
+                            </select>
 
                         <label>Image URL (Optional)</label>
                         <input type="text" class="form-control" name="imageURL" id="imageURL1" placeholder="Enter image URL" />
 
                         <label>Description (Optional)</label>
-                        <input type="text" class="form-control" name="desc" id="desc1" placeholder="Enter description" />
+                        <textarea class="form-control" name="description" id="description1" rows="3" cols="50" placeholder="Enter description"></textarea>
                     </form>
                 </div>
 
@@ -96,16 +102,21 @@
                         <label>Name</label>
                         <input type="text" class="form-control" name="name" id="name2" placeholder="Enter name" required />
 
-                        <label>City ID</label>
-                        <input type="number" class="form-control" name="cityID" id="cityID2" placeholder="Enter city ID" required />
+                        <label>City</label>
+                        <select class="form-select" name="cityID" id="cityID2" required>
+                            <option value="" disabled selected>Select a city</option>
+                            @foreach (var city in cities)
+                            {
+                                <option value="@city.id">@city.name</option>
+                            }
+                            </select>
 
                         <label>Image URL (Optional)</label>
                         <input type="text" class="form-control" name="imageURL" id="imageURL2" placeholder="Enter image URL" />
 
                         <label>Description (Optional)</label>
-                        <input type="text" class="form-control" name="desc" id="desc2" placeholder="Enter description" />
+                        <textarea class="form-control" name="description" id="description2" rows="3" cols="50" placeholder="Enter description"></textarea>
                     </form>
-                    <p class="message"></p>
                 </div>
 
                 <!-- Modal footer -->
@@ -120,26 +131,14 @@
 }
 
 <div class="container mt-4">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb bg-light p-3 rounded">
+            <li class="breadcrumb-item"><a>Management Panel</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Stores</li>
+        </ol>
+    </nav>
     <div class="row">
-        <div style="width:20%;">
-            <div class="sidemenu__categories">
-                <div class="sidemenu__categories__title">
-                    <span>Management Panel</span>
-                </div>
-                <ul>
-                    @if (User.IsInRole("A"))
-                    {
-                        <li><a href="/Panel/Users/">Users</a></li>
-                        <li><a href="/Panel/Cities/">Cities</a></li>
-                    }
-                    <li><a href="/Panel/Stores/">Stores</a></li>
-                    <li><a href="/Panel/Categories/">Categories</a></li>
-                    <li><a href="/Panel/Products/">Products</a></li>
-                    <li><a href="/Panel/Orders/">Orders</a></li>
-                    <li><a href="/Panel/Couriers/">Couriers</a></li>
-                </ul>
-            </div>
-        </div>
+        @Html.Partial("_Sidemenu")
         <div class="col-lg-9">
             <h2>Store Details</h2>
             @if (User.IsInRole("A"))
@@ -225,7 +224,7 @@
                 $(".modal-body #name2").val(name);
                 $(".modal-body #cityID2").val(cityID);
                 $(".modal-body #imageURL2").val(image);
-                $(".modal-body #desc2").val(desc);
+                $(".modal-body #description2").val(desc);
             }
         );
 

@@ -2,7 +2,7 @@
 @model List<Products>
 
 @{
-    ViewBag.Title = "Products";
+    List<Categories> categories = ViewBag.Categories;
 }
 
 @section head {
@@ -60,8 +60,14 @@
                         <label>Price</label>
                         <input type="text" class="form-control" name="price" id="price1" placeholder="Enter price" required />
 
-                        <label>Category ID</label>
-                        <input type="number" class="form-control" name="categoryID" id="categoryID1" placeholder="Enter category ID" required />
+                        <label>Category</label>
+                        <select class="form-select" name="categoryID" id="categoryID1" required>
+                            <option value="" disabled selected>Select a category</option>
+                            @foreach (var ctg in categories)
+                            {
+                                <option value="@ctg.id">@ctg.name</option>
+                            }
+                            </select>
 
                         <label>Image URL (Optional)</label>
                         <input type="text" class="form-control" name="imageURL" id="imageURL1" placeholder="Enter image URL" />
@@ -99,13 +105,18 @@
                         <label>Price</label>
                         <input type="text" class="form-control" name="price" id="price2" placeholder="Enter price" required />
 
-                        <label>Category ID</label>
-                        <input type="number" class="form-control" name="categoryID" id="categoryID2" placeholder="Enter category ID" required />
+                        <label>Category</label>
+                        <select class="form-select" name="categoryID" id="categoryID2" required>
+                            <option value="" disabled selected>Select a category</option>
+                            @foreach (var ctg in categories)
+                            {
+                                <option value="@ctg.id">@ctg.name</option>
+                            }
+                            </select>
 
                         <label>Image URL (Optional)</label>
                         <input type="text" class="form-control" name="imageURL" id="imageURL2" placeholder="Enter image URL" />
                     </form>
-                    <p class="message"></p>
                 </div>
 
                 <!-- Modal footer -->
@@ -120,26 +131,14 @@
 }
 
 <div class="container mt-4">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb bg-light p-3 rounded">
+            <li class="breadcrumb-item"><a>Management Panel</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Products</li>
+        </ol>
+    </nav>
     <div class="row">
-        <div style="width:20%;">
-            <div class="sidemenu__categories">
-                <div class="sidemenu__categories__title">
-                    <span>Management Panel</span>
-                </div>
-                <ul>
-                    @if (User.IsInRole("A"))
-                    {
-                        <li><a href="/Panel/Users/">Users</a></li>
-                        <li><a href="/Panel/Cities/">Cities</a></li>
-                    }
-                    <li><a href="/Panel/Stores/">Stores</a></li>
-                    <li><a href="/Panel/Categories/">Categories</a></li>
-                    <li><a href="/Panel/Products/">Products</a></li>
-                    <li><a href="/Panel/Orders/">Orders</a></li>
-                    <li><a href="/Panel/Couriers/">Couriers</a></li>
-                </ul>
-            </div>
-        </div>
+        @Html.Partial("_Sidemenu")
         <div class="col-lg-9">
             <h2>Product Details</h2>
             <div>

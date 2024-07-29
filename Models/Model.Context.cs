@@ -34,6 +34,7 @@ namespace GroceryDeliverySystem.Models
         public virtual DbSet<Products> Products { get; set; }
         public virtual DbSet<Stores> Stores { get; set; }
         public virtual DbSet<Users> Users { get; set; }
-        public virtual DbSet<Drivers> Drivers { get; set; }
+        public virtual DbSet<Couriers> Couriers { get; set; }
+        public virtual DbSet<Inquiries> Inquiries { get; set; }
     }
 }

@@ -16,7 +16,7 @@ namespace GroceryDeliverySystem.Controllers
         // GET: Account
         public ActionResult Settings()
         {
-            ViewBag.Cities = gdb.Cities.ToList();
+            ViewBag.Cities = gdb.Cities.Where(x => x.isActive == true).ToList();
             var email = User.Identity.Name;
             var user = gdb.Users.FirstOrDefault(x => x.email == email);
             return View(user);
@@ -26,7 +26,7 @@ namespace GroceryDeliverySystem.Controllers
         {
             var email = User.Identity.Name;
             var user = gdb.Users.FirstOrDefault(x => x.email == email);
-            var ord = gdb.Orders.Where(x => x.userID == user.id).ToList();
+            var ord = gdb.Orders.Where(x => x.userID == user.id && x.isActive == true).ToList();
             return View(ord);
         }
 
