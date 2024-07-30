@@ -29,5 +29,16 @@ namespace GroceryDeliverySystem.Controllers
             ViewBag.CategoryName = ctg.name;
             return View(products);
         }
+
+        public ActionResult Product(int prid)
+        {
+            var product = gdb.Products.FirstOrDefault(x => x.id == prid);
+            var ctg = gdb.Categories.FirstOrDefault(x => x.id == product.id);
+            var store = gdb.Stores.FirstOrDefault(x => x.id == ctg.storeID);
+
+            ViewBag.Store = store;
+            ViewBag.Category = ctg;
+            return View(product);
+        }
     }
 }

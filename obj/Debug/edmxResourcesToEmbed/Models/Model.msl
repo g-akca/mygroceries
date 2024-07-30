@@ -96,6 +96,7 @@
     <EntitySetMapping Name="Products">
       <EntityTypeMapping TypeName="groceryDBModel.Products">
         <MappingFragment StoreEntitySet="Products">
+          <ScalarProperty Name="description" ColumnName="description" />
           <ScalarProperty Name="isActive" ColumnName="isActive" />
           <ScalarProperty Name="imageURL" ColumnName="imageURL" />
           <ScalarProperty Name="categoryID" ColumnName="categoryID" />

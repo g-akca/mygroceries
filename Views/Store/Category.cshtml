@@ -56,19 +56,23 @@
 
         <!-- Products -->
         <div class="col-md-9">
-            <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4">
-                @foreach (var prd in Model)
-                {
+            @if (Model.Count != 0)
+            {
+                <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4">
+                    @foreach (var prd in Model)
+                    {
                     <div class="col mb-5">
                         <div class="card h-100 shadow-sm rounded">
-                            @if (!string.IsNullOrEmpty(prd.imageURL))
-                            {
-                                <img class="card-img-top" src="@prd.imageURL" alt="..." />
-                            }
-                            else
-                            {
-                                <img class="card-img-top" src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg" alt="..." />
-                            }
+                            <a href="@prd.id\">
+                                @if (!string.IsNullOrEmpty(prd.imageURL))
+                                {
+                                    <img class="card-img-top" src="@prd.imageURL" alt="..." />
+                                }
+                                else
+                                {
+                                    <img class="card-img-top" src="https://dummyimage.com/300x300/dee2e6/6c757d.jpg" alt="..." />
+                                }
+                            </a>
                             <div class="p-4">
                                 <div class="text-center">
                                     <h6>@prd.name</h6>
@@ -82,8 +86,13 @@
                             </div>
                         </div>
                     </div>
-                }
-            </div>
+                    }
+                </div>
+            }
+            else
+            {
+                <p class="mt-2">No products found in this category.</p>
+            }
         </div>
     </div>
 </div>

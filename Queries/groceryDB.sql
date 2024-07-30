@@ -56,6 +56,7 @@ create table Products (
 	[price]			decimal (10,2)	NOT NULL,
 	[categoryID]	int				NOT NULL FOREIGN KEY REFERENCES Categories(id),
 	[imageURL]		nvarchar(255)	NULL,
+	[description]	nvarchar(255)	NULL,
 	[isActive]		int				NOT NULL DEFAULT 1
 );
 
@@ -111,17 +112,26 @@ create table Inquiries (
 insert into Cities (name)
 values ('Istanbul')
 
-insert into Stores (name, cityID)
-values ('Test Store 1', 1)
+insert into Cities (name)
+values ('Ankara')
 
 insert into Stores (name, cityID)
-values ('Test Store 2', 1)
+values ('Migros', 1)
+
+insert into Stores (name, cityID)
+values ('CarrefourSA', 1)
+
+insert into Stores (name, cityID)
+values ('Metro Market', 2)
+
+insert into Stores (name, cityID)
+values ('A101', 2)
 
 insert into Users (firstName, lastName, email, password, roles)
-values ('Admin', 'Acc', 'admin@email.com', 12345, 'A')
+values ('Admin', 'Account', 'admin@email.com', 12345, 'A')
 
 insert into Users (firstName, lastName, email, password, roles, managedStore)
-values ('Store', 'Manager', 'strmng@email.com', 12345, 'S', 1)
+values ('Store', 'Manager', 'manager@email.com', 12345, 'S', 1)
 
 insert into Carts (userID)
 values (1)
@@ -130,11 +140,78 @@ update Users
 set cartID = 1
 where id = 1;
 
+insert into Carts (userID)
+values (2)
+
+update Users
+set cartID = 2
+where id = 2;
+
 insert into Categories (name, storeID)
 values ('Snacks', 1)
 
+insert into Categories (name, storeID)
+values ('Drinks', 1)
+
+insert into Categories (name, storeID)
+values ('Frozen Food', 1)
+
+insert into Categories (name, storeID)
+values ('Meat & Fish', 1)
+
+insert into Categories (name, storeID)
+values ('Fruits', 1)
+
+insert into Categories (name, storeID)
+values ('Vegetables', 1)
+
+insert into Categories (name, storeID)
+values ('Snacks', 2)
+
+insert into Categories (name, storeID)
+values ('Drinks', 2)
+
+insert into Categories (name, storeID)
+values ('Frozen Food', 2)
+
+insert into Categories (name, storeID)
+values ('Meat & Fish', 2)
+
+insert into Categories (name, storeID)
+values ('Snacks', 3)
+
+insert into Categories (name, storeID)
+values ('Drinks', 3)
+
+insert into Categories (name, storeID)
+values ('Frozen Food', 3)
+
+insert into Categories (name, storeID)
+values ('Meat & Fish', 3)
+
+insert into Categories (name, storeID)
+values ('Fruits', 3)
+
+insert into Categories (name, storeID)
+values ('Vegetables', 3)
+
+insert into Categories (name, storeID)
+values ('Snacks', 4)
+
+insert into Categories (name, storeID)
+values ('Drinks', 4)
+
+insert into Categories (name, storeID)
+values ('Meat & Fish', 4)
+
+insert into Categories (name, storeID)
+values ('Fruits', 4)
+
+insert into Categories (name, storeID)
+values ('Vegetables', 4)
+
 insert into Products (name, price, categoryID)
-values ('Ketchup Flavoured Potato Chips', 35, 1)
+values ('Potato Chips', 35, 1)
 
 insert into Couriers (name, phone)
 values ('Test Driver', '(468)-511-8464')

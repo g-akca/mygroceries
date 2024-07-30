@@ -1,0 +1,111 @@
+﻿@using GroceryDeliverySystem.Models;
+@model Products
+
+@{
+    Categories ctg = ViewBag.Category;
+    Stores store = ViewBag.Store;
+}
+
+<head>
+    <style>
+        .toast {
+            position: fixed;
+            bottom: 60px;
+            right: 20px;
+            min-width: 200px;
+            background: rgba(127, 173, 57, 0.8);
+            color: #fff;
+            padding: 10px;
+            border-radius: 5px;
+        }
+
+        .product-img {
+            width: 100%;
+            max-height: 500px;
+        }
+
+        .product-details {
+            margin-top: 20px;
+        }
+
+        .btn-small {
+            width: 120px;
+            margin-top: 10px;
+            background-color: #7fad39;
+            color: white;
+        }
+
+            .btn-small:hover {
+                color: white;
+                background-color: #357b36;
+            }
+    </style>
+</head>
+
+<div id="toast" class="toast" style="display: none;">
+    <div class="toast-body">
+        Item added to cart successfully!
+    </div>
+</div>
+
+<div class="container mt-4">
+    <!-- Breadcrumb navigation -->
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb bg-light p-3 rounded">
+            <li class="breadcrumb-item"><a href="/">Home</a></li>
+            <li class="breadcrumb-item"><a href="/Store/@store.id/">@store.name</a></li>
+            <li class="breadcrumb-item"><a href="/Store/@store.id/@ctg.id/">@ctg.name</a></li>
+            <li class="breadcrumb-item active" aria-current="page">@Model.name</li>
+        </ol>
+    </nav>
+
+    <div class="row">
+        <!-- Product Image -->
+        <div class="col-md-5 ms-5">
+            <div class="card">
+                @if (!string.IsNullOrEmpty(@Model.imageURL))
+                {
+                    <img class="product-img card-img-top" src="@Model.imageURL" alt="@Model.name" />
+                }
+                else
+                {
+                    <img class="product-img card-img-top" src="https://dummyimage.com/300x300/dee2e6/6c757d.jpg" alt="Placeholder image" />
+                }
+            </div>
+        </div>
+
+        <!-- Product Details -->
+        <div class="col-md-6">
+            <div class="card p-4">
+                <h2>@Model.name</h2>
+                <p>@Model.description</p>
+                <h4 class="fw-bold mt-4">@Model.price TL</h4>
+                <button type="button" data-prdID="@Model.id" class="btn btn-small addCart">Add to Cart</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts {
+    <script src="~/Shared/js/jquery-3.7.1.min.js"></script>
+    <script>
+        $(".addCart").click(function () {
+            var productID = $(this).attr("data-prdID");
+            $.ajax({
+                type: "POST",
+                url: "/Cart/AddToCart/",
+                data: { productID: productID },
+                success: function (response) {
+                    if (response.success) {
+                        $("#toast").fadeIn().delay(1000).fadeOut();
+                        updateCartDropdown();
+                    } else if (response.notAuth) {
+                        window.location.href = "@Url.Action("Login", "Home")";
+                    } else {
+                        alert(response.message);
+                    }
+                }
+            });
+        });
+    </script>
+}

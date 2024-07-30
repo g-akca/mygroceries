@@ -14,6 +14,12 @@ namespace GroceryDeliverySystem
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
             routes.MapRoute(
+                name: "Product",
+                url: "Store/{stid}/{ctgid}/{prid}",
+                defaults: new { controller = "Store", action = "Product" }
+            );
+
+            routes.MapRoute(
                 name: "Category",
                 url: "Store/{stid}/{ctgid}",
                 defaults: new { controller = "Store", action = "Category" }
@@ -31,6 +37,11 @@ namespace GroceryDeliverySystem
                 defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
             );
 
+            routes.MapRoute(
+                name: "Error",
+                url: "{*url}",
+                defaults: new { controller = "Home", action = "NotFound" }
+            );
         }
     }
 }

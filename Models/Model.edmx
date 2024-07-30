@@ -98,6 +98,7 @@
           <Property Name="price" Type="decimal" Precision="10" Scale="2" Nullable="false" />
           <Property Name="categoryID" Type="int" Nullable="false" />
           <Property Name="imageURL" Type="nvarchar" MaxLength="255" />
+          <Property Name="description" Type="nvarchar" MaxLength="255" />
           <Property Name="isActive" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Stores">
@@ -142,7 +143,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__CartItems__produ__4924D839">
+        <Association Name="FK__CartItems__produ__4119A21D">
           <End Role="Products" Type="Self.Products" Multiplicity="1" />
           <End Role="CartItems" Type="Self.CartItems" Multiplicity="*" />
           <ReferentialConstraint>
@@ -194,7 +195,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__OrderItem__produ__4FD1D5C8">
+        <Association Name="FK__OrderItem__produ__420DC656">
           <End Role="Products" Type="Self.Products" Multiplicity="1" />
           <End Role="OrderItems" Type="Self.OrderItems" Multiplicity="*" />
           <ReferentialConstraint>
@@ -242,7 +243,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Products__catego__45544755">
+        <Association Name="FK__Products__catego__40257DE4">
           <End Role="Categories" Type="Self.Categories" Multiplicity="1" />
           <End Role="Products" Type="Self.Products" Multiplicity="*" />
           <ReferentialConstraint>
@@ -318,7 +319,7 @@
             <End Role="Carts" EntitySet="Carts" />
             <End Role="CartItems" EntitySet="CartItems" />
           </AssociationSet>
-          <AssociationSet Name="FK__CartItems__produ__4924D839" Association="Self.FK__CartItems__produ__4924D839">
+          <AssociationSet Name="FK__CartItems__produ__4119A21D" Association="Self.FK__CartItems__produ__4119A21D">
             <End Role="Products" EntitySet="Products" />
             <End Role="CartItems" EntitySet="CartItems" />
           </AssociationSet>
@@ -334,7 +335,7 @@
             <End Role="Orders" EntitySet="Orders" />
             <End Role="OrderItems" EntitySet="OrderItems" />
           </AssociationSet>
-          <AssociationSet Name="FK__OrderItem__produ__4FD1D5C8" Association="Self.FK__OrderItem__produ__4FD1D5C8">
+          <AssociationSet Name="FK__OrderItem__produ__420DC656" Association="Self.FK__OrderItem__produ__420DC656">
             <End Role="Products" EntitySet="Products" />
             <End Role="OrderItems" EntitySet="OrderItems" />
           </AssociationSet>
@@ -350,7 +351,7 @@
             <End Role="Stores" EntitySet="Stores" />
             <End Role="Orders" EntitySet="Orders" />
           </AssociationSet>
-          <AssociationSet Name="FK__Products__catego__45544755" Association="Self.FK__Products__catego__45544755">
+          <AssociationSet Name="FK__Products__catego__40257DE4" Association="Self.FK__Products__catego__40257DE4">
             <End Role="Categories" EntitySet="Categories" />
             <End Role="Products" EntitySet="Products" />
           </AssociationSet>
@@ -558,6 +559,7 @@
           <NavigationProperty Name="CartItems" Relationship="groceryDBModel.FK__CartItems__produ__4924D839" FromRole="Products" ToRole="CartItems" />
           <NavigationProperty Name="Categories" Relationship="groceryDBModel.FK__Products__catego__45544755" FromRole="Products" ToRole="Categories" />
           <NavigationProperty Name="OrderItems" Relationship="groceryDBModel.FK__OrderItem__produ__4FD1D5C8" FromRole="Products" ToRole="OrderItems" />
+          <Property Name="description" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="Stores">
           <Key>
@@ -870,6 +872,7 @@
           <EntitySetMapping Name="Products">
             <EntityTypeMapping TypeName="groceryDBModel.Products">
               <MappingFragment StoreEntitySet="Products">
+                <ScalarProperty Name="description" ColumnName="description" />
                 <ScalarProperty Name="isActive" ColumnName="isActive" />
                 <ScalarProperty Name="imageURL" ColumnName="imageURL" />
                 <ScalarProperty Name="categoryID" ColumnName="categoryID" />

@@ -183,6 +183,7 @@
     <NavigationProperty Name="CartItems" Relationship="groceryDBModel.FK__CartItems__produ__4924D839" FromRole="Products" ToRole="CartItems" />
     <NavigationProperty Name="Categories" Relationship="groceryDBModel.FK__Products__catego__45544755" FromRole="Products" ToRole="Categories" />
     <NavigationProperty Name="OrderItems" Relationship="groceryDBModel.FK__OrderItem__produ__4FD1D5C8" FromRole="Products" ToRole="OrderItems" />
+    <Property Name="description" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
   </EntityType>
   <EntityType Name="Stores">
     <Key>

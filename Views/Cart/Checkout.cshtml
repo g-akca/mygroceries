@@ -13,7 +13,6 @@
             max-width: 800px;
             margin: 0 auto;
             padding: 20px;
-            margin-top: 20px;
             border: 1px solid #ddd;
             border-radius: 10px;
             background-color: #f9f9f9;
@@ -46,11 +45,10 @@
 
             .checkout-section .cart-item {
                 display: flex;
-                align-items: center; /* Vertically align items */
-                justify-content: space-between; /* Space items evenly */
+                align-items: center;
                 padding: 10px;
                 border-bottom: 1px solid #ddd;
-                gap: 10px; /* Add space between columns */
+                gap: 10px;
             }
 
                 .checkout-section .cart-item img {
@@ -62,13 +60,9 @@
                 .checkout-section .cart-item .item-details {
                     flex: 1;
                     display: flex;
-                    flex-direction: column; /* Stack name and price vertically */
-                    align-items: flex-start; /* Align items to the start */
+                    flex-direction: column;
+                    align-items: flex-start;
                 }
-
-                    .checkout-section .cart-item .item-details .item-name {
-                        font-weight: bold;
-                    }
 
                     .checkout-section .cart-item .item-details .item-price {
                         color: #888;
@@ -77,7 +71,7 @@
                 .checkout-section .cart-item .item-quantity {
                     display: flex;
                     align-items: center;
-                    margin-left: auto; /* Push quantity controls to the right */
+                    margin-left: auto;
                 }
 
                     .checkout-section .cart-item .item-quantity span {
@@ -87,7 +81,7 @@
 
                 .checkout-section .cart-item .item-total {
                     text-align: right;
-                    min-width: 100px; /* Ensure total column has enough width */
+                    min-width: 100px;
                 }
 
             .checkout-section .total-price {
@@ -104,7 +98,6 @@
                 border: none;
                 border-radius: 5px;
                 font-size: 16px;
-                cursor: pointer;
             }
 
                 .checkout-section .place-order-btn:hover {
@@ -136,10 +129,10 @@
                     }
                     else
                     {
-                        <img src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg" alt="Placeholder Image" />
+                        <img src="https://dummyimage.com/300x300/dee2e6/6c757d.jpg" alt="Placeholder Image" />
                     }
                     <div class="item-details">
-                        <div class="item-name">@item.Products.name</div>
+                        <div class="item-name fw-bold">@item.Products.name</div>
                         <div class="item-price">@item.Products.price TL</div>
                     </div>
                     <div class="item-quantity">

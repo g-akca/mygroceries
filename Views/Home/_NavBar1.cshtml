@@ -21,15 +21,15 @@
             display: none;
             position: absolute;
             background-color: #f1f1f1;
-            width: 410px; /* Adjust width as needed */
+            width: 430px;
             box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-            z-index: 1;
-            padding: 10px; /* Add padding for spacing */
+            padding: 10px;
             border-radius: 10px;
+            z-index: 1;
         }
 
             .dropdown-content a {
-                color: black;
+                color: white;
                 padding: 12px 16px;
                 text-decoration: none;
                 display: block;
@@ -47,7 +47,7 @@
             background-color: #7fad39;
         }
 
-        .button {
+        .checkout-button {
             display: block;
             text-align: center;
             background-color: #7fad39;
@@ -58,7 +58,7 @@
             width: 150px;
         }
 
-            .button:hover {
+            .checkout-button:hover {
                 background-color: #357b36;
             }
 
@@ -68,8 +68,8 @@
             background-color: #f1f1f1;
             min-width: 160px;
             box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-            z-index: 1;
             border-radius: 10px;
+            z-index: 1;
         }
 
             .dropdown-content2 a {
@@ -91,34 +91,32 @@
             display: flex;
             align-items: center;
             padding: 12px;
-            border-bottom: 1px solid #ddd; /* Optional: Add a border between items */
+            border-bottom: 1px solid #ddd;
         }
 
             .shopping-cart-item img {
-                width: 80px; /* Adjust image size */
-                height: auto;
-                margin-right: 15px; /* Add more spacing between image and text */
+                width: 75px;
+                margin-right: 15px;
             }
 
         .item-details {
             display: grid;
-            grid-template-columns: 2fr 1fr 1fr; /* Three columns: name, price, buttons */
+            grid-template-columns: 2fr 1fr 1fr;
             align-items: center;
-            width: 100%;
             gap: 10px;
         }
 
         .item-name {
-            font-weight: bold; /* Optionally bold item name */
+            font-weight: bold;
             display: -webkit-box;
             -webkit-box-orient: vertical;
-            -webkit-line-clamp: 3; /* Limit to 3 lines */
+            -webkit-line-clamp: 3;
             overflow: hidden;
         }
 
         .item-price {
-            text-align: right; /* Align price to the right */
-            white-space: nowrap; /* Prevent wrapping */
+            text-align: right;
+            white-space: nowrap;
         }
 
         .quantity-controls {
@@ -138,7 +136,6 @@
             .quantity-controls button {
                 background-color: #7fad39;
                 color: white;
-                cursor: pointer;
             }
 
             .quantity-controls span {
@@ -168,7 +165,7 @@
             justify-content: space-between;
             align-items: center;
             background-color: #f1f1f1;
-            padding: 10px; /* Add padding for spacing */
+            padding: 10px;
             margin-top: 10px;
         }
 
@@ -177,7 +174,7 @@
             }
 
         .total-price {
-            margin-left: 20px; /* Shift total price to the right */
+            margin-left: 20px;
         }
 
         .badge {
@@ -274,7 +271,7 @@
                         }
                         else
                         {
-                            <img class="card-img-top" src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg" alt="..." />
+                            <img class="card-img-top" src="https://dummyimage.com/300x300/dee2e6/6c757d.jpg" alt="..." />
                         }
                         <div class="item-details">
                             <span class="item-name">@item.Products.name</span>
@@ -289,7 +286,7 @@
                 }
                 <div class="total-checkout">
                     <span class="total-price"><strong>Total:</strong> @totalPrice TL</span>
-                    <a href="/Cart/Checkout/" class="button">Checkout</a>
+                    <a href="/Cart/Checkout/" class="checkout-button">Checkout</a>
                 </div>
             }
         </div>

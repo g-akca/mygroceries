@@ -143,5 +143,10 @@ namespace GroceryDeliverySystem.Controllers
 
             return PartialView("_NavBar1", cartItems);
         }
+
+        public ActionResult NotFound()
+        {
+            return View();
+        }
     }
 }

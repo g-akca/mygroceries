@@ -71,6 +71,9 @@
                             }
                         </select>
 
+                        <label>Description (Optional)</label>
+                        <input type="text" class="form-control" name="description" id="description1" placeholder="Enter description" />
+
                         <label>Image URL (Optional)</label>
                         <input type="text" class="form-control" name="imageURL" id="imageURL1" placeholder="Enter image URL" />
                     </form>
@@ -117,6 +120,9 @@
                             }
                         </select>
 
+                        <label>Description (Optional)</label>
+                        <input type="text" class="form-control" name="description" id="description2" placeholder="Enter description" />
+
                         <label>Image URL (Optional)</label>
                         <input type="text" class="form-control" name="imageURL" id="imageURL2" placeholder="Enter image URL" />
                     </form>
@@ -156,6 +162,7 @@
                             <th> Price </th>
                             <th> Category </th>
                             <th> Store </th>
+                            <th> Description </th>
                             <th> Image URL </th>
                             <th> Delete </th>
                             <th> Update </th>
@@ -170,9 +177,10 @@
                                 <td> @pr.price  </td>
                                 <td> @pr.Categories.name </td>
                                 <td> @pr.Categories.Stores.name </td>
+                                <td> @pr.description </td>
                                 <td> @pr.imageURL </td>
                                 <td> <a class="btn btn-danger delModal" data-prID="@pr.id" data-name="@pr.name" data-bs-toggle="modal" data-bs-target="#deleteModal"> Delete </a> </td>
-                                <td> <a class="btn btn-info updPrd" data-prID="@pr.id" data-name="@pr.name" data-price="@pr.price" data-ctgID="@pr.categoryID" data-image="@pr.imageURL" data-isActive="@pr.isActive" data-bs-toggle="modal" data-bs-target="#updateModal"> Update </a> </td>
+                                <td> <a class="btn btn-info updPrd" data-prID="@pr.id" data-name="@pr.name" data-price="@pr.price" data-ctgID="@pr.categoryID" data-image="@pr.imageURL" data-desc="@pr.description" data-isActive="@pr.isActive" data-bs-toggle="modal" data-bs-target="#updateModal"> Update </a> </td>
                             </tr>
                         }
                     </tbody>
@@ -221,6 +229,7 @@
                 var price = $(this).attr("data-price");
                 var ctgID = $(this).attr("data-ctgID");
                 var image = $(this).attr("data-image");
+                var desc = $(this).attr("data-desc");
                 var isActive = $(this).attr("data-isActive");
 
                 $(".modal-body #id").val(id);
@@ -228,6 +237,7 @@
                 $(".modal-body #price2").val(price);
                 $(".modal-body #categoryID2").val(ctgID);
                 $(".modal-body #imageURL2").val(image);
+                $(".modal-body #description2").val(desc);
                 $(".modal-body #isActive2").val(isActive);
             }
         );
