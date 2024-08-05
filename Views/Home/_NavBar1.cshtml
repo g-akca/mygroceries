@@ -313,3 +313,15 @@
         <a href="/Home/Logout/">Sign Out</a>
     </div>
 </div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var openCityModalButton = document.getElementById('openCityModal');
+        if (openCityModalButton) {
+            openCityModalButton.addEventListener('click', function () {
+                var cityUpdateModal = new bootstrap.Modal(document.getElementById('cityUpdate'));
+                cityUpdateModal.show();
+            });
+        }
+    });
+</script>

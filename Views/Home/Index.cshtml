@@ -38,31 +38,48 @@
     <div class="container px-4 px-lg-5">
         <div class="text-center mb-5">
             <h2 class="fw-bolder">Stores</h2>
-            <p class="lead fw-normal text-muted mb-0">Our partnered grocery shops in your city</p>
-        </div>
-        <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
-            @foreach (var store in Model)
+            @if (User.Identity.IsAuthenticated)
             {
-                <div class="col mb-5">
-                    <div class="card h-100 shadow-sm rounded">
-                        @if (!string.IsNullOrEmpty(store.imageURL))
-                        {
-                            <img class="card-img-top" src="@store.imageURL" alt="Store Image" style="height: 200px; object-fit: cover;" />
-                        }
-                        else
-                        {
-                            <img class="card-img-top" src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg" alt="Store Image" style="height: 200px; object-fit: cover;" />
-                        }
-                        <div class="card-body p-4 text-center">
-                            <h5 class="fw-bolder">@store.name</h5>
-                            <p class="text-muted">@store.description</p>
-                        </div>
-                        <div class="card-footer p-4 pt-0 border-top-0 bg-transparent text-center">
-                            <a class="btn btn-outline-dark mt-auto" href="/Store/@store.id/">Go to Store</a>
-                        </div>
-                    </div>
-                </div>
+                <p class="lead fw-normal text-muted mb-0">Our partnered grocery shops in your city</p>
+            }
+            else
+            {
+                <p class="lead fw-normal text-muted mb-0">All of our partnered grocery shops</p>
             }
         </div>
+        @if (Model.Count != 0)
+        {
+            <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+                @foreach (var store in Model)
+                {
+                    <div class="col mb-5">
+                        <div class="card h-100 shadow-sm rounded">
+                            @if (!string.IsNullOrEmpty(store.imageURL))
+                            {
+                                <img class="card-img-top" src="@store.imageURL" alt="Store Image" style="height: 200px; object-fit: cover;" />
+                            }
+                            else
+                            {
+                                <img class="card-img-top" src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg" alt="Store Image" style="height: 200px; object-fit: cover;" />
+                            }
+                            <div class="card-body p-4 text-center">
+                                <h5 class="fw-bolder">@store.name</h5>
+                                <p class="text-muted">@store.description</p>
+                            </div>
+                            <div class="card-footer p-4 pt-0 border-top-0 bg-transparent text-center">
+                                <a class="btn btn-outline-dark mt-auto" href="/Store/@store.id/">Go to Store</a>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        }
+        else
+        {
+            <div class="container d-flex flex-column align-items-center justify-content-center mt-5">
+                <p class="lead">Select your city to start shopping today!</p>
+                <button id="openCityModal" class="btn btn-primary">Select City</button>
+            </div>
+        }
     </div>
 </section>

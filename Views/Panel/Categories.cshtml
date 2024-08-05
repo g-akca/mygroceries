@@ -69,7 +69,7 @@
                                 <option value="" disabled selected>Select a store</option>
                                 @foreach (var store in stores)
                                 {
-                                    <option value="@store.id">@store.name</option>
+                                    <option value="@store.id">@store.name (@store.Cities.name)</option>
                                 }
                             </select>
                         }
@@ -119,7 +119,7 @@
                                 <option value="" disabled selected>Select a store</option>
                                 @foreach (var store in stores)
                                 {
-                                    <option value="@store.id">@store.name</option>
+                                    <option value="@store.id">@store.name (@store.Cities.name)</option>
                                 }
                             </select>
                         }

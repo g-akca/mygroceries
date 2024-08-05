@@ -67,7 +67,7 @@
                             <option value="" disabled selected>Select a category</option>
                             @foreach (var ctg in categories)
                             {
-                                <option value="@ctg.id">@ctg.name</option>
+                                <option value="@ctg.id">@ctg.name (@ctg.Stores.name / @ctg.Stores.Cities.name)</option>
                             }
                         </select>
 
@@ -116,7 +116,7 @@
                             <option value="" disabled selected>Select a category</option>
                             @foreach (var ctg in categories)
                             {
-                                <option value="@ctg.id">@ctg.name</option>
+                                <option value="@ctg.id">@ctg.name (@ctg.Stores.name / @ctg.Stores.Cities.name)</option>
                             }
                         </select>
 
