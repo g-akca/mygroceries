@@ -33,7 +33,7 @@ namespace GroceryDeliverySystem.Controllers
         public ActionResult Product(int prid)
         {
             var product = gdb.Products.FirstOrDefault(x => x.id == prid);
-            var ctg = gdb.Categories.FirstOrDefault(x => x.id == product.id);
+            var ctg = gdb.Categories.FirstOrDefault(x => x.id == product.categoryID);
             var store = gdb.Stores.FirstOrDefault(x => x.id == ctg.storeID);
 
             ViewBag.Store = store;
